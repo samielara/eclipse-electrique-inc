@@ -10,6 +10,10 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import { CinematicHero } from "@/components/motion/cinematic-hero";
+import { HeroVideo } from "@/components/motion/hero-video";
+import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AiAssistant } from "@/components/ai-assistant";
 import { ServiceCard } from "@/components/service-card";
 import { SectorMatrix } from "@/components/sector-matrix";
@@ -114,7 +118,7 @@ function CapabilitiesGrid({ locale }: { locale: Locale }) {
             {capability.items.map((item) => (
               <li key={item}>
                 <Check aria-hidden="true" />
-                <span>{item}</span>
+                <span>{item.includes("2008") ? <>{item.split("2008")[0]}<NumberTicker value={2008} />{item.split("2008")[1]}</> : item}</span>
               </li>
             ))}
           </ul>
@@ -195,61 +199,54 @@ function HomePage({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <section className="home-hero">
-        {/* Decorative motion background; the image remains the no-motion fallback. */}
-        <video
-          aria-hidden="true"
-          autoPlay
-          className="home-hero-video"
-          loop
-          muted
-          playsInline
-          poster="/eclipse-electrical-grid.webp"
-          preload="metadata"
-        >
-          <source src="/eclipse-electrical-ambient.mp4" type="video/mp4" />
-        </video>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          alt=""
-          aria-hidden="true"
-          className="home-hero-image"
-          decoding="async"
-          fetchPriority="high"
-          height="941"
-          src="/eclipse-electrical-grid.webp"
-          width="1672"
-        />
-        <div className="home-hero-overlay" aria-hidden="true" />
-        <div className="site-container home-hero-inner">
-          <div className="home-hero-copy">
-            <p className="eyebrow eyebrow-amber">{page.eyebrow}</p>
-            <h1>{page.title}</h1>
-            <p>{page.intro}</p>
-            <div
-              aria-label={isFrench ? "Repères de confiance" : "Trust markers"}
-              className="hero-trust-badges"
-            >
-              {copy.home.trustBadges.map((badge, index) => (
-                <div className="hero-trust-badge" key={badge.label}>
-                  <span className="hero-trust-badge-icon">
-                    {trustBadgeIcon(index)}
-                  </span>
-                  <span>
-                    <small>{badge.label}</small>
-                    <strong>{badge.value}</strong>
-                  </span>
-                </div>
-              ))}
-            </div>
-            <ActionPair locale={locale} dark />
-          </div>
+      <CinematicHero
+        actions={<ActionPair locale={locale} dark />}
+        background={
+          <>
+            {/* Decorative motion background; the image remains the no-motion fallback. */}
+            <HeroVideo />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt=""
+              className="home-hero-image"
+              decoding="async"
+              fetchPriority="high"
+              height="941"
+              src="/eclipse-electrical-grid.webp"
+              width="1672"
+            />
+            <div className="home-hero-overlay" />
+            <AnimatedGridPattern />
+          </>
+        }
+        eyebrow={<p className="eyebrow eyebrow-amber">{page.eyebrow}</p>}
+        heading={<h1>{page.title}</h1>}
+        intro={<p>{page.intro}</p>}
+        sideNote={
           <div className="hero-side-note" aria-hidden="true">
             <span>MTL</span>
             <span>45.5019° N</span>
           </div>
-        </div>
-      </section>
+        }
+        trustMarkers={
+          <div
+            aria-label={isFrench ? "Repères de confiance" : "Trust markers"}
+            className="hero-trust-badges"
+          >
+            {copy.home.trustBadges.map((badge, index) => (
+              <div className="hero-trust-badge" key={badge.label}>
+                <span className="hero-trust-badge-icon">
+                  {trustBadgeIcon(index)}
+                </span>
+                <span>
+                  <small>{badge.label}</small>
+                  <strong>{badge.value}</strong>
+                </span>
+              </div>
+            ))}
+          </div>
+        }
+      />
 
       <section className="trust-strip" aria-label={isFrench ? "Renseignements vérifiés" : "Verified information"}>
         <div className="site-container trust-grid trust-badge-bar">

@@ -1,4 +1,7 @@
+"use client";
+
 import { ArrowRight, ChevronDown, Menu, PhoneCall } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/brand-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -22,6 +25,7 @@ interface SiteHeaderProps {
 const regionOrder: readonly CityRegion[] = ["montreal", "northShore", "southShore"];
 
 export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
   const copy = content[locale];
   const isFrench = locale === "fr";
   const skipLabel = isFrench ? "Aller au contenu" : "Skip to content";
@@ -46,12 +50,23 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
     description: copy.pages[serviceId].title,
   }));
 
+  useEffect(() => {
+    const updateScrollState = () => setIsScrolled(window.scrollY > 16);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
+
   return (
     <>
       <a className="skip-link" href="#contenu">
         {skipLabel}
       </a>
-      <header className="site-header">
+      <header
+        className="site-header"
+        data-home={pageId === "home" ? "true" : "false"}
+        data-scroll-state={isScrolled ? "scrolled" : "top"}
+      >
         <div className="utility-bar">
           <div className="site-container utility-inner">
             <div className="utility-actions">

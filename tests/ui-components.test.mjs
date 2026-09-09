@@ -264,3 +264,75 @@ test("renders sidebar skeletons deterministically", async () => {
   assert.equal(first, second);
   assert.match(first, /--skeleton-width:70%/);
 });
+
+test("cinematic motion primitives keep decorative motion bounded and optional", async () => {
+  const [tokensSource, traceSource, surfaceSource] = await Promise.all([
+    readFile(path.join(root, "components/motion/tokens.ts"), "utf8"),
+    readFile(path.join(root, "components/motion/electric-trace.tsx"), "utf8"),
+    readFile(path.join(root, "components/motion/surface.tsx"), "utf8"),
+  ]);
+
+  assert.match(tokensSource, /export const cinematicVariants/);
+  assert.match(tokensSource, /export const cinematicTransition/);
+  assert.match(tokensSource, /hidden:\s*\{ opacity: 0, y: 24 \}/);
+  assert.match(tokensSource, /visible:\s*\{ opacity: 1, y: 0 \}/);
+  assert.match(
+    tokensSource,
+    /cinematicTransition = \{\s+duration: 0\.64,\s+ease: \[0\.22, 1, 0\.36, 1\] as const,\s+\} as const;/s,
+  );
+  assert.match(traceSource, /export function ElectricTrace/);
+  assert.match(traceSource, /useReducedMotion/);
+  assert.doesNotMatch(traceSource, /repeat:\s*Infinity/);
+  assert.doesNotMatch(`${traceSource}\n${surfaceSource}`, /on(?:Wheel|Scroll|TouchMove)=/);
+});
+
+test("cinematic trace enters from hidden while reduced motion is immediately final", async () => {
+  const {
+    cinematicMotionProps,
+    cinematicTransition,
+    cinematicVariants,
+  } = await vite.ssrLoadModule("/components/motion/tokens.ts");
+
+  assert.deepEqual(cinematicMotionProps(false), {
+    initial: cinematicVariants.hidden,
+    animate: cinematicVariants.visible,
+    transition: cinematicTransition,
+  });
+  assert.deepEqual(cinematicMotionProps(true), {
+    initial: false,
+    animate: cinematicVariants.visible,
+    transition: { duration: 0 },
+  });
+
+  const { MotionSurface } = await vite.ssrLoadModule(
+    "/components/motion/surface.tsx",
+  );
+  const { ElectricTrace } = await vite.ssrLoadModule(
+    "/components/motion/electric-trace.tsx",
+  );
+  const surfaceHtml = renderToStaticMarkup(
+    React.createElement(MotionSurface, null, "Visible content"),
+  );
+  const traceHtml = renderToStaticMarkup(React.createElement(ElectricTrace));
+
+  assert.match(traceHtml, /style="opacity:0;transform:translateY\(24px\)"/);
+  assert.match(surfaceHtml, /Visible content/);
+});
+
+test("MotionSurface stays visible across SSR and hydration", async () => {
+  const { MotionSurface } = await vite.ssrLoadModule(
+    "/components/motion/surface.tsx",
+  );
+  const surfaceSource = await readFile(
+    path.join(root, "components/motion/surface.tsx"),
+    "utf8",
+  );
+  const surfaceHtml = renderToStaticMarkup(
+    React.createElement(MotionSurface, null, "Visible content"),
+  );
+
+  assert.match(surfaceHtml, /Visible content/);
+  assert.doesNotMatch(surfaceHtml, /opacity:0/);
+  assert.match(surfaceSource, /initial=\{false\}/);
+  assert.doesNotMatch(surfaceSource, /use(?:Effect|AnimationControls)|startMotionSurfaceEntrance/);
+});

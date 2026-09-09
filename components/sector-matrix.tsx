@@ -1,5 +1,7 @@
 "use client";
 
+import { m } from "motion/react";
+import { useExperienceMotion } from "@/components/motion/provider";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import {
   ArrowRight,
@@ -26,6 +28,7 @@ const sectorIcons: Record<SectorId, LucideIcon> = {
 };
 
 export function SectorMatrix({ locale, copy }: SectorMatrixProps) {
+  const { reducedMotion, transition } = useExperienceMotion();
   const matrixId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const initialId = copy.tabs[0]?.id ?? "residential";
@@ -123,7 +126,7 @@ export function SectorMatrix({ locale, copy }: SectorMatrixProps) {
                     : "Commercial";
 
               return (
-                <div
+                <m.div initial={false} animate={{ y: isActive && reducedMotion === false ? [4, 0] : 0 }} transition={transition}
                   aria-labelledby={tabId}
                   className={`sector-matrix-panel${isActive ? " is-active" : ""}`}
                   hidden={!isActive}
@@ -164,7 +167,7 @@ export function SectorMatrix({ locale, copy }: SectorMatrixProps) {
                       </a>
                     )}
                   </div>
-                </div>
+                </m.div>
               );
             })}
           </div>

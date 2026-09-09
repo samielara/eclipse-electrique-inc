@@ -1,0 +1,62 @@
+{
+  "description": "Sum of individual production .next/static files, not per-route transfer; gzip level default. Fonts reported separately.",
+  "totals": {
+    "js": {
+      "files": 15,
+      "bytes": 945245,
+      "gzip": 286495
+    },
+    "css": {
+      "files": 2,
+      "bytes": 224519,
+      "gzip": 36980
+    },
+    "woff2": {
+      "files": 4,
+      "bytes": 173280,
+      "gzip": 173377
+    }
+  },
+  "largestJavaScript": [
+    {
+      "file": ".next/static/chunks/07lhk_q6pmm3r.js",
+      "bytes": 227537,
+      "gzip": 71012
+    },
+    {
+      "file": ".next/static/chunks/13f8m4lzcd8yg.js",
+      "bytes": 222963,
+      "gzip": 66704
+    },
+    {
+      "file": ".next/static/chunks/03~yq9q893hmn.js",
+      "bytes": 112594,
+      "gzip": 39627
+    },
+    {
+      "file": ".next/static/chunks/0-8f5dujjdlet.js",
+      "bytes": 146744,
+      "gzip": 39388
+    },
+    {
+      "file": ".next/static/chunks/0k1s~xlj07ule.js",
+      "bytes": 86308,
+      "gzip": 29530
+    },
+    {
+      "file": ".next/static/chunks/0d3shmwh5_nmn.js",
+      "bytes": 54646,
+      "gzip": 12875
+    },
+    {
+      "file": ".next/static/chunks/0dgq26a5_oy.a.js",
+      "bytes": 50702,
+      "gzip": 10559
+    },
+    {
+      "file": ".next/static/chunks/11kjahy2ntf0n.js",
+      "bytes": 21063,
+      "gzip": 7112
+    }
+  ]
+}

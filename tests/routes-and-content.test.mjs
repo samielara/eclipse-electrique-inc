@@ -98,7 +98,8 @@ test("renders emergency, language, dropdown, and skip links", async () => {
   assert.doesNotMatch(html, /Master electrician|Maître électricien/);
   assert.match(html, /href="\/en"/);
   assert.match(html, /English/);
-  assert.match(html, /eclipse-logo\.jpg/);
+  assert.match(html, /eclipse-logo-light\.png/);
+  assert.match(html, /eclipse-logo-dark\.png/);
   assert.match(html, /data-theme-toggle/);
   assert.match(html, /header-dropdown-panel/);
   assert.match(html, /\/fr\/territoire-desservi\/brossard/);
@@ -172,7 +173,7 @@ test("renders verified hero badges and mobile call actions", async () => {
   assert.match(frenchHtml, /tel:\+15147179277/);
 });
 
-test("styles desktop dropdowns for hover and focus, with a circular logo frame", () => {
+test("styles desktop dropdowns for hover and focus, with theme-aware owner logos", () => {
   const css = fs.readFileSync(
     fileURLToPath(new URL("../app/globals.css", import.meta.url)),
     "utf8",
@@ -180,7 +181,9 @@ test("styles desktop dropdowns for hover and focus, with a circular logo frame",
   const logoRule = css.match(/\.brand-logo-frame\s*\{[^}]+\}/s)?.[0];
 
   assert.ok(logoRule, "logo frame styles should exist");
-  assert.match(logoRule, /border-radius:\s*50%/);
+  assert.match(logoRule, /overflow:\s*hidden/);
+  assert.match(css, /\[data-theme="dark"\] \.brand-logo-light/);
+  assert.match(css, /\[data-theme="dark"\] \.brand-logo-dark/);
   assert.match(css, /\.header-dropdown:hover\s*>\s*\.header-dropdown-panel/);
   assert.match(css, /\.header-dropdown:focus-within\s*>\s*\.header-dropdown-panel/);
   assert.match(css, /\.header-dropdown::before\s*\{[^}]*height:\s*0\.85rem/s);

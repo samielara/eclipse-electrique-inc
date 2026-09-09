@@ -22,6 +22,9 @@ import {
   type FormEvent,
 } from "react";
 
+import { m } from "motion/react";
+import { useExperienceMotion } from "@/components/motion/provider";
+import { readQuotePrefill } from "@/lib/assistant/prefill";
 import { Button } from "@/components/ui/button";
 import {
   buildQuoteIntakeMailtoUrl,
@@ -176,6 +179,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
   const copy = wizardCopy[locale];
+  const { reducedMotion, transition } = useExperienceMotion();
   const [step, setStep] = useState<QuoteIntakeStep>(1);
   const [values, setValues] = useState<QuoteIntakeValues>(emptyQuoteIntakeValues);
   const [errors, setErrors] = useState<QuoteIntakeErrors>({});
@@ -189,6 +193,12 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
   useEffect(() => {
     if (!hasMounted.current) {
       hasMounted.current = true;
+      const prefill = readQuotePrefill(window.location.search);
+      if (Object.keys(prefill).length) {
+        // URL data is validated against service and city allowlists. Never overwrite entered values.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setValues(current => ({ ...current, service: current.service || prefill.service || "", municipality: current.municipality || prefill.municipality || "" }));
+      }
       return;
     }
     stepHeadingRef.current?.focus();
@@ -288,7 +298,7 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
         </div>
       )}
 
-      <fieldset className="quote-step-panel" hidden={step !== 1}>
+      <m.fieldset initial={false} animate={{ y: step === 1 && reducedMotion === false ? [4, 0] : 0 }} transition={transition} className="quote-step-panel" hidden={step !== 1}>
         <legend className="sr-only">{copy.stepTitles[0]}</legend>
         <h3 id="quote-step-1-title" ref={step === 1 ? stepHeadingRef : undefined} tabIndex={-1}>
           {copy.stepTitles[0]}
@@ -324,9 +334,9 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
           })}
         </div>
         <FieldError id="quote-service-error" message={errors.service} />
-      </fieldset>
+      </m.fieldset>
 
-      <fieldset className="quote-step-panel" hidden={step !== 2}>
+      <m.fieldset initial={false} animate={{ y: step === 2 && reducedMotion === false ? [4, 0] : 0 }} transition={transition} className="quote-step-panel" hidden={step !== 2}>
         <legend className="sr-only">{copy.stepTitles[1]}</legend>
         <h3 id="quote-step-2-title" ref={step === 2 ? stepHeadingRef : undefined} tabIndex={-1}>
           {copy.stepTitles[1]}
@@ -369,9 +379,9 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
             </div>
           </div>
         )}
-      </fieldset>
+      </m.fieldset>
 
-      <fieldset className="quote-step-panel" hidden={step !== 3}>
+      <m.fieldset initial={false} animate={{ y: step === 3 && reducedMotion === false ? [4, 0] : 0 }} transition={transition} className="quote-step-panel" hidden={step !== 3}>
         <legend className="sr-only">{copy.stepTitles[2]}</legend>
         <h3 id="quote-step-3-title" ref={step === 3 ? stepHeadingRef : undefined} tabIndex={-1}>
           {copy.stepTitles[2]}
@@ -409,9 +419,9 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
             <FieldError id="quote-postal-code-error" message={errors.postalCode} />
           </div>
         </div>
-      </fieldset>
+      </m.fieldset>
 
-      <fieldset className="quote-step-panel" hidden={step !== 4}>
+      <m.fieldset initial={false} animate={{ y: step === 4 && reducedMotion === false ? [4, 0] : 0 }} transition={transition} className="quote-step-panel" hidden={step !== 4}>
         <legend className="sr-only">{copy.stepTitles[3]}</legend>
         <h3 id="quote-step-4-title" ref={step === 4 ? stepHeadingRef : undefined} tabIndex={-1}>
           {copy.stepTitles[3]}
@@ -514,7 +524,7 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
             <small className="quote-attachment-notice">{copy.attachmentNotice}</small>
           </div>
         </div>
-      </fieldset>
+      </m.fieldset>
 
       <div className="quote-wizard-actions">
         {step > 1 && (

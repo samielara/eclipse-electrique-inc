@@ -1,3 +1,4 @@
+import { BorderBeam } from "@/components/magicui/border-beam";
 import { Activity, ArrowRight, FileCheck2, ShieldAlert } from "lucide-react";
 
 import type { ThermographyProofCopy } from "@/content/site-content";
@@ -28,8 +29,8 @@ export function ThermographyProof({ locale, copy }: ThermographyProofProps) {
             <strong>{copy.pillars.length}</strong>
             <span>{copy.pillarCountLabel}</span>
           </div>
-          <a className="thermography-proof-cta" href={quotePath(locale)}>
-            <span>{copy.cta}</span>
+          <a className="thermography-proof-cta beam-cta" href={quotePath(locale)}>
+            <span>{copy.cta}<BorderBeam /></span>
             <ArrowRight aria-hidden="true" />
           </a>
           <p className="thermography-proof-note">{copy.ctaNote}</p>

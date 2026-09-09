@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { site } from "@/lib/site";
+import "./fonts.css";
 import "./globals.css";
+import { MotionProvider } from "@/components/motion/provider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.origin),
@@ -39,7 +41,7 @@ export default function RootLayout({
               'try{if(localStorage.getItem("eclipse-theme")==="light"){document.documentElement.dataset.theme="light"}}catch(e){}',
           }}
         />
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );
