@@ -319,12 +319,13 @@ test("cinematic trace enters from hidden while reduced motion is immediately fin
   assert.match(surfaceHtml, /Visible content/);
 });
 
-test("MotionSurface keeps SSR content visible and schedules normal entry after mount", async () => {
-  const { MotionSurface, startMotionSurfaceEntrance } = await vite.ssrLoadModule(
+test("MotionSurface stays visible across SSR and hydration", async () => {
+  const { MotionSurface } = await vite.ssrLoadModule(
     "/components/motion/surface.tsx",
   );
-  const { cinematicTransition, cinematicVariants } = await vite.ssrLoadModule(
-    "/components/motion/tokens.ts",
+  const surfaceSource = await readFile(
+    path.join(root, "components/motion/surface.tsx"),
+    "utf8",
   );
   const surfaceHtml = renderToStaticMarkup(
     React.createElement(MotionSurface, null, "Visible content"),
@@ -332,41 +333,6 @@ test("MotionSurface keeps SSR content visible and schedules normal entry after m
 
   assert.match(surfaceHtml, /Visible content/);
   assert.doesNotMatch(surfaceHtml, /opacity:0/);
-
-  const normalCalls = [];
-  const scheduledFrames = [];
-  startMotionSurfaceEntrance(
-    {
-      set: (definition) => normalCalls.push(["set", definition]),
-      start: (definition, transition) => {
-        normalCalls.push(["start", definition, transition]);
-        return Promise.resolve();
-      },
-    },
-    false,
-    (callback) => {
-      scheduledFrames.push(callback);
-      return 1;
-    },
-  );
-
-  assert.deepEqual(normalCalls, [["set", cinematicVariants.hidden]]);
-  scheduledFrames[0](0);
-  assert.deepEqual(normalCalls, [
-    ["set", cinematicVariants.hidden],
-    ["start", cinematicVariants.visible, cinematicTransition],
-  ]);
-
-  const reducedCalls = [];
-  startMotionSurfaceEntrance(
-    {
-      set: (definition) => reducedCalls.push(["set", definition]),
-      start: () => Promise.resolve(),
-    },
-    true,
-    () => {
-      throw new Error("reduced motion must not schedule an entrance frame");
-    },
-  );
-  assert.deepEqual(reducedCalls, [["set", cinematicVariants.visible]]);
+  assert.match(surfaceSource, /initial=\{false\}/);
+  assert.doesNotMatch(surfaceSource, /use(?:Effect|AnimationControls)|startMotionSurfaceEntrance/);
 });
