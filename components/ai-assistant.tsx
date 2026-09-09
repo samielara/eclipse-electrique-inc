@@ -158,30 +158,54 @@ export function AiAssistant({ locale }: { locale: Locale }) {
       text: getAssistantGreeting(locale),
     },
   ]);
-  const responseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const requestRef = useRef<AbortController | null>(null);
+  const requestIdRef = useRef(0);
+  const openRef = useRef(false);
+  const [aiEnabled, setAiEnabled] = useState(false);
   const messageIdRef = useRef(1);
   const inputRef = useRef<HTMLInputElement>(null);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const quickReplies = getAssistantQuickReplies(locale);
 
   useEffect(() => {
+    // Capture the stable generation ref, not its value: cleanup invalidates the latest request.
+    const requestGeneration = requestIdRef;
     return () => {
-      if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+      requestGeneration.current++;
+      openRef.current = false;
+      requestRef.current?.abort();
     };
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const controller = new AbortController();
+    void fetch("/api/assistant", { signal: controller.signal })
+      .then(response => response.ok ? response.json() : { enabled: false })
+      .then(value => setAiEnabled(value.enabled === true))
+      .catch(() => {});
+    return () => controller.abort();
+  }, [open]);
 
   useEffect(() => {
     if (open) messageEndRef.current?.scrollIntoView({ block: "nearest" });
   }, [isResponding, messages, open]);
 
   function handleOpenChange(nextOpen: boolean) {
+    openRef.current = nextOpen;
     dispatch({ type: nextOpen ? "open" : "close" });
     if (nextOpen) setUnread(false);
   }
 
-  function submitMessage(rawMessage: string) {
-    const text = rawMessage.trim();
-    if (!text || isResponding) return;
+  async function submitMessage(rawMessage: string) {
+    const text = rawMessage.trim().slice(0, 600);
+    if (!text) return;
+    // A new hazard must interrupt even a stalled ordinary AI request.
+    let reply = getAssistantReply(text, locale);
+    if (requestRef.current && !reply.emergency) return;
+    const requestId = ++requestIdRef.current;
+    requestRef.current?.abort();
+    requestRef.current = null;
 
     const userMessage: ConversationMessage = {
       id: messageIdRef.current++,
@@ -193,21 +217,35 @@ export function AiAssistant({ locale }: { locale: Locale }) {
     setInput("");
     setIsResponding(true);
 
-    responseTimerRef.current = setTimeout(() => {
-      const reply = getAssistantReply(text, locale);
-      setMessages((current) => [
-        ...current,
-        {
-          id: messageIdRef.current++,
-          role: "assistant",
-          text: reply.message,
-          reply,
-        },
-      ]);
-      setIsResponding(false);
-      responseTimerRef.current = null;
-      queueMicrotask(() => inputRef.current?.focus());
-    }, 320);
+    // Safety is local and immediate, and is checked again by the server.
+    if (aiEnabled && !reply.emergency) {
+      const controller = new AbortController();
+      requestRef.current = controller;
+      const timer = setTimeout(() => controller.abort(), 7000);
+      try {
+        const response = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text, locale }), signal: controller.signal });
+        if (response.ok) {
+          const value = await response.json();
+          if (typeof value.reply?.message === "string" && typeof value.reply?.emergency === "boolean") reply = value.reply;
+        }
+      } catch { /* Keep the full deterministic reply on network/provider failure. */ }
+      finally {
+        clearTimeout(timer);
+        if (requestId === requestIdRef.current) requestRef.current = null;
+      }
+    }
+    if (requestId !== requestIdRef.current) return;
+    setMessages((current) => [
+      ...current,
+      {
+        id: messageIdRef.current++,
+        role: "assistant",
+        text: reply.message,
+        reply,
+      },
+    ]);
+    setIsResponding(false);
+    queueMicrotask(() => { if (requestId === requestIdRef.current && openRef.current) inputRef.current?.focus(); });
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -223,9 +261,9 @@ export function AiAssistant({ locale }: { locale: Locale }) {
 
     const quoteIntake = document.querySelector<HTMLElement>("#quote-intake");
     const targetUrl = new URL(action.href, window.location.href);
-    dispatch({ type: "close" });
+    handleOpenChange(false);
 
-    if (!quoteIntake || targetUrl.pathname !== window.location.pathname) return;
+    if (!quoteIntake || targetUrl.pathname !== window.location.pathname || targetUrl.search) return;
 
     event.preventDefault();
     window.history.replaceState(null, "", "#quote-intake");
@@ -340,7 +378,7 @@ export function AiAssistant({ locale }: { locale: Locale }) {
           <div className="ai-assistant-quick-replies">
             {quickReplies.map((reply) => (
               <button
-                disabled={isResponding}
+                disabled={isResponding && !getAssistantReply(reply.value, locale).emergency}
                 key={reply.id}
                 onClick={() => submitMessage(reply.value)}
                 type="button"
@@ -366,14 +404,14 @@ export function AiAssistant({ locale }: { locale: Locale }) {
           />
           <button
             aria-label={copy.send}
-            disabled={!input.trim() || isResponding}
+            disabled={!input.trim() || (isResponding && !getAssistantReply(input, locale).emergency)}
             type="submit"
           >
             <Send aria-hidden="true" />
           </button>
         </form>
 
-        <p className="ai-assistant-disclaimer">{copy.disclaimer}</p>
+        <p className="ai-assistant-disclaimer">{copy.disclaimer}{aiEnabled && (locale === "fr" ? " L’orientation IA envoie votre message à OpenAI; évitez les renseignements personnels." : " AI routing sends your message to OpenAI; avoid personal information.")}</p>
       </DialogContent>
     </Dialog>
   );

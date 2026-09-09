@@ -239,6 +239,8 @@ const frenchSignals = [
 ] as const;
 
 const hazardPatterns = [
+  /\b(?:on fire|there is (?:a )?fire|flames?|electric(?:al)? shock|electrocut(?:ed|ion))\b/,
+  /\b(?:feu|flammes?|choc electrique|electrocution|electrocute)\b/,
   /\b(?:spark|sparks|sparking)\b/,
   /\bburning smell\b/,
   /\bsmoke\b/,
