@@ -287,35 +287,49 @@ textarea {
 }
 
 .brand-logo-frame {
-  display: grid;
-  width: 5.25rem;
-  height: 5.25rem;
+  position: relative;
+  display: block;
+  width: 8.75rem;
+  height: 5.6rem;
   overflow: hidden;
-  place-items: center;
   flex: 0 0 auto;
-  border: 2px solid #b97845;
-  border-radius: 50%;
-  background: #050505;
-  box-shadow:
-    0 0 0 3px rgba(185, 120, 69, 0.13),
-    0 8px 20px rgba(15, 17, 21, 0.2);
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .brand-logo-frame img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: contain;
+  position: absolute;
+  max-width: none;
+  height: auto;
 }
 
-.brand-link:hover .brand-logo-frame,
-.brand-link:focus-visible .brand-logo-frame {
-  border-color: #e6a76f;
-  box-shadow:
-    0 0 0 4px rgba(230, 167, 111, 0.16),
-    0 10px 24px rgba(15, 17, 21, 0.24);
-  transform: translateY(-1px);
+/* Crop only the supplied images' outer whitespace; preserve the artwork. */
+.brand-logo-frame .brand-logo-light {
+  width: 113.33%;
+  left: -6.87%;
+  top: -53.63%;
+  mix-blend-mode: multiply;
+}
+
+.brand-logo-frame .brand-logo-dark {
+  display: none;
+  width: 129.71%;
+  left: -14.74%;
+  top: -69.04%;
+  mix-blend-mode: lighten;
+}
+
+[data-theme="dark"] .brand-logo-light,
+.brand-logo-inverse .brand-logo-light {
+  display: none;
+}
+
+[data-theme="dark"] .brand-logo-dark,
+.brand-logo-inverse .brand-logo-dark {
+  display: block;
+}
+
+.brand-link:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 4px;
 }
 
 .brand-symbol {
@@ -3311,13 +3325,7 @@ textarea {
   background: rgba(15, 17, 21, 0.98);
 }
 
-[data-theme="dark"] .brand-logo-frame {
-  border-color: #d6945d;
-  background: #08090b;
-  box-shadow:
-    0 0 0 3px rgba(214, 148, 93, 0.18),
-    0 8px 22px rgba(0, 0, 0, 0.42);
-}
+
 
 [data-theme="dark"] .brand-wordmark .text-ink {
   color: #f3f7f9;
@@ -4706,8 +4714,8 @@ textarea {
   }
 
   .brand-logo-frame {
-    width: 4.35rem;
-    height: 4.35rem;
+    width: 7rem;
+    height: 4.48rem;
   }
 
   .hero-trust-badges {

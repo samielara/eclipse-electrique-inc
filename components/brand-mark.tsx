@@ -8,16 +8,19 @@ interface BrandMarkProps {
 export function BrandMark({ inverse = false, compact = false }: BrandMarkProps) {
   return (
     <span className="brand-lockup">
-      <span className="brand-logo-frame" aria-hidden="true">
+      <span className={`brand-logo-frame${inverse ? " brand-logo-inverse" : ""}`} aria-hidden="true">
         {/* Owner-supplied logo asset. The accessible name remains in the sr-only text below. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt=""
           decoding="async"
-          height="1008"
-          src="/eclipse-logo.jpg"
-          width="1044"
+          className="brand-logo-light"
+          height="1402"
+          src="/eclipse-logo-light.png"
+          width="1122"
         />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img alt="" className="brand-logo-dark" decoding="async" height="1402" src="/eclipse-logo-dark.png" width="1122" />
       </span>
       <span className="brand-wordmark">
         <span className={inverse ? "text-white" : "text-ink"}>ÉCLIPSE</span>
