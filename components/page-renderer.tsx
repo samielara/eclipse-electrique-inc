@@ -12,6 +12,7 @@ import {
 
 import { CinematicHero } from "@/components/motion/cinematic-hero";
 import { HeroVideo } from "@/components/motion/hero-video";
+import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AiAssistant } from "@/components/ai-assistant";
@@ -316,6 +317,12 @@ function HomePage({ locale }: { locale: Locale }) {
   const copy = content[locale];
   const page = copy.pages.home;
   const isFrench = locale === "fr";
+  const heroTitle = isFrench
+    ? "L’électricité, maîtrisée."
+    : "Power, mastered.";
+  const heroIntro = isFrench
+    ? "De la maison à l’industrie, une expertise claire et précise dans le Grand Montréal — pour vos projets, votre entretien et vos urgences."
+    : "From homes to industry, clear and precise expertise across Greater Montreal — for projects, maintenance and emergencies.";
 
   const trustBadgeIcon = (index: number) => {
     if (index === 0) return <ShieldCheck aria-hidden="true" />;
@@ -324,7 +331,7 @@ function HomePage({ locale }: { locale: Locale }) {
   };
 
   return (
-    <>
+    <div className="home-page">
       <CinematicHero
         actions={<ActionPair locale={locale} dark />}
         background={
@@ -346,12 +353,13 @@ function HomePage({ locale }: { locale: Locale }) {
           </>
         }
         eyebrow={<p className="eyebrow eyebrow-amber">{page.eyebrow}</p>}
-        heading={<h1>{page.title}</h1>}
-        intro={<p>{page.intro}</p>}
+        heading={<h1>{heroTitle}</h1>}
+        intro={<p>{heroIntro}</p>}
         sideNote={
           <div className="hero-side-note" aria-hidden="true">
             <span>MTL</span>
             <span>45.5019° N</span>
+            <span>{isFrench ? "Défiler pour explorer" : "Scroll to explore"}</span>
           </div>
         }
         trustMarkers={
@@ -386,38 +394,49 @@ function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="section-pad services-section">
-        <div className="site-container">
-          <SectionHeading
-            eyebrow={copy.home.servicesEyebrow}
-            title={copy.home.servicesTitle}
-            intro={copy.home.servicesIntro}
-          />
-          <ServicesGrid locale={locale} />
-          <div className="section-link-row">
-            <a className="arrow-link" href={pathFor("services", locale)}>
-              {copy.actions.exploreServices}<ArrowRight aria-hidden="true" />
-            </a>
+      <ScrollReveal className="home-flow-block">
+        <section className="section-pad services-section" id="expertise">
+          <div className="site-container">
+            <SectionHeading
+              eyebrow={copy.home.servicesEyebrow}
+              title={copy.home.servicesTitle}
+              intro={copy.home.servicesIntro}
+            />
+            <ServicesGrid locale={locale} />
+            <div className="section-link-row">
+              <a className="arrow-link" href={pathFor("services", locale)}>
+                {copy.actions.exploreServices}<ArrowRight aria-hidden="true" />
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
-      <ProjectGallery locale={locale} />
+      <ScrollReveal className="home-flow-block" delay={50}>
+        <ProjectGallery locale={locale} />
+      </ScrollReveal>
 
-      <section className="section-pad capabilities-section">
-        <div className="site-container">
-          <SectionHeading
-            eyebrow={copy.home.capabilitiesEyebrow}
-            title={copy.home.capabilitiesTitle}
-            intro={copy.home.capabilitiesIntro}
-          />
-          <CapabilitiesGrid locale={locale} />
-        </div>
-      </section>
+      <ScrollReveal className="home-flow-block" delay={70}>
+        <section className="section-pad capabilities-section">
+          <div className="site-container">
+            <SectionHeading
+              eyebrow={copy.home.capabilitiesEyebrow}
+              title={copy.home.capabilitiesTitle}
+              intro={copy.home.capabilitiesIntro}
+            />
+            <CapabilitiesGrid locale={locale} />
+          </div>
+        </section>
+      </ScrollReveal>
 
-      <SectorMatrix locale={locale} copy={copy.home.sectorMatrix} />
-      <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />
+      <ScrollReveal className="home-flow-block">
+        <SectorMatrix locale={locale} copy={copy.home.sectorMatrix} />
+      </ScrollReveal>
+      <ScrollReveal className="home-flow-block">
+        <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />
+      </ScrollReveal>
 
+      <ScrollReveal className="home-flow-block">
       <section className="section-pad process-section">
         <div className="site-container split-heading">
           <SectionHeading
@@ -435,7 +454,9 @@ function HomePage({ locale }: { locale: Locale }) {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
+      <ScrollReveal className="home-flow-block">
       <section className="section-pad territory-preview">
         <div className="site-container territory-layout">
           <div>
@@ -460,9 +481,12 @@ function HomePage({ locale }: { locale: Locale }) {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
-      <CtaBand locale={locale} />
-    </>
+      <ScrollReveal className="home-flow-block home-flow-final">
+        <CtaBand locale={locale} />
+      </ScrollReveal>
+    </div>
   );
 }
 

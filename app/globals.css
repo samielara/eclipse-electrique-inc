@@ -33,7 +33,7 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .electrical-grid-cell, .hero-trust-badge, .border-beam-light { animation: none !important; }
-  .primary-action:active, .thermography-proof-cta:active, .city-links a:hover, .thermography-pillar:hover { transform: none; }
+  .primary-action:active, .thermography-proof-cta:active, .city-links a:hover, .thermography-pillar:hover, .scroll-reveal { transform: none !important; }
 }
 
 @utility scrollbar-thin {
@@ -1031,6 +1031,25 @@ textarea {
   margin-bottom: 3rem;
 }
 
+.scroll-reveal {
+  position: relative;
+  opacity: 1;
+  transform: none;
+}
+
+.scroll-reveal[data-scroll-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+
+.scroll-reveal[data-scroll-reveal="visible"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+
 .section-heading.is-centered {
   margin-inline: auto;
   text-align: center;
@@ -1185,17 +1204,55 @@ textarea {
 }
 
 .home-hero-copy {
-  width: min(47rem, 73%);
+  width: min(50rem, 70%);
 }
 
 .home-hero h1 {
-  max-width: 48rem;
+  max-width: 50rem;
   margin: 0;
   font-size: clamp(3.15rem, 7.4vw, 6.45rem);
   font-weight: 880;
   letter-spacing: -0.062em;
   line-height: 0.94;
   text-wrap: balance;
+}
+
+.home-page .section-pad {
+  padding-block: clamp(5.5rem, 9vw, 8.5rem);
+}
+
+.home-page .services-section > .site-container > .section-heading,
+.home-page .capabilities-section > .site-container > .section-heading {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr);
+  column-gap: clamp(2rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.home-page .services-section .section-heading .eyebrow,
+.home-page .capabilities-section .section-heading .eyebrow {
+  grid-row: 1 / span 2;
+}
+
+.home-page .services-section .section-heading h2,
+.home-page .services-section .section-heading .section-intro,
+.home-page .capabilities-section .section-heading h2,
+.home-page .capabilities-section .section-heading .section-intro {
+  grid-column: 2;
+}
+
+.home-page .services-section .section-heading .section-intro,
+.home-page .capabilities-section .section-heading .section-intro {
+  max-width: 39rem;
+}
+
+.home-flow-block {
+  overflow: clip;
+}
+
+.home-flow-final {
+  overflow: visible;
 }
 
 .home-hero-copy > .cinematic-hero-item > p:not(.eyebrow) {
@@ -2208,6 +2265,14 @@ textarea {
   gap: 1.2rem;
   padding: 1.65rem 0;
   border-top: 1px solid #c7d1d8;
+  transition: padding-left 220ms ease, border-color 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-page .process-grid article:hover {
+    padding-left: 0.75rem;
+    border-color: var(--amber);
+  }
 }
 
 .process-grid article:last-child {
@@ -5028,6 +5093,11 @@ textarea {
     margin-bottom: 2.25rem;
   }
 
+  .home-page .services-section > .site-container > .section-heading,
+  .home-page .capabilities-section > .site-container > .section-heading {
+    display: block;
+  }
+
   .inner-hero-layout {
     grid-template-columns: 1fr;
   }
@@ -5099,6 +5169,17 @@ textarea {
 
   .brand-wordmark {
     font-size: 0.9rem;
+  }
+
+  .ai-assistant-launcher {
+    width: 3.55rem;
+    min-height: 3.55rem;
+    justify-content: center;
+    padding: 0.45rem;
+  }
+
+  .ai-assistant-launcher > span:not(.ai-assistant-launcher-icon):not(.ai-assistant-unread) {
+    display: none;
   }
 
   .mobile-menu summary > span {

@@ -300,6 +300,17 @@ test("cinematic hero settles without blocking keyboard navigation", async ({ pag
   await noOverflow(page);
 });
 
+test("homepage scroll reveals preserve reduced-motion rendering", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/fr");
+
+  const reveals = page.locator("[data-scroll-reveal]");
+  await expect(reveals.first()).toHaveAttribute("data-scroll-reveal", "visible");
+  expect(await reveals.evaluateAll(elements =>
+    elements.every(element => getComputedStyle(element).transform === "none"),
+  )).toBe(true);
+});
+
 test("cinematic hero settles immediately with reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   const response = await page.goto("/fr", { waitUntil: "domcontentloaded" });
