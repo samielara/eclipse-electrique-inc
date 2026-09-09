@@ -14,6 +14,7 @@ import { CinematicHero } from "@/components/motion/cinematic-hero";
 import { HeroVideo } from "@/components/motion/hero-video";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { ServiceCarousel } from "@/components/motion/service-carousel";
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AiAssistant } from "@/components/ai-assistant";
@@ -105,6 +106,17 @@ function ServicesGrid({ locale, compact = false, homepage = false }: { locale: L
         />
       ))}
     </div>
+  );
+}
+
+function HomepageServices({ locale }: { locale: Locale }) {
+  const copy = content[locale];
+  return (
+    <ServiceCarousel
+      actionLabel={copy.actions.learnMore}
+      items={servicePageIds.slice(0, 3).map(id => ({ id, page: copy.pages[id] }))}
+      locale={locale}
+    />
   );
 }
 
@@ -405,7 +417,7 @@ function HomePage({ locale }: { locale: Locale }) {
               title={copy.home.servicesTitle}
               intro={copy.home.servicesIntro}
             />
-            <ServicesGrid locale={locale} homepage />
+            <HomepageServices locale={locale} />
             <div className="section-link-row">
               <a className="arrow-link" href={pathFor("services", locale)}>
                 {copy.actions.exploreServices}<ArrowRight aria-hidden="true" />

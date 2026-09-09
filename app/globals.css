@@ -1969,6 +1969,110 @@ textarea {
   gap: 1rem;
 }
 
+.service-carousel {
+  position: relative;
+  max-width: 54rem;
+  margin-inline: auto;
+}
+
+.service-carousel-stage {
+  position: relative;
+  min-height: 25rem;
+  padding-top: 1.75rem;
+}
+
+.service-carousel-card {
+  position: relative;
+  animation: carousel-card-in 600ms cubic-bezier(.2,.75,.25,1) both;
+}
+
+@keyframes carousel-card-in {
+  from { opacity: 0; transform: translateX(1.5rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.service-carousel-index {
+  position: absolute;
+  z-index: 2;
+  top: 0.8rem;
+  right: 1.2rem;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.service-carousel-card .service-card {
+  min-height: 24rem;
+  grid-column: auto;
+  padding: clamp(1.7rem, 4vw, 3rem);
+}
+
+.service-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.service-carousel-dots,
+.service-carousel-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.service-carousel-dots button {
+  width: 2.7rem;
+  height: 0.3rem;
+  border: 0;
+  border-radius: 999px;
+  background: #cbd5dc;
+  cursor: pointer;
+  transition: background 180ms ease, width 180ms ease;
+}
+
+.service-carousel-dots button.is-active {
+  width: 4.5rem;
+  background: var(--amber);
+}
+
+.service-carousel-actions button {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.service-carousel-actions button:hover,
+.service-carousel-actions button:focus-visible {
+  border-color: var(--amber);
+  background: var(--amber);
+  transform: translateY(-2px);
+}
+
+.service-carousel-actions svg { width: 1.05rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .service-carousel-card,
+  .service-carousel-actions button,
+  .service-carousel-dots button { animation: none !important; transition: none !important; transform: none !important; }
+}
+
+@media (max-width: 38rem) {
+  .service-carousel-stage { min-height: 27rem; }
+  .service-carousel-controls { align-items: flex-start; flex-direction: column; }
+  .service-carousel-actions { align-self: flex-end; }
+}
+
 .project-gallery-section {
   position: relative;
   overflow: hidden;
