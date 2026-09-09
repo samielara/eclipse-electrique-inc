@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useReducedMotion } from "motion/react";
+import { m, stagger, useAnimate } from "motion/react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { useEffect, useState } from "react";
 
@@ -17,8 +17,6 @@ interface CinematicHeroProps {
   trustMarkers: ReactNode;
 }
 
-const readableInitial = { ...cinematicVariants.hidden, opacity: 1 };
-
 export function CinematicHero({
   actions,
   background,
@@ -28,41 +26,73 @@ export function CinematicHero({
   sideNote,
   trustMarkers,
 }: CinematicHeroProps) {
-  const motionReduced = useReducedMotion();
-  const [mediaReduced, setMediaReduced] = useState(false);
-  // Start from the same visible state on the server and first client render,
-  // then apply the user's media preference without a stale hydration attribute.
-  const reducedMotion = mediaReduced;
-  const [settled, setSettled] = useState(false);
-  const motionState = reducedMotion || settled ? "settled" : "opening";
+  const [scope, animate] = useAnimate();
+  const [motionState, setMotionState] = useState<"opening" | "settled">("settled");
+  const [motionPreference, setMotionPreference] = useState<"pending" | "normal" | "reduce">("pending");
+  const reducedMotion = motionPreference === "reduce";
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updatePreference = () => setMediaReduced(Boolean(motionReduced || query.matches));
-    const frame = window.requestAnimationFrame(updatePreference);
+    let active = true;
+    let fallback: number | undefined;
+    let entrance: ReturnType<typeof animate> | undefined;
+
+    const settleImmediately = () => {
+      entrance?.stop();
+      setMotionPreference("reduce");
+      setMotionState("settled");
+      void animate(
+        ".cinematic-hero-item",
+        cinematicVariants.visible,
+        { duration: 0 },
+      );
+    };
+
+    queueMicrotask(() => {
+      if (!active) return;
+      if (query.matches) {
+        settleImmediately();
+        return;
+      }
+
+      setMotionPreference("normal");
+      setMotionState("opening");
+      entrance = animate(
+        ".cinematic-hero-item",
+        {
+          opacity: [1, cinematicVariants.visible.opacity],
+          y: [cinematicVariants.hidden.y, cinematicVariants.visible.y],
+        },
+        {
+          ...cinematicTransition,
+          delay: stagger(0.11, { startDelay: 0.04 }),
+        },
+      );
+      void entrance.then(() => {
+        if (active) setMotionState("settled");
+      });
+      fallback = window.setTimeout(() => {
+        if (active) setMotionState("settled");
+      }, 1400);
+    });
+
+    const updatePreference = () => {
+      if (query.matches) {
+        if (fallback !== undefined) window.clearTimeout(fallback);
+        settleImmediately();
+      } else {
+        setMotionPreference("normal");
+      }
+    };
+
     query.addEventListener("change", updatePreference);
     return () => {
-      window.cancelAnimationFrame(frame);
+      active = false;
+      entrance?.stop();
+      if (fallback !== undefined) window.clearTimeout(fallback);
       query.removeEventListener("change", updatePreference);
     };
-  }, [motionReduced]);
-
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    const fallback = window.setTimeout(() => setSettled(true), 1400);
-    return () => window.clearTimeout(fallback);
-  }, [reducedMotion]);
-
-  function itemMotion(index: number) {
-    return {
-      initial: reducedMotion ? false : readableInitial,
-      animate: cinematicVariants.visible,
-      transition: reducedMotion
-        ? { duration: 0 }
-        : { ...cinematicTransition, delay: 0.04 + index * 0.11 },
-    } as const;
-  }
+  }, [animate]);
 
   function handlePointerMove(event: ReactPointerEvent<HTMLElement>) {
     if (
@@ -84,10 +114,11 @@ export function CinematicHero({
 
   return (
     <m.section
+      ref={scope}
       className="home-hero"
       data-cinematic-hero="true"
       data-motion-state={motionState}
-      data-reduced-motion={reducedMotion ? "true" : "false"}
+      data-reduced-motion={motionPreference === "pending" ? "pending" : reducedMotion ? "true" : "false"}
       onPointerLeave={resetPointerDepth}
       onPointerMove={handlePointerMove}
       style={{ "--hero-depth-x": "0px", "--hero-depth-y": "0px" } as CSSProperties}
@@ -97,17 +128,11 @@ export function CinematicHero({
       </div>
       <div className="site-container home-hero-inner">
         <div className="home-hero-copy">
-          <m.div className="cinematic-hero-item" {...itemMotion(0)}>{eyebrow}</m.div>
-          <m.div className="cinematic-hero-item" {...itemMotion(1)}>{heading}</m.div>
-          <m.div className="cinematic-hero-item" {...itemMotion(2)}>{intro}</m.div>
-          <m.div className="cinematic-hero-item" {...itemMotion(3)}>{trustMarkers}</m.div>
-          <m.div
-            className="cinematic-hero-item"
-            {...itemMotion(4)}
-            onAnimationComplete={() => setSettled(true)}
-          >
-            {actions}
-          </m.div>
+          <m.div className="cinematic-hero-item" initial={false}>{eyebrow}</m.div>
+          <m.div className="cinematic-hero-item" initial={false}>{heading}</m.div>
+          <m.div className="cinematic-hero-item" initial={false}>{intro}</m.div>
+          <m.div className="cinematic-hero-item" initial={false}>{trustMarkers}</m.div>
+          <m.div className="cinematic-hero-item" initial={false}>{actions}</m.div>
           <ElectricTrace className="cinematic-hero-trace" />
         </div>
         {sideNote}

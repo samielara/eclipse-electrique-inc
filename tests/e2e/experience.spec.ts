@@ -231,46 +231,101 @@ for (const locale of ["fr", "en"] as const) {
 }
 
 test("cinematic hero settles without blocking keyboard navigation", async ({ page }, testInfo) => {
-  await page.goto("/fr");
+  await page.goto("/fr", { waitUntil: "domcontentloaded" });
 
   const hero = page.locator("[data-cinematic-hero]");
   await expect(hero).toBeVisible();
+  await expect(hero).toHaveAttribute("data-motion-state", "opening");
   await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
   await page.keyboard.press("Tab");
   await expect(page.locator(".skip-link")).toBeFocused();
-  await expect(hero).toHaveAttribute("data-motion-state", "settled");
-  await expect(hero).toHaveAttribute("data-reduced-motion", "false");
+
+  const quote = hero.getByRole("link", { name: "Demander un service" });
+  await expect(quote).toHaveAttribute("href", "/fr/contact#quote-intake");
+  await quote.focus();
+  await expect(quote).toBeFocused();
+
+  const emergency = hero.getByRole("link", { name: "Urgence 24/7" });
+  await expect(emergency).toHaveAttribute("href", /^tel:(?:\+1)?5147179277$/);
+  await emergency.focus();
+  await expect(emergency).toBeFocused();
 
   const header = page.locator(".site-header");
+  await page.evaluate(() => window.scrollTo(0, 0));
   await expect(header).toHaveAttribute("data-scroll-state", "top");
-  await page.evaluate(() => window.scrollTo(0, 500));
-  await expect(header).toHaveAttribute("data-scroll-state", "scrolled");
+  const topHeader = await header.evaluate(element => ({
+    background: getComputedStyle(element).backgroundColor,
+    height: element.getBoundingClientRect().height,
+  }));
+  expect(topHeader.height).toBeGreaterThan(0);
+
+  const depth = async () => hero.evaluate(element => {
+    const style = getComputedStyle(element);
+    return [
+      Number.parseFloat(style.getPropertyValue("--hero-depth-x")),
+      Number.parseFloat(style.getPropertyValue("--hero-depth-y")),
+    ];
+  });
+  const heroBox = await hero.boundingBox();
+  expect(heroBox).not.toBeNull();
 
   if (testInfo.project.name === "desktop") {
-    await page.mouse.move(0, 0);
-    await page.mouse.move(1440, 900);
-    const depth = await hero.evaluate(element => {
-      const style = getComputedStyle(element);
-      return [
-        Number.parseFloat(style.getPropertyValue("--hero-depth-x")),
-        Number.parseFloat(style.getPropertyValue("--hero-depth-y")),
-      ];
+    expect(await page.evaluate(() => window.matchMedia("(pointer: fine)").matches)).toBe(true);
+    await page.mouse.move(heroBox!.x + heroBox!.width * 0.8, heroBox!.y + Math.min(heroBox!.height, 500) * 0.7);
+    const activeDepth = await depth();
+    expect(activeDepth.some(value => Math.abs(value) > 0.1)).toBe(true);
+    expect(activeDepth.every(value => Number.isFinite(value) && Math.abs(value) <= 8)).toBe(true);
+    await page.mouse.move(1, 1);
+    expect(await depth()).toEqual([0, 0]);
+  } else {
+    expect(await page.evaluate(() => window.matchMedia("(pointer: fine)").matches)).toBe(false);
+    await hero.dispatchEvent("pointermove", {
+      clientX: heroBox!.x + heroBox!.width * 0.8,
+      clientY: heroBox!.y + Math.min(heroBox!.height, 500) * 0.7,
+      pointerType: "touch",
     });
-    expect(depth.every(value => Number.isFinite(value) && Math.abs(value) <= 8)).toBe(true);
+    expect(await depth()).toEqual([0, 0]);
   }
 
+  await expect(hero).toHaveAttribute("data-motion-state", "settled");
+  await expect(hero).toHaveAttribute("data-reduced-motion", "false");
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect(header).toHaveAttribute("data-scroll-state", "scrolled");
+  const scrolledHeader = await header.evaluate(element => ({
+    background: getComputedStyle(element).backgroundColor,
+    height: element.getBoundingClientRect().height,
+  }));
+  expect(scrolledHeader.background).not.toBe("rgba(0, 0, 0, 0)");
+  expect(scrolledHeader.height).toBe(topHeader.height);
   await noOverflow(page);
 });
 
 test("cinematic hero settles immediately with reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/fr");
+  const response = await page.goto("/fr", { waitUntil: "domcontentloaded" });
+  expect(response).not.toBeNull();
+  const serverHtml = await response!.text();
+  expect(serverHtml).toContain("data-cinematic-hero");
 
   const hero = page.locator("[data-cinematic-hero]");
   expect(await page.evaluate(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)).toBe(true);
   await expect(hero).toHaveAttribute("data-reduced-motion", "true");
   await expect(hero).toHaveAttribute("data-motion-state", "settled");
   await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
+  const heroBox = await hero.boundingBox();
+  expect(heroBox).not.toBeNull();
+  await hero.dispatchEvent("pointermove", {
+    clientX: heroBox!.x + heroBox!.width * 0.8,
+    clientY: heroBox!.y + Math.min(heroBox!.height, 500) * 0.7,
+    pointerType: "mouse",
+  });
+  expect(await hero.evaluate(element => {
+    const style = getComputedStyle(element);
+    return [
+      Number.parseFloat(style.getPropertyValue("--hero-depth-x")),
+      Number.parseFloat(style.getPropertyValue("--hero-depth-y")),
+    ];
+  })).toEqual([0, 0]);
   await noOverflow(page);
 });
 

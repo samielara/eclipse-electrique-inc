@@ -253,7 +253,8 @@ textarea {
 }
 
 .site-header[data-home="true"][data-scroll-state="top"] {
-  background: rgba(255, 255, 255, 0.9);
+  border-bottom-color: transparent;
+  background: transparent;
   box-shadow: none;
 }
 
@@ -3424,7 +3425,8 @@ textarea {
 }
 
 [data-theme="dark"] .site-header[data-home="true"][data-scroll-state="top"] {
-  background: rgba(15, 17, 21, 0.9);
+  border-bottom-color: transparent;
+  background: transparent;
 }
 
 [data-theme="dark"] .site-header[data-scroll-state="scrolled"] {
