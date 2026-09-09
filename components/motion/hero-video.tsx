@@ -12,9 +12,9 @@ export function HeroVideo() {
     const stop = () => video.pause();
     const update = () => { if (preference.matches) stop(); };
     if (!preference.matches) void video.play().catch(() => {});
-    const timer = window.setTimeout(stop, 4500);
+    const timer = window.setTimeout(stop, 12000);
     preference.addEventListener("change", update);
     return () => { stop(); clearTimeout(timer); preference.removeEventListener("change", update); };
   }, []);
-  return <video ref={ref} aria-hidden="true" className="home-hero-video" muted playsInline poster="/eclipse-electrical-grid.webp" preload="none"><source src="/eclipse-electrical-ambient.mp4" type="video/mp4" /></video>;
+  return <video ref={ref} aria-hidden="true" className="home-hero-video" loop muted playsInline poster="/eclipse-electrical-grid.webp" preload="metadata"><source src="/eclipse-electrical-ambient.mp4" type="video/mp4" /></video>;
 }

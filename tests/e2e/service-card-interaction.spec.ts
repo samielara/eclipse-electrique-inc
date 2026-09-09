@@ -2,6 +2,17 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Service card accessibility and motion", () => {
   for (const route of ["/fr", "/en"]) {
+    test(`${route}: project gallery renders licensed responsive media`, async ({ page }) => {
+      await page.goto(route);
+
+      const gallery = page.getByTestId("project-gallery");
+      await expect(gallery).toBeVisible();
+      const images = gallery.locator("img");
+      await expect(images).toHaveCount(3);
+      await expect(images.first()).toHaveAttribute("alt", /.+/);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+    });
+
     test(`${route}: service card link is visible and focusable`, async ({ page }) => {
       await page.goto(route);
 

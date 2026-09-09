@@ -186,6 +186,97 @@ function CtaBand({ locale }: { locale: Locale }) {
   );
 }
 
+function ProjectGallery({ locale }: { locale: Locale }) {
+  const isFrench = locale === "fr";
+  const projects = isFrench
+    ? [
+        {
+          src: "/media/industrial-panel.webp",
+          eyebrow: "Distribution industrielle",
+          title: "Câblage structuré. Accès clair. Maintenance simplifiée.",
+          description: "Une installation ordonnée facilite l’entretien et soutient la continuité des opérations.",
+          alt: "Panneau de contrôle industriel avec câblage et composants électriques",
+        },
+        {
+          src: "/media/electrical-testing.webp",
+          eyebrow: "Mesure et vérification",
+          title: "Les décisions reposent sur des données, pas des suppositions",
+          description: "Essais, thermographie et validation avant la remise en service.",
+          alt: "Technicien testant un panneau électrique avec un multimètre",
+        },
+        {
+          src: "/eclipse-electrical-grid.webp",
+          eyebrow: "Environnements connectés",
+          title: "L’électricité intégrée à l’architecture moderne",
+          description: "Distribution, contrôle et éclairage pensés comme un système cohérent.",
+          alt: "Architecture moderne avec distribution électrique et éclairage intégrés",
+        },
+      ]
+    : [
+        {
+          src: "/media/industrial-panel.webp",
+          eyebrow: "Industrial distribution",
+          title: "Structured wiring. Clear access. Simpler maintenance.",
+          description: "An orderly installation supports safer service and operational continuity.",
+          alt: "Industrial control panel with electrical wiring and components",
+        },
+        {
+          src: "/media/electrical-testing.webp",
+          eyebrow: "Testing and verification",
+          title: "Decisions grounded in measurements, not assumptions",
+          description: "Testing, thermography and validation before equipment returns to service.",
+          alt: "Technician testing an electrical panel with a multimeter",
+        },
+        {
+          src: "/eclipse-electrical-grid.webp",
+          eyebrow: "Connected environments",
+          title: "Electrical systems integrated into modern architecture",
+          description: "Distribution, controls and lighting designed as one coherent system.",
+          alt: "Modern architecture with integrated electrical distribution and lighting",
+        },
+      ];
+
+  return (
+    <section className="project-gallery-section section-pad" data-testid="project-gallery">
+      <div className="site-container">
+        <div className="project-gallery-heading">
+          <SectionHeading
+            eyebrow={isFrench ? "L’expertise, en détail" : "Expertise, in detail"}
+            title={isFrench ? "La précision électrique en action" : "Electrical precision in action"}
+            intro={isFrench
+              ? "Du diagnostic à la mise en service, chaque détail doit inspirer confiance."
+              : "From diagnosis to commissioning, every detail should earn your confidence."}
+          />
+          <span aria-hidden="true" className="project-gallery-index">02 / 06</span>
+        </div>
+        <div className="project-gallery-grid">
+          {projects.map((project, index) => (
+            <article className={`project-story${index === 0 ? " project-story-featured" : ""}`} key={project.src}>
+              <div className="project-story-media">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt={project.alt}
+                  decoding="async"
+                  height="1067"
+                  loading="lazy"
+                  src={project.src}
+                  width="1600"
+                />
+                <span className="project-story-number" aria-hidden="true">0{index + 1}</span>
+              </div>
+              <div className="project-story-copy">
+                <p className="eyebrow">{project.eyebrow}</p>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HomePage({ locale }: { locale: Locale }) {
   const copy = content[locale];
   const page = copy.pages.home;
@@ -275,6 +366,8 @@ function HomePage({ locale }: { locale: Locale }) {
           </div>
         </div>
       </section>
+
+      <ProjectGallery locale={locale} />
 
       <section className="section-pad capabilities-section">
         <div className="site-container">
