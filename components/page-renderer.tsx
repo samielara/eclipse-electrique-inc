@@ -10,6 +10,10 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import { MotionSurface } from "@/components/motion/surface";
+import { HeroVideo } from "@/components/motion/hero-video";
+import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AiAssistant } from "@/components/ai-assistant";
 import { ServiceCard } from "@/components/service-card";
 import { SectorMatrix } from "@/components/sector-matrix";
@@ -114,7 +118,7 @@ function CapabilitiesGrid({ locale }: { locale: Locale }) {
             {capability.items.map((item) => (
               <li key={item}>
                 <Check aria-hidden="true" />
-                <span>{item}</span>
+                <span>{item.includes("2008") ? <>{item.split("2008")[0]}<NumberTicker value={2008} />{item.split("2008")[1]}</> : item}</span>
               </li>
             ))}
           </ul>
@@ -197,18 +201,7 @@ function HomePage({ locale }: { locale: Locale }) {
     <>
       <section className="home-hero">
         {/* Decorative motion background; the image remains the no-motion fallback. */}
-        <video
-          aria-hidden="true"
-          autoPlay
-          className="home-hero-video"
-          loop
-          muted
-          playsInline
-          poster="/eclipse-electrical-grid.webp"
-          preload="metadata"
-        >
-          <source src="/eclipse-electrical-ambient.mp4" type="video/mp4" />
-        </video>
+        <HeroVideo />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt=""
@@ -221,8 +214,9 @@ function HomePage({ locale }: { locale: Locale }) {
           width="1672"
         />
         <div className="home-hero-overlay" aria-hidden="true" />
+        <AnimatedGridPattern />
         <div className="site-container home-hero-inner">
-          <div className="home-hero-copy">
+          <MotionSurface className="home-hero-copy">
             <p className="eyebrow eyebrow-amber">{page.eyebrow}</p>
             <h1>{page.title}</h1>
             <p>{page.intro}</p>
@@ -243,7 +237,7 @@ function HomePage({ locale }: { locale: Locale }) {
               ))}
             </div>
             <ActionPair locale={locale} dark />
-          </div>
+          </MotionSurface>
           <div className="hero-side-note" aria-hidden="true">
             <span>MTL</span>
             <span>45.5019° N</span>

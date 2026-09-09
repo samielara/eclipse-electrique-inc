@@ -2,6 +2,40 @@
 @import "tw-animate-css";
 @import "../vendor/shadcn-tailwind-4.13.0.css";
 
+/* Two self-hosted variable families. Optional display avoids late font swaps/CLS. */
+body { font-family: var(--font-sans); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, .desktop-nav, .mobile-menu, .primary-action, .thermography-proof-cta {
+  font-family: var(--font-heading);
+  font-weight: 800;
+}
+h1, h2 { text-wrap: balance; }
+p { text-wrap: pretty; }
+.number-ticker { display: inline-block; min-width: 4ch; font-variant-numeric: tabular-nums; }
+
+/* Finite, low-contrast atmosphere; content is never hidden before hydration. */
+.electrical-grid { position: absolute; inset: 0; pointer-events: none; color: #c88854; opacity: .12; mask-image: linear-gradient(to right, transparent, black); }
+.electrical-grid path { stroke: currentColor; }
+.electrical-grid-cell { fill: currentColor; opacity: .12; animation: grid-current 3s ease-out 1; }
+@keyframes grid-current { 0%, 100% { opacity: .12; } 45% { opacity: .45; } }
+.hero-trust-badge { animation: badge-settle .42s ease-out 1; }
+@keyframes badge-settle { from { transform: translateY(4px); } to { transform: none; } }
+.beam-cta { position: relative; isolation: isolate; overflow: hidden; }
+.border-beam { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; border: 1px solid transparent; mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); mask-composite: exclude; }
+.border-beam-light { position: absolute; inset: -150%; background: conic-gradient(from 0deg, transparent 0 80%, #c88854 90%, #f2a71b 98%, transparent); opacity: 0; }
+.beam-cta:is(:hover, :focus-visible) .border-beam-light { animation: beam-pass .8s ease-out 1; }
+@keyframes beam-pass { 0% { opacity: 1; transform: rotate(0); } 90% { opacity: 1; } 100% { opacity: 0; transform: rotate(360deg); } }
+.site-header, .header-dropdown-panel { transition: background-color .24s ease, box-shadow .24s ease; }
+.primary-action, .thermography-proof-cta, .city-links a, .thermography-pillar { transition: transform .16s ease, border-color .16s ease; }
+.primary-action:active, .thermography-proof-cta:active { transform: scale(.985); }
+.city-links a:hover, .thermography-pillar:hover { transform: translateY(-2px); }
+.quote-wizard progress::-webkit-progress-value { transition: width .24s ease; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .electrical-grid-cell, .hero-trust-badge, .border-beam-light { animation: none !important; }
+  .primary-action:active, .thermography-proof-cta:active, .city-links a:hover, .thermography-pillar:hover { transform: none; }
+}
+
 @utility scrollbar-thin {
   scrollbar-width: thin;
 }
@@ -105,7 +139,8 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+  --font-heading: "Manrope Variable", Arial, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
@@ -4901,3 +4936,35 @@ textarea {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Browser-verified details behavior, AA labels and Tailwind 4 dialog positioning. */
+.header-dropdown:focus-within::details-content { content-visibility: visible; }
+@media (hover: hover) and (pointer: fine) {
+  .header-dropdown:hover::details-content { content-visibility: visible; }
+}
+.ai-assistant-panel { translate: none !important; }
+[data-theme="dark"] .eyebrow,
+[data-theme="dark"] .service-eyebrow { color: #dca66f; }
+[data-theme="dark"] .trust-grid small,
+[data-theme="dark"] .service-number,
+[data-theme="dark"] .capability-index,
+[data-theme="dark"] .region-list header span,
+[data-theme="dark"] .region-preview-grid article > span,
+[data-theme="dark"] .sector-panel-index,
+[data-theme="dark"] .thermography-pillar-metric,
+[data-theme="dark"] .process-grid article > span { color: #91aabd; }
+[data-theme="light"] .eyebrow,
+[data-theme="light"] .service-eyebrow { color: #865300; }
+[data-theme="light"] .home-hero .eyebrow,
+[data-theme="light"] .contact-rail .eyebrow { color: #f4c471; }
+[data-theme="dark"] .field-error { color: #ffaaa2; }
+[data-theme="light"] .trust-grid small,
+[data-theme="light"] .service-number,
+[data-theme="light"] .capability-index,
+[data-theme="light"] .region-list header span,
+[data-theme="light"] .region-preview-grid article > span,
+[data-theme="light"] .sector-panel-index,
+[data-theme="light"] .thermography-pillar-metric { color: #637787; }
+[data-theme="light"] .sector-matrix-tab-copy small,
+[data-theme="light"] .quote-wizard-steps li small { color: #536372; }
+[data-theme="light"] .process-grid article > span { color: #865300; }
