@@ -30,6 +30,12 @@ p { text-wrap: pretty; }
 .city-links a:hover, .thermography-pillar:hover { transform: translateY(-2px); }
 .quote-wizard progress::-webkit-progress-value { transition: width .24s ease; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
+
+/* The homepage already exposes emergency actions in the hero and mobile dock;
+   keep its first frame focused on the brand and primary navigation. */
+.site-header[data-home="true"] .utility-bar {
+  display: none;
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .electrical-grid-cell, .hero-trust-badge, .border-beam-light { animation: none !important; }
