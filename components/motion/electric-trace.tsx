@@ -1,7 +1,7 @@
 "use client";
 
 import { m, useReducedMotion } from "motion/react";
-import { cinematicTransition } from "./tokens";
+import { cinematicMotionProps } from "./tokens";
 
 interface ElectricTraceProps {
   className?: string;
@@ -10,6 +10,7 @@ interface ElectricTraceProps {
 /** Decorative copper trace that completes once without delaying page content. */
 export function ElectricTrace({ className }: ElectricTraceProps) {
   const reducedMotion = useReducedMotion();
+  const motionProps = cinematicMotionProps(reducedMotion);
 
   return (
     <m.svg
@@ -17,9 +18,7 @@ export function ElectricTrace({ className }: ElectricTraceProps) {
       className={className}
       focusable="false"
       viewBox="0 0 240 24"
-      initial={false}
-      animate={{ opacity: 1 }}
-      transition={reducedMotion ? { duration: 0 } : cinematicTransition}
+      {...motionProps}
     >
       <m.path
         d="M0 12h52l12-8 12 16 16-8h52l12-8 12 16 16-8h52"
@@ -28,9 +27,9 @@ export function ElectricTrace({ className }: ElectricTraceProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
-        initial={false}
+        initial={reducedMotion ? false : { pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={reducedMotion ? { duration: 0 } : cinematicTransition}
+        transition={motionProps.transition}
       />
     </m.svg>
   );

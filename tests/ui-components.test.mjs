@@ -285,3 +285,36 @@ test("cinematic motion primitives keep decorative motion bounded and optional", 
   assert.doesNotMatch(traceSource, /repeat:\s*Infinity/);
   assert.doesNotMatch(`${traceSource}\n${surfaceSource}`, /on(?:Wheel|Scroll|TouchMove)=/);
 });
+
+test("cinematic motion enters from hidden while reduced motion is immediately final", async () => {
+  const {
+    cinematicMotionProps,
+    cinematicTransition,
+    cinematicVariants,
+  } = await vite.ssrLoadModule("/components/motion/tokens.ts");
+
+  assert.deepEqual(cinematicMotionProps(false), {
+    initial: cinematicVariants.hidden,
+    animate: cinematicVariants.visible,
+    transition: cinematicTransition,
+  });
+  assert.deepEqual(cinematicMotionProps(true), {
+    initial: false,
+    animate: cinematicVariants.visible,
+    transition: { duration: 0 },
+  });
+
+  const { MotionSurface } = await vite.ssrLoadModule(
+    "/components/motion/surface.tsx",
+  );
+  const { ElectricTrace } = await vite.ssrLoadModule(
+    "/components/motion/electric-trace.tsx",
+  );
+  const surfaceHtml = renderToStaticMarkup(
+    React.createElement(MotionSurface, null, "Visible content"),
+  );
+  const traceHtml = renderToStaticMarkup(React.createElement(ElectricTrace));
+
+  assert.match(surfaceHtml, /style="opacity:0;transform:translateY\(24px\)"/);
+  assert.match(traceHtml, /style="opacity:0;transform:translateY\(24px\)"/);
+});

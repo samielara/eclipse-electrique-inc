@@ -13,3 +13,17 @@ export const cinematicTransition = {
   duration: 0.64,
   ease: [0.22, 1, 0.36, 1] as const,
 } as const;
+
+export function cinematicMotionProps(reducedMotion: boolean | null) {
+  return reducedMotion
+    ? {
+        initial: false,
+        animate: cinematicVariants.visible,
+        transition: { duration: 0 },
+      }
+    : {
+        initial: cinematicVariants.hidden,
+        animate: cinematicVariants.visible,
+        transition: cinematicTransition,
+      };
+}

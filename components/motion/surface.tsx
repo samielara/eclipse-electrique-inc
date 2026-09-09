@@ -3,17 +3,17 @@
 import { m } from "motion/react";
 import type { ReactNode } from "react";
 import { useExperienceMotion } from "./provider";
-import { cinematicTransition, cinematicVariants } from "./tokens";
+import { cinematicMotionProps } from "./tokens";
 
-/** SSR content starts visible. Transform-only motion does not move surrounding layout. */
+/** Normal motion enters from a stable transform; reduced motion renders its final state. */
 export function MotionSurface({ children, className }: { children: ReactNode; className?: string }) {
   const { reducedMotion } = useExperienceMotion();
+  const motionProps = cinematicMotionProps(reducedMotion);
+
   return (
     <m.div
       className={className}
-      initial={false}
-      animate={cinematicVariants.visible}
-      transition={reducedMotion ? { duration: 0 } : cinematicTransition}
+      {...motionProps}
     >
       {children}
     </m.div>
