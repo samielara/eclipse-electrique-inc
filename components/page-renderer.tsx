@@ -62,8 +62,8 @@ function ActionPair({ locale, dark = false }: { locale: Locale; dark?: boolean }
         className={dark ? "secondary-action secondary-action-dark" : "secondary-action"}
       >
         <a href={site.emergencyPhoneHref}>
-          <PhoneCall aria-hidden="true" />
-          {copy.actions.emergency}
+          <span className="emergency-action-icon" aria-hidden="true"><PhoneCall /></span>
+          <span><small>{copy.actions.emergency}</small><strong>{site.emergencyPhoneDisplay}</strong></span>
         </a>
       </Button>
     </div>

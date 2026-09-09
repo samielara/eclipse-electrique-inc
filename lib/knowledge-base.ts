@@ -11,6 +11,7 @@ export type AssistantIntent =
   | "coverage"
   | "quote"
   | "licence"
+  | "hours"
   | "general";
 
 export type AssistantActionKind =
@@ -50,6 +51,7 @@ export const assistantBusinessFacts = {
   emergencyPhone: site.emergencyPhoneDisplay,
   emergencyPhoneHref: "tel:5147179277",
   coveredCityCount: cityRoutes.length,
+  emergencyAvailability: "24/7",
 } as const;
 
 const quickReplies: Record<Locale, readonly AssistantQuickReply[]> = {
@@ -135,6 +137,8 @@ const copy = {
     coverageAction: "Consulter le territoire desservi",
     licence: `Éclipse électrique inc. détient la licence RBQ ${site.rbq}, délivrée en ${site.licensedSince}, et possède une fiche au répertoire de la CMEQ.`,
     licenceAction: "Consulter la fiche CMEQ",
+    hours:
+      "La ligne d’urgence électrique est disponible 24 h sur 24, 7 jours sur 7 au 514-717-9277. Les heures du bureau et la disponibilité pour un projet sont confirmées directement par l’équipe au 514-510-1112.",
     general:
       "Je peux vous aider à choisir un service, vérifier une ville publiée ou commencer une demande. Je fournis de l’orientation générale, jamais un diagnostic électrique à distance.",
   },
@@ -163,6 +167,8 @@ const copy = {
     coverageAction: "View the service area",
     licence: `Éclipse électrique inc. holds RBQ licence ${site.rbq}, issued in ${site.licensedSince}, and has a listing in the CMEQ directory.`,
     licenceAction: "View the CMEQ listing",
+    hours:
+      "The electrical emergency line is available 24 hours a day, 7 days a week at 514-717-9277. Office hours and project availability are confirmed directly by the team at 514-510-1112.",
     general:
       "I can help you choose a service, check a published city or begin a request. I provide general guidance, never a remote electrical diagnosis.",
   },
@@ -300,6 +306,10 @@ const intentPatterns: Record<Exclude<AssistantIntent, "emergency" | "general">, 
     /\b(?:licence|license|licensed|rbq|cmeq)\b/,
     /\bmaitre electricien\b/,
     /\bmaster electrician\b/,
+  ],
+  hours: [
+    /\b(?:hours|opening hours|open|closed|available|availability|when do you)\b/,
+    /\b(?:heures|ouvert|ferme|disponibilite|disponible|quand)\b/,
   ],
 };
 
@@ -503,6 +513,16 @@ export function getAssistantReply(
         label: localized.licenceAction,
         href: site.cmeqUrl,
       },
+    };
+  }
+
+  if (hasPattern(normalized, intentPatterns.hours)) {
+    return {
+      intent: "hours",
+      locale,
+      message: localized.hours,
+      emergency: false,
+      action: { kind: "service", label: locale === "fr" ? "Appeler le bureau" : "Call the office", href: site.officePhoneHref },
     };
   }
 
