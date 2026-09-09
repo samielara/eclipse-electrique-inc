@@ -89,12 +89,13 @@ function SectionHeading({
   );
 }
 
-function ServicesGrid({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
+function ServicesGrid({ locale, compact = false, homepage = false }: { locale: Locale; compact?: boolean; homepage?: boolean }) {
   const copy = content[locale];
+  const ids = homepage ? servicePageIds.slice(0, 3) : servicePageIds;
 
   return (
     <div className={`services-grid${compact ? " is-compact" : ""}`}>
-      {servicePageIds.map((serviceId) => (
+      {ids.map((serviceId) => (
         <ServiceCard
           actionLabel={copy.actions.learnMore}
           key={serviceId}
@@ -404,7 +405,7 @@ function HomePage({ locale }: { locale: Locale }) {
               title={copy.home.servicesTitle}
               intro={copy.home.servicesIntro}
             />
-            <ServicesGrid locale={locale} />
+            <ServicesGrid locale={locale} homepage />
             <div className="section-link-row">
               <a className="arrow-link" href={pathFor("services", locale)}>
                 {copy.actions.exploreServices}<ArrowRight aria-hidden="true" />

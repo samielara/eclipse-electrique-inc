@@ -48,7 +48,13 @@ export function ServiceCard({
   const Icon = serviceIcons[serviceId];
 
   return (
-    <article data-testid="service-card" className="service-card">
+    <article data-service-id={serviceId} data-testid="service-card" className={`service-card${serviceId === "residential" ? " service-card-featured" : ""}`}>
+      {serviceId === "residential" && (
+        <div className="service-card-media" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img alt="" decoding="async" height="720" loading="lazy" src="/media/electrical-testing.webp" width="1080" />
+        </div>
+      )}
       <div className="service-card-top">
         <span className="service-icon" aria-hidden="true">
           <Icon strokeWidth={1.8} />

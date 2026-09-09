@@ -2141,6 +2141,41 @@ textarea {
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
+.service-card-media {
+  position: absolute;
+  z-index: 0;
+  inset: 0 0 auto;
+  height: 8.75rem;
+  overflow: hidden;
+  opacity: 0.82;
+  mask-image: linear-gradient(to bottom, black 25%, transparent 100%);
+  pointer-events: none;
+}
+
+.service-card-media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 16, 24, 0.18), rgba(255, 255, 255, 0.98));
+  content: "";
+}
+
+.service-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.78) contrast(1.04);
+  transition: transform 700ms cubic-bezier(.2,.75,.25,1), filter 300ms ease;
+}
+
+.service-card > *:not(.service-card-media) {
+  position: relative;
+  z-index: 1;
+}
+
+.service-card-featured .service-card-top {
+  margin-top: 3.5rem;
+}
+
 .service-card:nth-child(4),
 .service-card:nth-child(5) {
   grid-column: span 3;
@@ -2168,6 +2203,11 @@ textarea {
 
   .service-card:hover .service-icon {
     transform: rotate(-5deg) scale(1.05);
+  }
+
+  .service-card:hover .service-card-media img {
+    transform: scale(1.06);
+    filter: saturate(1) contrast(1.08);
   }
 
   .service-card:hover::before {
@@ -5407,6 +5447,9 @@ textarea {
     transform: none !important;
     transition: none !important;
   }
+
+  .service-card-media img,
+  .service-card:hover .service-card-media img { transform: none !important; filter: none !important; }
 
   .home-hero-video {
     display: none;
