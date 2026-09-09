@@ -48,7 +48,7 @@ export function ServiceCard({
   const Icon = serviceIcons[serviceId];
 
   return (
-    <article className="service-card">
+    <article data-testid="service-card" className="service-card">
       <div className="service-card-top">
         <span className="service-icon" aria-hidden="true">
           <Icon strokeWidth={1.8} />
@@ -58,9 +58,9 @@ export function ServiceCard({
         </span>
       </div>
       <p className="service-eyebrow">{page.eyebrow}</p>
-      <h3>{page.title}</h3>
+      <h3 data-testid="service-card-title">{page.title}</h3>
       <p>{page.intro}</p>
-      <a className="service-card-link" href={pathFor(serviceId, locale)}>
+      <a data-testid="service-card-link" className="service-card-link" href={pathFor(serviceId, locale)}>
         {actionLabel}
         <ArrowUpRight aria-hidden="true" />
       </a>
