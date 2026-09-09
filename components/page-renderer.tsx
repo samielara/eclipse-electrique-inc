@@ -13,6 +13,7 @@ import {
 import { CinematicHero } from "@/components/motion/cinematic-hero";
 import { HeroVideo } from "@/components/motion/hero-video";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AiAssistant } from "@/components/ai-assistant";
@@ -332,6 +333,7 @@ function HomePage({ locale }: { locale: Locale }) {
 
   return (
     <div className="home-page">
+      <ScrollProgress />
       <CinematicHero
         actions={<ActionPair locale={locale} dark />}
         background={

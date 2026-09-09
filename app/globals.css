@@ -1050,6 +1050,27 @@ textarea {
     transform 720ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
 }
 
+.scroll-progress {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  pointer-events: none;
+  background: transparent;
+}
+
+.scroll-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #d97706, #fbbf24 55%, #fde68a);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+  transition: transform 120ms linear;
+}
+
 .section-heading.is-centered {
   margin-inline: auto;
   text-align: center;
@@ -2002,6 +2023,7 @@ textarea {
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 0.55rem;
   background: #15191f;
+  transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
 }
 
 .project-story-featured { grid-row: span 2; }
@@ -2068,9 +2090,20 @@ textarea {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .project-story:hover {
+    border-color: rgba(245, 158, 11, 0.58);
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.28);
+    transform: translateY(-4px);
+  }
+
   .project-story:hover .project-story-media img {
     transform: scale(1.035);
     filter: saturate(1) contrast(1.08);
+  }
+
+  .project-story:hover .project-story-number {
+    background: rgba(245, 158, 11, 0.92);
+    color: #111820;
   }
 }
 
@@ -2084,7 +2117,11 @@ textarea {
 
 @media (prefers-reduced-motion: reduce) {
   .project-story-media img { transition: none !important; }
-  .project-story:hover .project-story-media img { transform: none !important; }
+  .project-story,
+  .project-story:hover,
+  .project-story-media img,
+  .project-story:hover .project-story-media img,
+  .scroll-progress span { transform: none !important; transition: none !important; }
 }
 
 .service-card {
@@ -2097,7 +2134,9 @@ textarea {
   padding: clamp(1.4rem, 2.8vw, 2rem);
   border: 1px solid var(--border);
   border-radius: 0.55rem;
-  background: #fff;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.08), transparent 13rem),
+    #fff;
   box-shadow: 0 12px 38px rgba(18, 39, 55, 0.055);
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
@@ -2122,9 +2161,13 @@ textarea {
 
 @media (hover: hover) and (pointer: fine) {
   .service-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
     border-color: #aebcc6;
     box-shadow: 0 22px 48px rgba(18, 39, 55, 0.11);
+  }
+
+  .service-card:hover .service-icon {
+    transform: rotate(-5deg) scale(1.05);
   }
 
   .service-card:hover::before {
@@ -2147,6 +2190,7 @@ textarea {
   border-radius: 0.4rem;
   background: var(--navy);
   color: var(--amber);
+  transition: transform 220ms cubic-bezier(.2,.75,.25,1), box-shadow 220ms ease;
 }
 
 .service-icon svg {
@@ -2202,6 +2246,16 @@ textarea {
 .service-card-link {
   margin-top: auto;
   border-radius: 0.25rem;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3rem;
+  transition: text-decoration-color 160ms ease;
+}
+
+.service-card-link:hover,
+.service-card-link:focus-visible {
+  text-decoration-color: currentColor;
 }
 
 .service-card-link:focus-visible {
@@ -4021,7 +4075,9 @@ textarea {
 [data-theme="dark"] .capability-card,
 [data-theme="dark"] .prose-card {
   border-color: #2c333f;
-  background: #181b22;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.1), transparent 15rem),
+    #181b22;
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
 }
 
@@ -4029,6 +4085,10 @@ textarea {
   [data-theme="dark"] .service-card:hover {
     border-color: #454d5d;
     box-shadow: 0 22px 48px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-theme="dark"] .service-card:hover .service-icon {
+    box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.1);
   }
 }
 
