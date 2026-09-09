@@ -39,7 +39,10 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .electrical-grid-cell, .hero-trust-badge, .border-beam-light { animation: none !important; }
-  .primary-action:active, .thermography-proof-cta:active, .city-links a:hover, .thermography-pillar:hover, .scroll-reveal { transform: none !important; }
+  .primary-action:active, .thermography-proof-cta:active, .city-links a:hover, .thermography-pillar:hover,
+  .scroll-reveal, .home-page .project-gallery-section, .home-page .process-section,
+  .home-page .territory-preview, .home-page .project-story-media img,
+  .home-page .service-carousel-card { transform: none !important; animation: none !important; }
 }
 
 @utility scrollbar-thin {
@@ -1303,6 +1306,46 @@ textarea {
 
 .home-flow-final {
   overflow: visible;
+}
+
+/* Progressive scroll-linked depth is additive: browsers without view timelines
+   keep the IntersectionObserver reveal above, while modern browsers gain a
+   subtle editorial camera move through each chapter. */
+@supports (animation-timeline: view()) {
+  .home-page .project-gallery-section,
+  .home-page .process-section,
+  .home-page .territory-preview {
+    animation: section-breathe linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+
+  .home-page .project-story-media img {
+    animation: image-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 70%;
+  }
+
+  .home-page .service-carousel-card {
+    animation: carousel-card-in 600ms cubic-bezier(.2,.75,.25,1) both, card-float linear both;
+    animation-timeline: auto, view();
+    animation-range: normal, entry 0% cover 42%;
+  }
+}
+
+@keyframes section-breathe {
+  from { opacity: 0.72; transform: translateY(1.5rem) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes image-drift {
+  from { transform: scale(1.1) translateY(1.5rem); }
+  to { transform: scale(1) translateY(0); }
+}
+
+@keyframes card-float {
+  from { transform: translateY(1.25rem); }
+  to { transform: translateY(0); }
 }
 
 .home-hero-copy > .cinematic-hero-item > p:not(.eyebrow) {
