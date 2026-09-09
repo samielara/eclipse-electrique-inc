@@ -230,6 +230,50 @@ for (const locale of ["fr", "en"] as const) {
   });
 }
 
+test("cinematic hero settles without blocking keyboard navigation", async ({ page }, testInfo) => {
+  await page.goto("/fr");
+
+  const hero = page.locator("[data-cinematic-hero]");
+  await expect(hero).toBeVisible();
+  await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
+  await page.keyboard.press("Tab");
+  await expect(page.locator(".skip-link")).toBeFocused();
+  await expect(hero).toHaveAttribute("data-motion-state", "settled");
+  await expect(hero).toHaveAttribute("data-reduced-motion", "false");
+
+  const header = page.locator(".site-header");
+  await expect(header).toHaveAttribute("data-scroll-state", "top");
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect(header).toHaveAttribute("data-scroll-state", "scrolled");
+
+  if (testInfo.project.name === "desktop") {
+    await page.mouse.move(0, 0);
+    await page.mouse.move(1440, 900);
+    const depth = await hero.evaluate(element => {
+      const style = getComputedStyle(element);
+      return [
+        Number.parseFloat(style.getPropertyValue("--hero-depth-x")),
+        Number.parseFloat(style.getPropertyValue("--hero-depth-y")),
+      ];
+    });
+    expect(depth.every(value => Number.isFinite(value) && Math.abs(value) <= 8)).toBe(true);
+  }
+
+  await noOverflow(page);
+});
+
+test("cinematic hero settles immediately with reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/fr");
+
+  const hero = page.locator("[data-cinematic-hero]");
+  expect(await page.evaluate(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)).toBe(true);
+  await expect(hero).toHaveAttribute("data-reduced-motion", "true");
+  await expect(hero).toHaveAttribute("data-motion-state", "settled");
+  await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
+  await noOverflow(page);
+});
+
 test("saved light theme survives reload and reduced motion stops effects", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/fr");
