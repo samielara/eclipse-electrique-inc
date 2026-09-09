@@ -277,6 +277,41 @@ function ProjectGallery({ locale }: { locale: Locale }) {
   );
 }
 
+function ServiceVisualPanel({ locale, pageId }: { locale: Locale; pageId: ServicePageId }) {
+  const page = content[locale].pages[pageId];
+  const isFrench = locale === "fr";
+  const mediaByService: Record<ServicePageId, { src: string; position: string }> = {
+    residential: { src: "/eclipse-electrical-grid.webp", position: "center" },
+    commercial: { src: "/media/electrical-testing.webp", position: "center" },
+    industrial: { src: "/media/industrial-panel.webp", position: "center" },
+    maintenance: { src: "/media/electrical-testing.webp", position: "center" },
+    generators: { src: "/media/industrial-panel.webp", position: "center" },
+    thermography: { src: "/media/electrical-testing.webp", position: "center" },
+    security: { src: "/eclipse-electrical-grid.webp", position: "70% center" },
+  };
+  const media = mediaByService[pageId];
+
+  return (
+    <section className="service-visual-panel" data-testid="service-visual-panel">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img alt="" decoding="async" height="900" loading="eager" src={media.src}
+        style={{ objectPosition: media.position }} width="1600" />
+      <div className="service-visual-shade" />
+      <div className="service-visual-content">
+        <div>
+          <p className="eyebrow eyebrow-amber">{isFrench ? "L’expertise en contexte" : "Expertise in context"}</p>
+          <h2>{page.title}</h2>
+        </div>
+        <ol aria-label={isFrench ? "Points clés du service" : "Service highlights"}>
+          {page.items?.slice(0, 3).map((item, index) => (
+            <li key={item}><span>0{index + 1}</span><strong>{item}</strong></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 function HomePage({ locale }: { locale: Locale }) {
   const copy = content[locale];
   const page = copy.pages.home;
@@ -471,6 +506,9 @@ function ServiceDetailPage({ locale, pageId }: { locale: Locale; pageId: Service
   return (
     <>
       <InnerHero locale={locale} pageId={pageId} />
+      <div className="site-container service-visual-wrap">
+        <ServiceVisualPanel locale={locale} pageId={pageId} />
+      </div>
       <section className="section-pad service-detail-section">
         <div className="site-container service-detail-grid">
           <div>

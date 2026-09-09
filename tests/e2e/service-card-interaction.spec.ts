@@ -1,6 +1,15 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Service card accessibility and motion", () => {
+  test("service detail pages use a responsive media-led introduction", async ({ page }) => {
+    await page.goto("/en/services/industrial-electrician");
+    const panel = page.getByTestId("service-visual-panel");
+    await expect(panel).toBeVisible();
+    await expect(panel.locator("img")).toHaveAttribute("src", "/media/industrial-panel.webp");
+    await expect(panel.locator("li")).toHaveCount(3);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+  });
+
   for (const route of ["/fr", "/en"]) {
     test(`${route}: project gallery renders licensed responsive media`, async ({ page }) => {
       await page.goto(route);
