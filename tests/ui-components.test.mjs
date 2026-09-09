@@ -286,7 +286,7 @@ test("cinematic motion primitives keep decorative motion bounded and optional", 
   assert.doesNotMatch(`${traceSource}\n${surfaceSource}`, /on(?:Wheel|Scroll|TouchMove)=/);
 });
 
-test("cinematic motion enters from hidden while reduced motion is immediately final", async () => {
+test("cinematic trace enters from hidden while reduced motion is immediately final", async () => {
   const {
     cinematicMotionProps,
     cinematicTransition,
@@ -315,6 +315,58 @@ test("cinematic motion enters from hidden while reduced motion is immediately fi
   );
   const traceHtml = renderToStaticMarkup(React.createElement(ElectricTrace));
 
-  assert.match(surfaceHtml, /style="opacity:0;transform:translateY\(24px\)"/);
   assert.match(traceHtml, /style="opacity:0;transform:translateY\(24px\)"/);
+  assert.match(surfaceHtml, /Visible content/);
+});
+
+test("MotionSurface keeps SSR content visible and schedules normal entry after mount", async () => {
+  const { MotionSurface, startMotionSurfaceEntrance } = await vite.ssrLoadModule(
+    "/components/motion/surface.tsx",
+  );
+  const { cinematicTransition, cinematicVariants } = await vite.ssrLoadModule(
+    "/components/motion/tokens.ts",
+  );
+  const surfaceHtml = renderToStaticMarkup(
+    React.createElement(MotionSurface, null, "Visible content"),
+  );
+
+  assert.match(surfaceHtml, /Visible content/);
+  assert.doesNotMatch(surfaceHtml, /opacity:0/);
+
+  const normalCalls = [];
+  const scheduledFrames = [];
+  startMotionSurfaceEntrance(
+    {
+      set: (definition) => normalCalls.push(["set", definition]),
+      start: (definition, transition) => {
+        normalCalls.push(["start", definition, transition]);
+        return Promise.resolve();
+      },
+    },
+    false,
+    (callback) => {
+      scheduledFrames.push(callback);
+      return 1;
+    },
+  );
+
+  assert.deepEqual(normalCalls, [["set", cinematicVariants.hidden]]);
+  scheduledFrames[0](0);
+  assert.deepEqual(normalCalls, [
+    ["set", cinematicVariants.hidden],
+    ["start", cinematicVariants.visible, cinematicTransition],
+  ]);
+
+  const reducedCalls = [];
+  startMotionSurfaceEntrance(
+    {
+      set: (definition) => reducedCalls.push(["set", definition]),
+      start: () => Promise.resolve(),
+    },
+    true,
+    () => {
+      throw new Error("reduced motion must not schedule an entrance frame");
+    },
+  );
+  assert.deepEqual(reducedCalls, [["set", cinematicVariants.visible]]);
 });
