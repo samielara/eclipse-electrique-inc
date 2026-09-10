@@ -2,7 +2,6 @@ import {
   ArrowRight,
   BadgeCheck,
   Check,
-  CircleCheckBig,
   Mail,
   MapPin,
   Phone,
@@ -396,18 +395,6 @@ function HomePage({ locale }: { locale: Locale }) {
           </div>
         }
       />
-
-      <section className="trust-strip" aria-label={isFrench ? "Renseignements vérifiés" : "Verified information"}>
-        <div className="site-container trust-grid trust-badge-bar">
-          {copy.home.trust.map((item, index) => (
-            <div key={item}>
-              <CircleCheckBig aria-hidden="true" />
-              <span>{item}</span>
-              <small>0{index + 1}</small>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <ScrollReveal className="home-flow-block">
         <section className="section-pad services-section" id="expertise">

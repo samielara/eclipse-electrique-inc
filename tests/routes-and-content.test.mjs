@@ -118,9 +118,9 @@ test("renders the homepage capability summary in both locales", async () => {
   );
 
   assert.match(frenchHtml, /capabilities-grid/);
-  assert.match(frenchHtml, /Une lecture claire de votre installation/);
+  assert.match(frenchHtml, /Les points qui comptent/);
   assert.match(frenchHtml, /Données, téléphone, audio et vidéo/);
-  assert.match(englishHtml, /A clear view of your electrical system/);
+  assert.match(englishHtml, /The points that matter/);
   assert.match(englishHtml, /Data, telephone, audio and video/);
 });
 

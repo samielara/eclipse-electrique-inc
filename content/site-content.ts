@@ -1007,18 +1007,18 @@ export const content = {
     },
     home: {
       servicesEyebrow: "Expertise",
-      servicesTitle: "Un service adapté à votre bâtiment",
+      servicesTitle: "Choisissez votre contexte",
       servicesIntro:
-        "Sept parcours de services couvrent les besoins résidentiels, commerciaux et industriels, de l’installation à l’inspection spécialisée.",
+        "Maison, commerce ou industrie : choisissez votre contexte et nous vous menons directement vers le bon service.",
       trustBadges: [
         { label: "Licence RBQ", value: "5582-0096-01" },
         { label: "Maître électricien", value: "Membre CMEQ" },
         { label: "Service d’urgence", value: "24 h / 7 jours" },
       ],
       capabilitiesEyebrow: "Lire votre besoin",
-      capabilitiesTitle: "Une lecture claire de votre installation",
+      capabilitiesTitle: "Les points qui comptent",
       capabilitiesIntro:
-        "Les demandes électriques changent selon le bâtiment. Ces repères résument les travaux publiés par l’entreprise pour vous aider à formuler une demande précise.",
+        "Trois repères simples pour décrire votre besoin sans parcourir toute la liste des services.",
       capabilities: [
         {
           title: "Installation et mise à niveau",
@@ -1337,18 +1337,18 @@ export const content = {
     },
     home: {
       servicesEyebrow: "Expertise",
-      servicesTitle: "Service matched to your property",
+      servicesTitle: "Choose your context",
       servicesIntro:
-        "Seven service pathways cover residential, commercial and industrial needs, from installation through specialized inspection.",
+        "Home, business or industrial site: choose your context and we’ll take you straight to the right service.",
       trustBadges: [
         { label: "RBQ licence", value: "5582-0096-01" },
         { label: "Master electrician", value: "CMEQ member" },
         { label: "Emergency service", value: "24 hours / 7 days" },
       ],
       capabilitiesEyebrow: "Make the need clear",
-      capabilitiesTitle: "A clear view of your electrical system",
+      capabilitiesTitle: "The points that matter",
       capabilitiesIntro:
-        "Electrical needs change with the property. These reference points summarize the work published by the company and help you prepare a useful request.",
+        "Three simple reference points help you describe your need without reading the entire service list.",
       capabilities: [
         {
           title: "Installation and upgrades",
