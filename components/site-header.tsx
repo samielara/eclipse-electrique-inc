@@ -173,22 +173,25 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                 <div className="city-groups">
                   {regionOrder.map((region) => {
                     const RegionIcon = regionIcons[region];
+                    const cities = cityRoutes.filter((city) => city.region === region);
                     return (
                       <section className="city-group" key={region}>
-                        <h3>
-                          <span className="region-heading-icon" aria-hidden="true">
-                            <RegionIcon strokeWidth={1.8} />
-                          </span>
-                          <span>{regionLabels[region]}</span>
-                        </h3>
+                        <div className="city-group-header">
+                          <h3>
+                            <span className="region-heading-icon" aria-hidden="true">
+                              <RegionIcon strokeWidth={1.8} />
+                            </span>
+                            <span>{regionLabels[region]}</span>
+                          </h3>
+                          <span className="city-group-badge">{cities.length} {locale === "fr" ? "villes" : "cities"}</span>
+                        </div>
                         <div className="city-links">
-                          {cityRoutes
-                            .filter((city) => city.region === region)
-                            .map((city) => (
-                              <a href={cityPath(locale, city.slug)} key={city.slug}>
-                                {city[locale]}
-                              </a>
-                            ))}
+                          {cities.map((city) => (
+                            <a href={cityPath(locale, city.slug)} key={city.slug} className="city-pill">
+                              <span className="city-pill-dot" aria-hidden="true" />
+                              <span>{city[locale]}</span>
+                            </a>
+                          ))}
                         </div>
                       </section>
                     );

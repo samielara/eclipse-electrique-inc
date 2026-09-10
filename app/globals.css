@@ -767,38 +767,125 @@ textarea {
   height: 0.88rem;
 }
 
+.area-dropdown-panel {
+  width: min(58rem, calc(100vw - 2rem));
+  padding: 0.85rem;
+}
+
 .city-groups {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.7rem;
+  gap: 0.85rem;
   padding: 0.35rem 0.15rem 0.15rem;
+}
+
+@media (max-width: 768px) {
+  .city-groups {
+    grid-template-columns: 1fr;
+  }
 }
 
 .city-group {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(245, 248, 250, 0.65);
+  border: 1px solid rgba(203, 214, 221, 0.7);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.city-group:hover {
+  border-color: rgba(242, 167, 27, 0.4);
+  box-shadow: 0 6px 20px rgba(10, 27, 47, 0.08);
+}
+
+.city-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(203, 214, 221, 0.5);
 }
 
 .city-group h3 {
-  margin: 0.65rem 0 0.35rem;
-  padding-inline: 0.55rem;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   color: #8b5909;
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.city-links {
-  display: grid;
-  gap: 0.08rem;
+.city-group-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.45rem;
+  border-radius: 9999px;
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
 }
 
-.city-links a {
-  min-height: 2.2rem;
-  padding: 0.45rem 0.55rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  line-height: 1.3;
+.city-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+  max-height: 20rem;
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
+.city-links a,
+.city-pill {
+  min-height: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.45rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(203, 214, 221, 0.65);
+  color: #244257;
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.2;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+.city-links a:hover,
+.city-pill:hover {
+  background: #fff6df;
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #8b5909;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+
+.city-pill-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--amber-dark);
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+.city-links a:hover .city-pill-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+  opacity: 1;
 }
 
 .desktop-actions {
@@ -1392,22 +1479,17 @@ textarea {
   will-change: transform;
 }
 
-.cinematic-depth-layer .home-hero-image { z-index: 0; }
-.cinematic-depth-layer .home-hero-video { z-index: 1; }
-.cinematic-depth-layer .interactive-3d-scene { z-index: 2; }
-.cinematic-depth-layer .home-hero-overlay { z-index: 3; }
+.cinematic-depth-layer .home-hero-video { z-index: 0; }
+.cinematic-depth-layer .interactive-3d-scene { z-index: 1; }
+.cinematic-depth-layer .home-hero-overlay { z-index: 2; }
+.cinematic-depth-layer .home-hero-image { z-index: 3; }
 .cinematic-depth-layer .electrical-grid { z-index: 4; }
 
-.home-hero-video,
-.home-hero-image,
-.home-hero-overlay {
+.home-hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-.home-hero-video {
   z-index: -3;
   object-fit: cover;
   object-position: center;
@@ -1420,20 +1502,40 @@ textarea {
 }
 
 .home-hero-video.is-playing {
-  opacity: 0.85;
+  opacity: 0.88;
 }
 
 .home-hero-image {
-  z-index: -4;
-  object-fit: cover;
-  object-position: 62% center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  width: auto;
+  height: 95%;
+  max-width: 52%;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.75));
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .home-hero-image {
+    max-width: 75%;
+    height: 70%;
+    opacity: 0.4;
+  }
 }
 
 .home-hero-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: -2;
   background:
-    linear-gradient(90deg, rgba(11, 14, 18, 0.98) 0%, rgba(11, 14, 18, 0.92) 34%, rgba(11, 14, 18, 0.46) 61%, rgba(11, 14, 18, 0.12) 100%),
-    linear-gradient(0deg, rgba(11, 14, 18, 0.58), transparent 38%);
+    linear-gradient(90deg, rgba(11, 14, 18, 0.98) 0%, rgba(11, 14, 18, 0.88) 38%, rgba(11, 14, 18, 0.35) 72%, rgba(11, 14, 18, 0.1) 100%),
+    linear-gradient(0deg, rgba(11, 14, 18, 0.58), transparent 42%);
 }
 
 .home-hero::after {
@@ -4482,6 +4584,45 @@ textarea {
 [data-theme="dark"] .dropdown-option svg,
 [data-theme="dark"] .region-heading-icon {
   color: #ffd36f;
+}
+
+[data-theme="dark"] .city-group {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .city-group:hover {
+  border-color: rgba(242, 167, 27, 0.35);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 158, 11, 0.1);
+}
+
+[data-theme="dark"] .city-group-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .city-group-badge {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+[data-theme="dark"] .city-links a,
+[data-theme="dark"] .city-pill {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #c9d8e2;
+}
+
+[data-theme="dark"] .city-links a:hover,
+[data-theme="dark"] .city-pill:hover {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #ffd36f;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+[data-theme="dark"] .city-pill-dot {
+  background: #f59e0b;
 }
 
 [data-theme="dark"] .desktop-nav a:hover,
