@@ -265,6 +265,16 @@ test("renders sidebar skeletons deterministically", async () => {
   assert.match(first, /--skeleton-width:70%/);
 });
 
+test("hero video defers its source so the cinematic still is the initial payload", async () => {
+  const { HeroVideo } = await vite.ssrLoadModule(
+    "/components/motion/hero-video.tsx",
+  );
+  const html = renderToStaticMarkup(React.createElement(HeroVideo));
+
+  assert.match(html, /poster="\/media\/eclipse-hero-electrician-v2\.png"/);
+  assert.doesNotMatch(html, /eclipse-electrical-ambient\.mp4/);
+});
+
 test("cinematic motion primitives keep decorative motion bounded and optional", async () => {
   const [tokensSource, traceSource, surfaceSource] = await Promise.all([
     readFile(path.join(root, "components/motion/tokens.ts"), "utf8"),

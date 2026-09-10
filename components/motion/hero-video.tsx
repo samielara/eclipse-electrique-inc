@@ -1,20 +1,49 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-/** Short decorative introduction; never starts when reduced motion is requested. */
+type ConnectionInfo = {
+  effectiveType?: string;
+  saveData?: boolean;
+  addEventListener?: (event: "change", listener: () => void) => void;
+  removeEventListener?: (event: "change", listener: () => void) => void;
+};
+
+/** The still image is the initial paint; the decorative loop waits for a suitable connection. */
 export function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const connection = (navigator as Navigator & { connection?: ConnectionInfo }).connection;
+    const update = () => {
+      const slowConnection = connection?.saveData || connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g";
+      const allowed = !preference.matches && !slowConnection;
+      setShouldLoadVideo(allowed);
+      if (!allowed) ref.current?.pause();
+    };
+
+    update();
+    preference.addEventListener("change", update);
+    connection?.addEventListener?.("change", update);
+    return () => {
+      preference.removeEventListener("change", update);
+      connection?.removeEventListener?.("change", update);
+    };
+  }, []);
+
   useEffect(() => {
     const video = ref.current;
-    if (!video) return;
-    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const stop = () => video.pause();
-    const update = () => { if (preference.matches) stop(); };
-    if (!preference.matches) void video.play().catch(() => {});
-    const timer = window.setTimeout(stop, 12000);
-    preference.addEventListener("change", update);
-    return () => { stop(); clearTimeout(timer); preference.removeEventListener("change", update); };
-  }, []);
-  return <video ref={ref} aria-hidden="true" className="home-hero-video" loop muted playsInline poster="/eclipse-electrical-grid.webp" preload="metadata"><source src="/eclipse-electrical-ambient.mp4" type="video/mp4" /></video>;
+    if (!video || !shouldLoadVideo) return;
+    video.load();
+    void video.play().catch(() => {});
+    return () => video.pause();
+  }, [shouldLoadVideo]);
+
+  return (
+    <video ref={ref} aria-hidden="true" className="home-hero-video" loop muted playsInline poster="/media/eclipse-hero-electrician-v2.png" preload="none">
+      {shouldLoadVideo && <source src="/eclipse-electrical-ambient.mp4" type="video/mp4" />}
+    </video>
+  );
 }

@@ -50,7 +50,8 @@ test("redirects the root to French and renders both locale homes", async () => {
     assert.match(html, /data-theme="dark"/);
     assert.match(html, /eclipse-logo\.jpg/);
     assert.match(html, /data-theme-toggle/);
-    assert.match(html, /eclipse-electrical-ambient\.mp4/);
+    assert.match(html, /poster="\/media\/eclipse-hero-electrician-v2\.png"/);
+    assert.doesNotMatch(html, /eclipse-electrical-ambient\.mp4/);
     assert.match(html, /class="header-dropdown"/);
     assert.match(html, /(?:territoire-desservi|service-area)\/brossard/);
   }
