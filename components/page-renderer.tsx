@@ -15,10 +15,8 @@ import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { ServiceCarousel } from "@/components/motion/service-carousel";
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
-import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AiAssistant } from "@/components/ai-assistant";
 import { ServiceCard } from "@/components/service-card";
-import { SectorMatrix } from "@/components/sector-matrix";
 import { ThermographyProof } from "@/components/thermography-proof";
 import { MobileActionBar } from "@/components/mobile-action-bar";
 import { QuoteIntakeWizard } from "@/components/quote-intake-wizard";
@@ -116,29 +114,6 @@ function HomepageServices({ locale }: { locale: Locale }) {
       items={servicePageIds.slice(0, 3).map(id => ({ id, page: copy.pages[id] }))}
       locale={locale}
     />
-  );
-}
-
-function CapabilitiesGrid({ locale }: { locale: Locale }) {
-  const copy = content[locale];
-
-  return (
-    <div className="capabilities-grid">
-      {copy.home.capabilities.map((capability, index) => (
-        <article className="capability-card" key={capability.title}>
-          <span className="capability-index">0{index + 1}</span>
-          <h3>{capability.title}</h3>
-          <ul>
-            {capability.items.map((item) => (
-              <li key={item}>
-                <Check aria-hidden="true" />
-                <span>{item.includes("2008") ? <>{item.split("2008")[0]}<NumberTicker value={2008} />{item.split("2008")[1]}</> : item}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
-    </div>
   );
 }
 
@@ -423,22 +398,6 @@ function HomePage({ locale }: { locale: Locale }) {
         <ProjectGallery locale={locale} />
       </ScrollReveal>
 
-      <ScrollReveal className="home-flow-block" delay={70}>
-        <section className="section-pad capabilities-section">
-          <div className="site-container">
-            <SectionHeading
-              eyebrow={copy.home.capabilitiesEyebrow}
-              title={copy.home.capabilitiesTitle}
-              intro={copy.home.capabilitiesIntro}
-            />
-            <CapabilitiesGrid locale={locale} />
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal className="home-flow-block">
-        <SectorMatrix locale={locale} copy={copy.home.sectorMatrix} />
-      </ScrollReveal>
       <ScrollReveal className="home-flow-block">
         <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />
       </ScrollReveal>

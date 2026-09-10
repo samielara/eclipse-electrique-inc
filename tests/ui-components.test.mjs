@@ -189,6 +189,22 @@ test("assistant is mounted in the bilingual global page shell", async () => {
   assert.equal((english.match(/data-assistant-launcher="true"/g) ?? []).length, 1);
 });
 
+test("homepage uses visual service choices without repeating the long capability matrices", async () => {
+  const { PageRenderer } = await vite.ssrLoadModule(
+    "/components/page-renderer.tsx",
+  );
+  const html = renderToStaticMarkup(
+    React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
+  );
+
+  assert.match(html, /class="service-carousel"/);
+  assert.match(html, /eclipse-residential-electrician-v1\.png/);
+  assert.match(html, /media\/electrical-testing\.webp/);
+  assert.match(html, /media\/industrial-panel\.webp/);
+  assert.doesNotMatch(html, /The points that matter/);
+  assert.doesNotMatch(html, /Focused expertise for every environment/);
+});
+
 async function readCssTree(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const contents = await Promise.all(

@@ -32,6 +32,37 @@ const serviceNumbers: Record<ServicePageId, string> = {
   security: "07",
 };
 
+const serviceMedia: Record<ServicePageId, { alt: string; src: string }> = {
+  residential: {
+    alt: "Electrician completing a residential electrical upgrade at dusk",
+    src: "/media/eclipse-residential-electrician-v1.png",
+  },
+  commercial: {
+    alt: "Technician testing electrical equipment for a commercial installation",
+    src: "/media/electrical-testing.webp",
+  },
+  industrial: {
+    alt: "Industrial control panel with orderly electrical distribution",
+    src: "/media/industrial-panel.webp",
+  },
+  maintenance: {
+    alt: "Electrical testing and maintenance equipment",
+    src: "/media/electrical-testing.webp",
+  },
+  generators: {
+    alt: "Electrical distribution equipment supporting power continuity",
+    src: "/media/industrial-panel.webp",
+  },
+  thermography: {
+    alt: "Electrical inspection and testing work",
+    src: "/media/electrical-testing.webp",
+  },
+  security: {
+    alt: "Modern building with integrated electrical systems",
+    src: "/eclipse-electrical-grid.webp",
+  },
+};
+
 interface ServiceCardProps {
   locale: Locale;
   serviceId: ServicePageId;
@@ -46,15 +77,14 @@ export function ServiceCard({
   actionLabel,
 }: ServiceCardProps) {
   const Icon = serviceIcons[serviceId];
+  const media = serviceMedia[serviceId];
 
   return (
     <article data-service-id={serviceId} data-testid="service-card" className={`service-card${serviceId === "residential" ? " service-card-featured" : ""}`}>
-      {serviceId === "residential" && (
-        <div className="service-card-media" aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt="" decoding="async" height="720" loading="lazy" src="/media/electrical-testing.webp" width="1080" />
-        </div>
-      )}
+      <div className="service-card-media" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img alt={media.alt} decoding="async" height="720" loading="lazy" src={media.src} width="1280" />
+      </div>
       <div className="service-card-top">
         <span className="service-icon" aria-hidden="true">
           <Icon strokeWidth={1.8} />

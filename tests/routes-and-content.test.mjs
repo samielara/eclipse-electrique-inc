@@ -105,7 +105,7 @@ test("renders emergency, language, dropdown, and skip links", async () => {
   assert.match(html, /\/fr\/territoire-desservi\/brossard/);
 });
 
-test("renders the homepage capability summary in both locales", async () => {
+test("renders visual homepage service choices in both locales", async () => {
   const { PageRenderer } = await vite.ssrLoadModule(
     "/components/page-renderer.tsx",
   );
@@ -117,14 +117,15 @@ test("renders the homepage capability summary in both locales", async () => {
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(frenchHtml, /capabilities-grid/);
-  assert.match(frenchHtml, /Les points qui comptent/);
-  assert.match(frenchHtml, /Données, téléphone, audio et vidéo/);
-  assert.match(englishHtml, /The points that matter/);
-  assert.match(englishHtml, /Data, telephone, audio and video/);
+  assert.match(frenchHtml, /service-carousel/);
+  assert.match(frenchHtml, /eclipse-residential-electrician-v1\.png/);
+  assert.match(frenchHtml, /Services électriques résidentiels/);
+  assert.match(englishHtml, /Residential electrical services/);
+  assert.match(englishHtml, /media\/industrial-panel\.webp/);
+  assert.doesNotMatch(englishHtml, /The points that matter/);
 });
 
-test("renders the four-sector matrix and thermography proof module with deep links", async () => {
+test("renders gallery and thermography proof without a duplicate sector matrix", async () => {
   const { PageRenderer } = await vite.ssrLoadModule(
     "/components/page-renderer.tsx",
   );
@@ -136,20 +137,14 @@ test("renders the four-sector matrix and thermography proof module with deep lin
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(frenchHtml, /sector-matrix/);
-  assert.match(frenchHtml, /Résidentiel/);
-  assert.match(frenchHtml, /Commercial &amp; Industriel/);
-  assert.match(frenchHtml, /Thermographie Infrarouge/);
-  assert.match(frenchHtml, /Systèmes d’Alarme &amp; Sécurité/);
-  assert.match(frenchHtml, /\/fr\/services\/thermographie-infrarouge/);
-  assert.match(frenchHtml, /\/fr\/services\/alarme-et-securite/);
-  assert.match(frenchHtml, /\/fr\/services\/electricien-commercial/);
-  assert.match(frenchHtml, /\/fr\/services\/electricien-industriel/);
+  assert.match(frenchHtml, /project-gallery/);
+  assert.match(frenchHtml, /La précision électrique en action/);
+  assert.match(frenchHtml, /\/fr\/services\/electricien-residentiel/);
   assert.match(frenchHtml, /thermography-proof/);
   assert.match(frenchHtml, /Inspection par thermographie infrarouge/);
   assert.match(frenchHtml, /Planifier une inspection thermique/);
-  assert.match(englishHtml, /Infrared Thermography/);
-  assert.match(englishHtml, /Fire &amp; Alarm Systems/);
+  assert.match(englishHtml, /Electrical precision in action/);
+  assert.doesNotMatch(englishHtml, /sector-matrix/);
   assert.match(englishHtml, /Plan an infrared inspection/);
 });
 
