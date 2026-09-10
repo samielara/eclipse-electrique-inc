@@ -1,18 +1,32 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { ServiceCard } from "@/components/service-card";
 import type { LocalizedPage } from "@/content/site-content";
-import { type Locale, type ServicePageId } from "@/lib/routes";
+import { pathFor, type Locale, type ServicePageId } from "@/lib/routes";
 
 interface ServiceCarouselItem {
   id: ServicePageId;
   page: LocalizedPage;
 }
 
-export function ServiceCarousel({ locale, items, actionLabel }: { locale: Locale; items: ServiceCarouselItem[]; actionLabel: string }) {
+export function ServiceCarousel({
+  locale,
+  items,
+  actionLabel,
+  eyebrow,
+  title,
+  intro,
+}: {
+  locale: Locale;
+  items: ServiceCarouselItem[];
+  actionLabel: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+}) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -58,6 +72,14 @@ export function ServiceCarousel({ locale, items, actionLabel }: { locale: Locale
         }}
         ref={stageRef}
       >
+        <div className="service-carousel-copy">
+          <p className="eyebrow">{eyebrow}</p>
+          <h2>{title}</h2>
+          <p>{intro}</p>
+          <a className="service-carousel-primary-link" href={pathFor(item.id, locale)}>
+            {actionLabel}<ArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
         <div className="service-carousel-surface">
           <div className="service-carousel-card" key={item.id}>
             <span className="service-carousel-index">0{active + 1} / 0{items.length}</span>

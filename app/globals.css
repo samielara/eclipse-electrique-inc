@@ -2134,8 +2134,8 @@ textarea {
 
 .service-carousel-stage {
   position: relative;
-  min-height: 25rem;
-  padding-top: 1.75rem;
+  min-height: clamp(38rem, 50vw, 44rem);
+  padding-top: 0;
 }
 
 .service-carousel-stage-3d {
@@ -2146,11 +2146,58 @@ textarea {
 
 .service-carousel-surface {
   position: relative;
+  width: min(72%, 52rem);
+  margin-left: auto;
+  padding-top: 3.5rem;
   transform: rotateX(calc(var(--service-depth-y) * -0.45)) rotateY(calc(var(--service-depth-x) * 0.48));
   transform-style: preserve-3d;
   transition: transform 420ms cubic-bezier(.2,.75,.25,1);
   will-change: transform;
 }
+
+.service-carousel-copy {
+  position: absolute;
+  z-index: 4;
+  top: clamp(4rem, 9vw, 7.5rem);
+  left: clamp(1.5rem, 6vw, 5.5rem);
+  width: min(35rem, 47%);
+}
+
+.service-carousel-copy .eyebrow { margin-bottom: 1.45rem; }
+.service-carousel-copy h2 {
+  max-width: 10ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.8rem, 6.5vw, 5.7rem);
+  letter-spacing: -0.07em;
+  line-height: 0.95;
+}
+.service-carousel-copy > p:not(.eyebrow) {
+  max-width: 28rem;
+  margin: 1.6rem 0 1.85rem;
+  color: #b9c8d3;
+  font-size: clamp(0.98rem, 1.35vw, 1.1rem);
+  line-height: 1.6;
+}
+.service-carousel-primary-link {
+  display: inline-flex;
+  min-height: 3.35rem;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.3rem;
+  background: var(--amber);
+  color: #111820;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.service-carousel-primary-link:hover,
+.service-carousel-primary-link:focus-visible { box-shadow: 0 12px 30px rgba(245, 158, 11, 0.25); transform: translateY(-2px); }
+.service-carousel-primary-link:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 
 .service-carousel-card {
   position: relative;
@@ -2188,7 +2235,7 @@ textarea {
 }
 
 .service-carousel-card .service-card {
-  min-height: clamp(29rem, 51vw, 37rem);
+  min-height: clamp(31rem, 46vw, 38rem);
   grid-column: auto;
   padding: clamp(1.7rem, 4.5vw, 4rem);
   isolation: isolate;
@@ -2298,8 +2345,12 @@ textarea {
 }
 
 @media (max-width: 38rem) {
-  .service-carousel-stage { min-height: 31rem; }
-  .service-carousel-card .service-card { min-height: 30rem; }
+  .service-carousel-stage { min-height: 45rem; }
+  .service-carousel-surface { width: calc(100% - 1.2rem); padding-top: 17.5rem; }
+  .service-carousel-copy { top: 2rem; left: 1.25rem; width: calc(100% - 2.5rem); }
+  .service-carousel-copy h2 { max-width: 12ch; font-size: clamp(2.7rem, 14vw, 4.3rem); }
+  .service-carousel-copy > p:not(.eyebrow) { margin: 0.9rem 0 1.2rem; }
+  .service-carousel-card .service-card { min-height: 29rem; }
   .service-carousel-card .service-card-top { margin-bottom: 4rem; }
   .service-carousel-card .service-card h3 { max-width: 100%; font-size: clamp(1.65rem, 9.5vw, 2.55rem); }
   .service-carousel-card .service-card > p:not(.service-eyebrow) { font-size: 0.95rem; }

@@ -198,6 +198,8 @@ test("homepage uses visual service choices without repeating the long capability
   );
 
   assert.match(html, /class="service-carousel"/);
+  assert.match(html, /class="service-carousel-copy"/);
+  assert.match(html, /Choose your context/);
   assert.match(html, /service-carousel-stage service-carousel-stage-3d/);
   assert.match(html, /class="service-carousel-surface"/);
   assert.match(html, /class="service-carousel-tab-label">Residential/);

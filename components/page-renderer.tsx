@@ -111,8 +111,11 @@ function HomepageServices({ locale }: { locale: Locale }) {
   return (
     <ServiceCarousel
       actionLabel={copy.actions.learnMore}
+      eyebrow={copy.home.servicesEyebrow}
+      intro={copy.home.servicesIntro}
       items={servicePageIds.slice(0, 3).map(id => ({ id, page: copy.pages[id] }))}
       locale={locale}
+      title={copy.home.servicesTitle}
     />
   );
 }
@@ -379,11 +382,6 @@ function HomePage({ locale }: { locale: Locale }) {
       <ScrollReveal className="home-flow-block">
         <section className="section-pad services-section" id="expertise">
           <div className="site-container">
-            <SectionHeading
-              eyebrow={copy.home.servicesEyebrow}
-              title={copy.home.servicesTitle}
-              intro={copy.home.servicesIntro}
-            />
             <HomepageServices locale={locale} />
             <div className="section-link-row">
               <a className="arrow-link" href={pathFor("services", locale)}>
