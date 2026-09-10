@@ -1,6 +1,5 @@
 import {
   ArrowRight,
-  Award,
   BadgeCheck,
   Check,
   Mail,
@@ -8,7 +7,6 @@ import {
   Phone,
   PhoneCall,
   ShieldCheck,
-  Zap,
 } from "lucide-react";
 
 import { CinematicHero } from "@/components/motion/cinematic-hero";
@@ -364,64 +362,24 @@ function HomePage({ locale }: { locale: Locale }) {
           </div>
         }
         trustMarkers={
-          <>
-            <div className="hero-president-credit">
-              <span className="president-signature">Sami El-Arabi</span>
-              <span className="president-title">
-                {isFrench
-                  ? "PRÉSIDENT, MAÎTRE ÉLECTRICIEN · RBQ 5582-0096-01"
-                  : "PRESIDENT, MASTER ELECTRICIAN · RBQ 5582-0096-01"}
-              </span>
-            </div>
-            <div
-              aria-label={isFrench ? "Repères de confiance" : "Trust markers"}
-              className="hero-trust-badges"
-            >
-              {copy.home.trustBadges.map((badge, index) => (
-                <div className="hero-trust-badge" key={badge.label}>
-                  <span className="hero-trust-badge-icon">
-                    {trustBadgeIcon(index)}
-                  </span>
-                  <span>
-                    <small>{badge.label}</small>
-                    <strong>{badge.value}</strong>
-                  </span>
-                </div>
-              ))}
-            </div>
-          </>
+          <div
+            aria-label={isFrench ? "Repères de confiance" : "Trust markers"}
+            className="hero-trust-badges"
+          >
+            {copy.home.trustBadges.map((badge, index) => (
+              <div className="hero-trust-badge" key={badge.label}>
+                <span className="hero-trust-badge-icon">
+                  {trustBadgeIcon(index)}
+                </span>
+                <span>
+                  <small>{badge.label}</small>
+                  <strong>{badge.value}</strong>
+                </span>
+              </div>
+            ))}
+          </div>
         }
       />
-
-      <div
-        className="hero-trust-ribbon"
-        aria-label={isFrench ? "Garanties d'excellence" : "Guarantees of excellence"}
-      >
-        <div className="site-container hero-trust-ribbon-inner">
-          <div className="trust-ribbon-highlight">
-            <Zap aria-hidden="true" className="trust-ribbon-icon" />
-            <span>
-              {isFrench
-                ? "SERVICES ÉLECTRIQUES RÉSIDENTIELS & COMMERCIAUX"
-                : "RESIDENTIAL & COMMERCIAL ELECTRICAL SERVICES"}
-            </span>
-          </div>
-          <div className="trust-ribbon-items">
-            <div className="trust-ribbon-item">
-              <ShieldCheck aria-hidden="true" />
-              <span>{isFrench ? "Travail soigné garanti" : "Precision craftsmanship"}</span>
-            </div>
-            <div className="trust-ribbon-item">
-              <BadgeCheck aria-hidden="true" />
-              <span>{isFrench ? "Respect des normes CSA & RBQ" : "CSA & RBQ standards"}</span>
-            </div>
-            <div className="trust-ribbon-item">
-              <Award aria-hidden="true" />
-              <span>{isFrench ? "Maître électricien CMEQ" : "CMEQ Master Electrician"}</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <ScrollReveal className="home-flow-block">
         <section className="section-pad services-section" id="expertise">
