@@ -16,22 +16,8 @@ export function HeroVideo() {
   const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
-    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const connection = (navigator as Navigator & { connection?: ConnectionInfo }).connection;
-    const update = () => {
-      const slowConnection = connection?.saveData || connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g";
-      const allowed = !preference.matches && !slowConnection;
-      setShouldLoadVideo(allowed);
-      if (!allowed) ref.current?.pause();
-    };
-
-    update();
-    preference.addEventListener("change", update);
-    connection?.addEventListener?.("change", update);
-    return () => {
-      preference.removeEventListener("change", update);
-      connection?.removeEventListener?.("change", update);
-    };
+    // Keep the branded master electrician and van hero visible without video per user request
+    setShouldLoadVideo(false);
   }, []);
 
   useEffect(() => {

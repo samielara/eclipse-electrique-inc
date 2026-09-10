@@ -1507,23 +1507,23 @@ textarea {
 
 .home-hero-image {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: -2;
-  width: auto;
-  height: 95%;
-  max-width: 52%;
-  object-fit: contain;
-  object-position: right bottom;
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.75));
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  object-fit: cover;
+  object-position: 74% center;
   pointer-events: none;
+}
+
+[data-theme="light"] .home-hero-image {
+  content: url("/media/eclipse-hero-electrician-light.png");
 }
 
 @media (max-width: 768px) {
   .home-hero-image {
-    max-width: 75%;
-    height: 70%;
-    opacity: 0.4;
+    object-position: 68% center;
+    opacity: 0.35;
   }
 }
 
@@ -1534,8 +1534,123 @@ textarea {
   height: 100%;
   z-index: -2;
   background:
-    linear-gradient(90deg, rgba(11, 14, 18, 0.98) 0%, rgba(11, 14, 18, 0.88) 38%, rgba(11, 14, 18, 0.35) 72%, rgba(11, 14, 18, 0.1) 100%),
-    linear-gradient(0deg, rgba(11, 14, 18, 0.58), transparent 42%);
+    linear-gradient(90deg, #0b0e12 0%, rgba(11, 14, 18, 0.95) 42%, rgba(11, 14, 18, 0.35) 68%, transparent 100%),
+    linear-gradient(0deg, rgba(11, 14, 18, 0.6) 0%, transparent 40%);
+}
+
+[data-theme="light"] .home-hero-overlay {
+  background:
+    linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.96) 42%, rgba(255, 255, 255, 0.35) 68%, transparent 100%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, transparent 40%);
+}
+
+.hero-president-credit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.president-signature {
+  font-family: Georgia, "Playfair Display", "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--amber-primary, #f59e0b);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+[data-theme="light"] .president-signature {
+  color: #174f74;
+}
+
+.president-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9cb1c2;
+}
+
+[data-theme="light"] .president-title {
+  color: #536879;
+}
+
+.hero-trust-ribbon {
+  background: #0d1217;
+  border-top: 1px solid rgba(245, 158, 11, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.95rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+[data-theme="light"] .hero-trust-ribbon {
+  background: #0f1d2b;
+  border-top: 1px solid rgba(245, 158, 11, 0.35);
+  border-bottom: 1px solid rgba(15, 29, 43, 0.15);
+}
+
+.hero-trust-ribbon-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.trust-ribbon-highlight {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #ffd36f;
+  font-weight: 850;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.trust-ribbon-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--amber-primary, #f59e0b);
+  flex-shrink: 0;
+}
+
+.trust-ribbon-items {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.trust-ribbon-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #d1dce5;
+  font-size: 0.84rem;
+  font-weight: 650;
+}
+
+.trust-ribbon-item svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  color: var(--amber-primary, #f59e0b);
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .hero-trust-ribbon-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .trust-ribbon-items {
+    gap: 0.85rem;
+  }
 }
 
 .home-hero::after {
