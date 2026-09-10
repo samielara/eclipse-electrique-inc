@@ -197,7 +197,7 @@ function ProjectGallery({ locale }: { locale: Locale }) {
           alt: "Technicien testant un panneau électrique avec un multimètre",
         },
         {
-          src: "/eclipse-electrical-grid.webp",
+          src: "/media/landing-hero-exterior.jpg",
           eyebrow: "Environnements connectés",
           title: "L’électricité intégrée à l’architecture moderne",
           description: "Distribution, contrôle et éclairage pensés comme un système cohérent.",
@@ -220,7 +220,7 @@ function ProjectGallery({ locale }: { locale: Locale }) {
           alt: "Technician testing an electrical panel with a multimeter",
         },
         {
-          src: "/eclipse-electrical-grid.webp",
+          src: "/media/landing-hero-exterior.jpg",
           eyebrow: "Connected environments",
           title: "Electrical systems integrated into modern architecture",
           description: "Distribution, controls and lighting designed as one coherent system.",
@@ -273,13 +273,13 @@ function ServiceVisualPanel({ locale, pageId }: { locale: Locale; pageId: Servic
   const page = content[locale].pages[pageId];
   const isFrench = locale === "fr";
   const mediaByService: Record<ServicePageId, { src: string; position: string }> = {
-    residential: { src: "/eclipse-electrical-grid.webp", position: "center" },
-    commercial: { src: "/media/electrical-testing.webp", position: "center" },
+    residential: { src: "/media/service-residential.jpg", position: "center" },
+    commercial: { src: "/media/service-commercial.jpg", position: "center" },
     industrial: { src: "/media/industrial-panel.webp", position: "center" },
-    maintenance: { src: "/media/electrical-testing.webp", position: "center" },
-    generators: { src: "/media/industrial-panel.webp", position: "center" },
-    thermography: { src: "/media/electrical-testing.webp", position: "center" },
-    security: { src: "/eclipse-electrical-grid.webp", position: "70% center" },
+    maintenance: { src: "/media/service-emergency.jpg", position: "center" },
+    generators: { src: "/media/service-generators.jpg", position: "center" },
+    thermography: { src: "/media/service-thermography.jpg", position: "center" },
+    security: { src: "/media/service-security.jpg", position: "center" },
   };
   const media = mediaByService[pageId];
 
@@ -434,14 +434,33 @@ function HomePage({ locale }: { locale: Locale }) {
             </a>
           </div>
           <div className="region-preview-grid">
-            {copy.regions.map((region, index) => (
-              <article key={region.name}>
-                <span>0{index + 1}</span>
-                <MapPin aria-hidden="true" />
-                <h3>{region.name}</h3>
-                <p>{region.description}</p>
-              </article>
-            ))}
+            {copy.regions.map((region, index) => {
+              const regionImages = [
+                "/media/area-montreal.jpg",
+                "/media/area-north-shore.jpg",
+                "/media/area-south-shore.jpg",
+              ];
+              return (
+                <article key={region.name}>
+                  <div className="region-preview-media" style={{ marginBottom: "1.25rem", borderRadius: "0.375rem", overflow: "hidden", height: "160px" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      alt={region.name}
+                      decoding="async"
+                      height="320"
+                      loading="lazy"
+                      src={regionImages[index % regionImages.length]}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      width="480"
+                    />
+                  </div>
+                  <span>0{index + 1}</span>
+                  <MapPin aria-hidden="true" />
+                  <h3>{region.name}</h3>
+                  <p>{region.description}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -559,6 +578,11 @@ function ServiceDetailPage({ locale, pageId }: { locale: Locale; pageId: Service
 
 function ServiceAreaPage({ locale }: { locale: Locale }) {
   const copy = content[locale];
+  const regionImages = [
+    "/media/area-montreal.jpg",
+    "/media/area-north-shore.jpg",
+    "/media/area-south-shore.jpg",
+  ];
   return (
     <>
       <InnerHero locale={locale} pageId="serviceArea" />
@@ -566,6 +590,18 @@ function ServiceAreaPage({ locale }: { locale: Locale }) {
         <div className="site-container region-list">
           {copy.regions.map((region, index) => (
             <article key={region.name}>
+              <div className="region-card-media" style={{ marginBottom: "1.5rem", borderRadius: "0.5rem", overflow: "hidden", height: "220px" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt={region.name}
+                  decoding="async"
+                  height="440"
+                  loading="lazy"
+                  src={regionImages[index % regionImages.length]}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  width="800"
+                />
+              </div>
               <header><span>0{index + 1}</span><MapPin aria-hidden="true" /><h2>{region.name}</h2></header>
               <p>{region.description}</p>
               <ul>

@@ -34,32 +34,32 @@ const serviceNumbers: Record<ServicePageId, string> = {
 
 const serviceMedia: Record<ServicePageId, { alt: string; src: string }> = {
   residential: {
-    alt: "Electrician completing a residential electrical upgrade at dusk",
+    alt: "Installation domotique et éclairage résidentiel moderne",
     src: "/media/eclipse-residential-electrician-v1.png",
   },
   commercial: {
-    alt: "Technician testing electrical equipment for a commercial installation",
-    src: "/media/electrical-testing.webp",
+    alt: "Câblage structuré et éclairage architectural commercial",
+    src: "/media/service-commercial.jpg",
   },
   industrial: {
-    alt: "Industrial control panel with orderly electrical distribution",
-    src: "/media/industrial-panel.webp",
+    alt: "Appareillage de distribution haute tension et machinerie industrielle",
+    src: "/media/service-industrial.jpg",
   },
   maintenance: {
-    alt: "Electrical testing and maintenance equipment",
-    src: "/media/electrical-testing.webp",
+    alt: "Camion d'intervention officiel Éclipse et électricien d'urgence 24/7",
+    src: "/media/service-emergency.jpg",
   },
   generators: {
-    alt: "Electrical distribution equipment supporting power continuity",
-    src: "/media/industrial-panel.webp",
+    alt: "Installation extérieure de génératrice de secours et commutateur ATS",
+    src: "/media/service-generators.jpg",
   },
   thermography: {
-    alt: "Electrical inspection and testing work",
-    src: "/media/electrical-testing.webp",
+    alt: "Inspection thermographique infrarouge par caméra thermique FLIR",
+    src: "/media/service-thermography.jpg",
   },
   security: {
-    alt: "Modern building with integrated electrical systems",
-    src: "/eclipse-electrical-grid.webp",
+    alt: "Système de contrôle d'accès, alarme incendie et sécurité électrique",
+    src: "/media/service-security.jpg",
   },
 };
 

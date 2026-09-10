@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Éclipse électrique inc. — Vitrine Médias & Évaluation Client</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root[data-theme="dark"] {
+      --bg: #0f1115;
+      --surface: #181b22;
+      --surface-border: #2c333f;
+      --text: #edf4f8;
+      --text-muted: #abc0ce;
+      --accent: #f2a71b;
+      --accent-glow: rgba(242, 167, 27, 0.18);
+      --badge-bg: rgba(242, 167, 27, 0.12);
+      --card-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6);
+    }
+    :root[data-theme="light"] {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #d97706;
+      --accent-glow: rgba(217, 119, 6, 0.12);
+      --badge-bg: rgba(217, 119, 6, 0.1);
+      --card-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background-color: rgba(15, 17, 21, 0.85);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    :root[data-theme="light"] header {
+      background-color: rgba(255, 255, 255, 0.88);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-arc {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      border-bottom-color: transparent;
+      transform: rotate(-45deg);
+    }
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .theme-toggle-btn {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    .hero-banner {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--badge-bg);
+      color: var(--accent);
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .hero-banner h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero-banner p {
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      margin: 48px 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 2px solid var(--surface-border);
+      padding-bottom: 12px;
+    }
+    .section-title span.number {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    .card-media {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: #050608;
+      overflow: hidden;
+    }
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .card:hover .card-media img {
+      transform: scale(1.03);
+    }
+    .card-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(15, 17, 21, 0.85);
+      backdrop-filter: blur(8px);
+      color: var(--accent);
+      border: 1px solid rgba(242, 167, 27, 0.4);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .card-content {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card-route {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--badge-bg);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .btn {
+      flex: 1;
+      text-align: center;
+      padding: 8px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+    .btn-outline {
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+    }
+    .canva-guide {
+      margin-top: 60px;
+      padding: 32px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+    }
+    .canva-guide h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-arc"></div>
+      <div>
+        <div class="brand-title">ÉCLIPSE ÉLECTRIQUE INC.</div>
+        <div class="brand-sub">Vitrine Médias & Modernisation</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="theme-toggle-btn" id="themeBtn" onclick="toggleTheme()">
+        <span id="themeIcon">☀️</span> <span id="themeText">Passer en mode Clair</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="hero-banner">
+      <span class="hero-badge">Validation Client & Canva Media Kit</span>
+      <h1>Collection Médias Haute Définition</h1>
+      <p>Collection cinématographique complète conçue pour sublimer le site d'Éclipse électrique inc., harmonisée pour un rendu impeccable en mode sombre comme en mode clair.</p>
+    </div>
+
+    <h2 class="section-title"><span class="number">01</span> Page d'Accueil & Crédibilité</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Bannière Hero</span>
+          <img src="./landing-hero-skyline.png" alt="Électricien Éclipse vue Montréal" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Maître Électricien vue sur Montréal</div>
+            <div class="card-route">Route: / (home-hero)</div>
+            <p class="card-desc">L'uniforme officiel à capuchon et casquette avec logo Éclipse en arc doré, intervenant sur panneau face à la ligne d'horizon montréalaise.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./landing-hero-skyline.png" download class="btn btn-primary">Télécharger</a>
+            <a href="./landing-hero-skyline.png" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Hero Alternatif</span>
+          <img src="./landing-hero-exterior.jpg" alt="Résidence moderne avec borne VE" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Résidence d'Exception & Borne VE</div>
+            <div class="card-route">Route: / (home-hero)</div>
+            <p class="card-desc">Architecture contemporaine au crépuscule avec éclairage encastré chaleureux et borne de recharge pour véhicule électrique.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./landing-hero-exterior.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./landing-hero-exterior.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Accréditation RBQ</span>
+          <img src="./landing-craftsmanship.jpg" alt="Câblage minutieux de panneau" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Rigueur & Savoir-Faire Électrique</div>
+            <div class="card-route">Section: Repères de confiance</div>
+            <p class="card-desc">Gros plan sur l'installation soignée d'un panneau avec disjoncteurs témoins LED et conducteurs calibrés au millimètre.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./landing-craftsmanship.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./landing-craftsmanship.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title"><span class="number">02</span> Les 7 Services Spécialisés</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Service 01</span>
+          <img src="./service-residential.jpg" alt="Électricien Résidentiel" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Électricien Résidentiel</div>
+            <div class="card-route">/fr/services/electricien-residentiel</div>
+            <p class="card-desc">Résidence haut de gamme avec écran tactile domotique mural et éclairage encastré architectural.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./service-residential.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./service-residential.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Service 02</span>
+          <img src="./service-commercial.jpg" alt="Électricien Commercial" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Électricien Commercial</div>
+            <div class="card-route">/fr/services/electricien-commercial</div>
+            <p class="card-desc">Bureaux et espaces ouverts avec chemins de câbles suspendus noirs et luminaires linéaires DEL.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./service-commercial.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./service-commercial.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Service 03</span>
+          <img src="./service-industrial.jpg" alt="Électricien Industriel" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Électricien Industriel</div>
+            <div class="card-route">/fr/services/electricien-industriel</div>
+            <p class="card-desc">Appareillage de distribution haute tension en acier inoxydable et raccordement de machinerie lourde.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./service-industrial.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./service-industrial.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Service 04</span>
+          <img src="./service-emergency.jpg" alt="Urgence 24/7 & Entretien" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Entretien & Urgence 24/7</div>
+            <div class="card-route">/fr/services/maintenance-et-urgence</div>
+            <p class="card-desc">Camion d'intervention officiel Éclipse et électricien équipé de multimètre pour dépannage immédiat.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./service-emergency.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./service-emergency.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Service 05</span>
+          <img src="./service-generators.jpg" alt="Génératrices de secours" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Génératrices de Secours</div>
+            <div class="card-route">/fr/services/generatrices</div>
+            <p class="card-desc">Installation extérieure d'une génératrice automatique avec commutateur de transfert (ATS).</p>
+          </div>
+          <div class="card-actions">
+            <a href="./service-generators.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./service-generators.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Matrice Spécialisée</span>
+          <img src="./service-thermography.jpg" alt="Thermographie infrarouge" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Thermographie Infrarouge</div>
+            <div class="card-route">Section: #thermographie</div>
+            <p class="card-desc">Caméra thermique FLIR tenue par un électricien Éclipse détectant les points chauds et surcharges.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./service-thermography.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./service-thermography.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Matrice Spécialisée</span>
+          <img src="./service-security.jpg" alt="Systèmes de sécurité" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Alarmes & Sécurité Électrique</div>
+            <div class="card-route">Section: #securite</div>
+            <p class="card-desc">Raccordement d'un clavier de contrôle d'accès, panneau d'alarme incendie et caméra dôme.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./service-security.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./service-security.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title"><span class="number">03</span> Territoires Desservis</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Région 01</span>
+          <img src="./area-montreal.jpg" alt="Montréal et pont Jacques-Cartier" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Grand Montréal</div>
+            <div class="card-route">/fr/territoire-desservi/montreal</div>
+            <p class="card-desc">Vue panoramique nocturne avec le pont Jacques-Cartier, le centre-ville et le mont Royal illuminés.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./area-montreal.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./area-montreal.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Région 02</span>
+          <img src="./area-north-shore.jpg" alt="Rive-Nord et Laval" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Rive-Nord & Laval</div>
+            <div class="card-route">/fr/territoire-desservi/laval</div>
+            <p class="card-desc">Quartiers résidentiels modernes et pôles d'affaires de Laval, Blainville et les Laurentides.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./area-north-shore.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./area-north-shore.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-media">
+          <span class="card-tag">Région 03</span>
+          <img src="./area-south-shore.jpg" alt="Rive-Sud et pont Champlain" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Rive-Sud & Longueuil</div>
+            <div class="card-route">/fr/territoire-desservi/longueuil</div>
+            <p class="card-desc">Le dynamisme de Brossard, Quartier DIX30, Longueuil et le pont Samuel-De Champlain au crépuscule.</p>
+          </div>
+          <div class="card-actions">
+            <a href="./area-south-shore.jpg" download class="btn btn-primary">Télécharger</a>
+            <a href="./area-south-shore.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="canva-guide">
+      <h3>Intégration Directe dans Canva</h3>
+      <p>Ces fichiers sont prêts à être glissés-déposés directement dans <strong>Canva</strong> pour concevoir vos maquettes, présentations clients ou visuels publicitaires :</p>
+      <ol style="margin: 16px 0 0 24px; color: var(--text-muted);">
+        <li>Ouvrez votre projet sur <strong>Canva.com</strong>.</li>
+        <li>Glissez-déposez n'importe quel fichier depuis <code>public/media/</code> vers la barre latérale <strong>Importations</strong> de Canva.</li>
+        <li>Toutes les images respectent le ratio d'aspect idéal pour les cartes (4:3) et les bannières grand écran (16:9).</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', newTheme);
+      document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
+      document.getElementById('themeText').textContent = isDark ? 'Passer en mode Sombre' : 'Passer en mode Clair';
+    }
+  </script>
+</body>
+</html>
