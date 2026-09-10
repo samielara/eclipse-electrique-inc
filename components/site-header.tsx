@@ -1,6 +1,21 @@
 "use client";
 
-import { ArrowRight, ChevronDown, Menu, PhoneCall } from "lucide-react";
+import {
+  ArrowRight,
+  BatteryCharging,
+  Building,
+  Building2,
+  ChevronDown,
+  Compass,
+  Factory,
+  House,
+  MapPin,
+  Menu,
+  PhoneCall,
+  ScanSearch,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/brand-mark";
@@ -13,7 +28,7 @@ import {
   cityRoutes,
   type CityRegion,
 } from "@/lib/city-routes";
-import { alternatePath, pathFor, quotePath, servicePageIds, type Locale, type PageId } from "@/lib/routes";
+import { alternatePath, pathFor, quotePath, servicePageIds, type Locale, type PageId, type ServicePageId } from "@/lib/routes";
 import { site } from "@/lib/site";
 
 interface SiteHeaderProps {
@@ -23,6 +38,27 @@ interface SiteHeaderProps {
 }
 
 const regionOrder: readonly CityRegion[] = ["montreal", "northShore", "southShore"];
+
+const serviceIcons: Record<ServicePageId, typeof House> = {
+  residential: House,
+  commercial: Building2,
+  industrial: Factory,
+  maintenance: Zap,
+  generators: BatteryCharging,
+  thermography: ScanSearch,
+  security: ShieldCheck,
+};
+
+const serviceBadges: Partial<Record<ServicePageId, string>> = {
+  maintenance: "24/7",
+  thermography: "FLIR",
+};
+
+const regionIcons: Record<CityRegion, typeof MapPin> = {
+  montreal: MapPin,
+  northShore: Compass,
+  southShore: Building,
+};
 
 export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -97,13 +133,27 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                   <span>{copy.actions.exploreServices}</span>
                   <ArrowRight aria-hidden="true" />
                 </a>
-                {serviceLinks.map(({ serviceId, label, description }) => (
-                  <a className="dropdown-option" href={pathFor(serviceId, locale)} key={serviceId}>
-                    <span>{label}</span>
-                    <small>{description}</small>
-                    <ArrowRight aria-hidden="true" />
-                  </a>
-                ))}
+                <div className="services-dropdown-grid">
+                  {serviceLinks.map(({ serviceId, label, description }) => {
+                    const Icon = serviceIcons[serviceId];
+                    const badge = serviceBadges[serviceId];
+                    return (
+                      <a className="dropdown-option" href={pathFor(serviceId, locale)} key={serviceId}>
+                        <span className="dropdown-option-icon" aria-hidden="true">
+                          <Icon strokeWidth={1.8} />
+                        </span>
+                        <div className="dropdown-option-body">
+                          <div className="dropdown-option-heading">
+                            <span>{label}</span>
+                            {badge && <span className="dropdown-badge">{badge}</span>}
+                          </div>
+                          <small>{description}</small>
+                        </div>
+                        <ArrowRight aria-hidden="true" className="dropdown-option-arrow" />
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
             </details>
 
@@ -121,20 +171,28 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                   <ArrowRight aria-hidden="true" />
                 </a>
                 <div className="city-groups">
-                  {regionOrder.map((region) => (
-                    <section className="city-group" key={region}>
-                      <h3>{regionLabels[region]}</h3>
-                      <div className="city-links">
-                        {cityRoutes
-                          .filter((city) => city.region === region)
-                          .map((city) => (
-                            <a href={cityPath(locale, city.slug)} key={city.slug}>
-                              {city[locale]}
-                            </a>
-                          ))}
-                      </div>
-                    </section>
-                  ))}
+                  {regionOrder.map((region) => {
+                    const RegionIcon = regionIcons[region];
+                    return (
+                      <section className="city-group" key={region}>
+                        <h3>
+                          <span className="region-heading-icon" aria-hidden="true">
+                            <RegionIcon strokeWidth={1.8} />
+                          </span>
+                          <span>{regionLabels[region]}</span>
+                        </h3>
+                        <div className="city-links">
+                          {cityRoutes
+                            .filter((city) => city.region === region)
+                            .map((city) => (
+                              <a href={cityPath(locale, city.slug)} key={city.slug}>
+                                {city[locale]}
+                              </a>
+                            ))}
+                        </div>
+                      </section>
+                    );
+                  })}
                 </div>
               </div>
             </details>

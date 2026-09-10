@@ -13,12 +13,25 @@ type ConnectionInfo = {
 export function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const connection = (navigator as Navigator & { connection?: ConnectionInfo }).connection;
-    // Keep the branded master electrician hero visible on modern browsers
-    setShouldLoadVideo(false);
+    const update = () => {
+      const slowConnection = connection?.saveData || connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g";
+      const allowed = !preference.matches && !slowConnection;
+      setShouldLoadVideo(allowed);
+      if (!allowed) ref.current?.pause();
+    };
+
+    update();
+    preference.addEventListener("change", update);
+    connection?.addEventListener?.("change", update);
+    return () => {
+      preference.removeEventListener("change", update);
+      connection?.removeEventListener?.("change", update);
+    };
   }, []);
 
   useEffect(() => {
@@ -30,7 +43,19 @@ export function HeroVideo() {
   }, [shouldLoadVideo]);
 
   return (
-    <video ref={ref} aria-hidden="true" className="home-hero-video" loop muted playsInline poster="/media/eclipse-hero-electrician-v2.png" preload="none">
+    <video
+      ref={ref}
+      aria-hidden="true"
+      className={`home-hero-video${isVideoReady ? " is-playing" : " is-buffering"}`}
+      loop
+      muted
+      onCanPlay={() => setIsVideoReady(true)}
+      onLoadedData={() => setIsVideoReady(true)}
+      onPlaying={() => setIsVideoReady(true)}
+      playsInline
+      poster="/media/eclipse-hero-electrician-v2.png"
+      preload="none"
+    >
       {shouldLoadVideo && <source src="/eclipse-electrical-ambient.mp4" type="video/mp4" />}
     </video>
   );

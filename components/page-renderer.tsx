@@ -11,6 +11,7 @@ import {
 
 import { CinematicHero } from "@/components/motion/cinematic-hero";
 import { HeroVideo } from "@/components/motion/hero-video";
+import { Interactive3DScene } from "@/components/motion/interactive-3d-scene";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { ServiceCarousel } from "@/components/motion/service-carousel";
@@ -330,6 +331,7 @@ function HomePage({ locale }: { locale: Locale }) {
           <>
             {/* Decorative motion background; the image remains the no-motion fallback. */}
             <HeroVideo />
+            <Interactive3DScene />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt=""
