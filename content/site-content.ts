@@ -1013,7 +1013,7 @@ export const content = {
       trustBadges: [
         { label: "Licence RBQ", value: "5582-0096-01" },
         { label: "Maître électricien", value: "Membre CMEQ" },
-        { label: "Service d’urgence", value: "24 h / 7 jours" },
+        { label: "Territoire desservi", value: "50 secteurs" },
       ],
       capabilitiesEyebrow: "Lire votre besoin",
       capabilitiesTitle: "Les points qui comptent",
@@ -1343,7 +1343,7 @@ export const content = {
       trustBadges: [
         { label: "RBQ licence", value: "5582-0096-01" },
         { label: "Master electrician", value: "CMEQ member" },
-        { label: "Emergency service", value: "24 hours / 7 days" },
+        { label: "Service territory", value: "50 areas" },
       ],
       capabilitiesEyebrow: "Make the need clear",
       capabilitiesTitle: "The points that matter",

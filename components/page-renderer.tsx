@@ -340,7 +340,7 @@ function HomePage({ locale }: { locale: Locale }) {
   const trustBadgeIcon = (index: number) => {
     if (index === 0) return <ShieldCheck aria-hidden="true" />;
     if (index === 1) return <BadgeCheck aria-hidden="true" />;
-    return <PhoneCall aria-hidden="true" />;
+    return <MapPin aria-hidden="true" />;
   };
 
   return (
@@ -358,12 +358,17 @@ function HomePage({ locale }: { locale: Locale }) {
               className="home-hero-image"
               decoding="async"
               fetchPriority="high"
-              height="941"
-              src="/eclipse-electrical-grid.webp"
-              width="1672"
+              height="936"
+              src="/media/eclipse-hero-electrician-v2.png"
+              width="1664"
             />
             <div className="home-hero-overlay" />
             <AnimatedGridPattern />
+            <div className="hero-energy-orbit" aria-hidden="true">
+              <span className="hero-energy-orbit-ring hero-energy-orbit-ring-a" />
+              <span className="hero-energy-orbit-ring hero-energy-orbit-ring-b" />
+              <span className="hero-energy-orbit-core" />
+            </div>
           </>
         }
         eyebrow={<p className="eyebrow eyebrow-amber">{page.eyebrow}</p>}

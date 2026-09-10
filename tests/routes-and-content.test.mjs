@@ -165,7 +165,8 @@ test("renders verified hero badges and mobile call actions", async () => {
   assert.match(frenchHtml, /hero-trust-badges/);
   assert.match(frenchHtml, /Maître électricien/);
   assert.match(frenchHtml, /RBQ 5582-0096-01/);
-  assert.match(frenchHtml, /Service d’urgence/);
+  assert.match(frenchHtml, /Territoire desservi/);
+  assert.match(frenchHtml, /50 secteurs/);
   assert.match(frenchHtml, /mobile-action-bar/);
   assert.match(frenchHtml, /Actions rapides/);
   assert.match(frenchHtml, /tel:\+15145101112/);
