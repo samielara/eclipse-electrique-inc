@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ServiceCard } from "@/components/service-card";
 import type { LocalizedPage } from "@/content/site-content";
@@ -16,6 +16,7 @@ export function ServiceCarousel({ locale, items, actionLabel }: { locale: Locale
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -33,6 +34,10 @@ export function ServiceCarousel({ locale, items, actionLabel }: { locale: Locale
 
   const select = (index: number) => setActive((index + items.length) % items.length);
   const item = items[active];
+  const setDepth = (x = 0, y = 0) => {
+    stageRef.current?.style.setProperty("--service-depth-x", `${x}px`);
+    stageRef.current?.style.setProperty("--service-depth-y", `${y}px`);
+  };
 
   return (
     <div
@@ -42,10 +47,22 @@ export function ServiceCarousel({ locale, items, actionLabel }: { locale: Locale
       onFocus={() => setPaused(true)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}
     >
-      <div className="service-carousel-stage" aria-live="polite">
-        <div className="service-carousel-card">
-          <span className="service-carousel-index">0{active + 1} / 0{items.length}</span>
-          <ServiceCard actionLabel={actionLabel} locale={locale} page={item.page} serviceId={item.id} />
+      <div
+        aria-live="polite"
+        className="service-carousel-stage service-carousel-stage-3d"
+        onPointerLeave={() => setDepth()}
+        onPointerMove={(event) => {
+          if (reducedMotion || event.pointerType !== "mouse") return;
+          const bounds = event.currentTarget.getBoundingClientRect();
+          setDepth(Math.max(-8, Math.min(8, ((event.clientX - bounds.left) / bounds.width - 0.5) * 16)), Math.max(-6, Math.min(6, ((event.clientY - bounds.top) / bounds.height - 0.5) * 12)));
+        }}
+        ref={stageRef}
+      >
+        <div className="service-carousel-surface">
+          <div className="service-carousel-card" key={item.id}>
+            <span className="service-carousel-index">0{active + 1} / 0{items.length}</span>
+            <ServiceCard actionLabel={actionLabel} locale={locale} page={item.page} serviceId={item.id} />
+          </div>
         </div>
       </div>
       <div className="service-carousel-controls">
@@ -59,7 +76,7 @@ export function ServiceCarousel({ locale, items, actionLabel }: { locale: Locale
               onClick={() => select(index)}
               role="tab"
               type="button"
-            />
+            ><span className="service-carousel-tab-label">{entry.page.eyebrow}</span></button>
           ))}
         </div>
         <div className="service-carousel-actions">

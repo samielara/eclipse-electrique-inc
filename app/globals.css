@@ -2138,9 +2138,36 @@ textarea {
   padding-top: 1.75rem;
 }
 
+.service-carousel-stage-3d {
+  --service-depth-x: 0px;
+  --service-depth-y: 0px;
+  perspective: 1200px;
+}
+
+.service-carousel-surface {
+  position: relative;
+  transform: rotateX(calc(var(--service-depth-y) * -0.45)) rotateY(calc(var(--service-depth-x) * 0.48));
+  transform-style: preserve-3d;
+  transition: transform 420ms cubic-bezier(.2,.75,.25,1);
+  will-change: transform;
+}
+
 .service-carousel-card {
   position: relative;
   animation: carousel-card-in 600ms cubic-bezier(.2,.75,.25,1) both;
+  transform: translateZ(0);
+}
+
+.service-carousel-card::after {
+  position: absolute;
+  z-index: -1;
+  inset: 11% 7% -4%;
+  background: radial-gradient(ellipse, rgba(245, 158, 11, 0.23), transparent 68%);
+  filter: blur(28px);
+  content: "";
+  opacity: 0.72;
+  transform: translateZ(-42px);
+  pointer-events: none;
 }
 
 @keyframes carousel-card-in {
@@ -2215,19 +2242,32 @@ textarea {
 }
 
 .service-carousel-dots button {
-  width: 2.7rem;
-  height: 0.3rem;
+  min-width: 6.5rem;
+  height: 2.5rem;
+  padding: 0 0.1rem 0.55rem;
   border: 0;
-  border-radius: 999px;
-  background: #cbd5dc;
+  border-bottom: 1px solid rgba(169, 190, 207, 0.36);
+  border-radius: 0;
+  background: transparent;
+  color: var(--steel);
   cursor: pointer;
-  transition: background 180ms ease, width 180ms ease;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease;
 }
 
 .service-carousel-dots button.is-active {
-  width: 4.5rem;
-  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--amber);
 }
+
+.service-carousel-dots button:hover,
+.service-carousel-dots button:focus-visible { border-color: var(--amber); color: var(--amber); }
+
+.service-carousel-dots button:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
 
 .service-carousel-actions button {
   display: grid;
@@ -2252,7 +2292,7 @@ textarea {
 .service-carousel-actions svg { width: 1.05rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-carousel-card,
+  .service-carousel-card, .service-carousel-surface,
   .service-carousel-actions button,
   .service-carousel-dots button { animation: none !important; transition: none !important; transform: none !important; }
 }
@@ -2264,6 +2304,8 @@ textarea {
   .service-carousel-card .service-card h3 { max-width: 100%; font-size: clamp(1.65rem, 9.5vw, 2.55rem); }
   .service-carousel-card .service-card > p:not(.service-eyebrow) { font-size: 0.95rem; }
   .service-carousel-controls { align-items: flex-start; flex-direction: column; }
+  .service-carousel-dots { width: 100%; gap: 0.45rem; }
+  .service-carousel-dots button { min-width: 0; flex: 1; font-size: 0.58rem; letter-spacing: 0.04em; }
   .service-carousel-actions { align-self: flex-end; }
 }
 

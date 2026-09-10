@@ -198,6 +198,9 @@ test("homepage uses visual service choices without repeating the long capability
   );
 
   assert.match(html, /class="service-carousel"/);
+  assert.match(html, /service-carousel-stage service-carousel-stage-3d/);
+  assert.match(html, /class="service-carousel-surface"/);
+  assert.match(html, /class="service-carousel-tab-label">Residential/);
   assert.match(html, /eclipse-residential-electrician-v1\.png/);
   assert.match(html, /media\/electrical-testing\.webp/);
   assert.match(html, /media\/industrial-panel\.webp/);
