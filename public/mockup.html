@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Éclipse Électrique Inc. — Votre Électricien De Choix (UI Mockup)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-black: #05070a;
+      --gold: #d4af37;
+      --gold-light: #fef08a;
+      --cyan: #38bdf8;
+      --font-serif: 'Cinzel', serif;
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: #f8fafc;
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    .font-serif { font-family: var(--font-serif); }
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); }
+
+    .glass-hud {
+      background: rgba(8, 12, 20, 0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .glass-hud-hover:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+      box-shadow: 0 16px 40px -10px rgba(212, 175, 55, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .gold-metallic {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef08a 25%, #d4af37 60%, #b45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.45));
+    }
+
+    .cinematic-vignette {
+      background: 
+        radial-gradient(ellipse 75% 65% at 50% 50%, rgba(5, 7, 10, 0.2) 0%, rgba(5, 7, 10, 0.78) 60%, #05070a 100%),
+        linear-gradient(180deg, rgba(5, 7, 10, 0.85) 0%, transparent 20%, transparent 80%, #05070a 100%);
+    }
+
+    /* Scroll progress indicator */
+    .scroll-rail-progress {
+      background: linear-gradient(180deg, #38bdf8, #d4af37);
+      box-shadow: 0 0 12px #d4af37;
+    }
+  </style>
+</head>
+<body class="selection:bg-amber-400/20 selection:text-amber-200">
+
+  <!-- ========================================================================= -->
+  <!-- TOP OPERATIONAL STATUS TICKER (AUTHENTIC BUSINESS HOURS & ADDRESS)         -->
+  <!-- ========================================================================= -->
+  <div class="bg-black/90 border-b border-white/10 py-1.5 px-4 text-xs font-mono text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5 text-emerald-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>DISPATCH EN SERVICE 24/7</span>
+        </span>
+        <span class="hidden md:inline text-slate-500">|</span>
+        <span class="hidden md:inline">Bureau : Lun - Ven 7h00 - 17h00</span>
+        <span class="hidden lg:inline text-slate-500">|</span>
+        <span class="hidden lg:inline text-slate-300">📍 9005 Rue du Champ-d'Eau, Saint-Léonard, QC</span>
+      </div>
+      <div class="flex items-center gap-4 text-amber-300 font-semibold">
+        <a href="tel:5149551112" class="hover:underline">Bureau : (514) 955-1112</a>
+        <span>•</span>
+        <a href="tel:5147179277" class="text-red-400 hover:underline flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+          <span>Urgence : (514) 717-9277</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- FLOATING LUXURY NAVIGATION DOCK                                           -->
+  <!-- ========================================================================= -->
+  <header class="fixed top-12 inset-x-0 z-50 max-w-7xl mx-auto px-4">
+    <nav class="glass-hud rounded-full px-6 py-3 flex items-center justify-between shadow-2xl border border-white/15">
+      
+      <!-- Brand & RBQ License -->
+      <a href="#" class="flex items-center gap-3.5 group">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-200 flex items-center justify-center text-black font-display font-black text-base shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform">
+          ✦
+        </div>
+        <div>
+          <div class="font-serif tracking-[0.16em] text-sm font-bold text-white uppercase flex items-center gap-2">
+            <span>Éclipse Électrique</span>
+            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">CMEQ</span>
+          </div>
+          <span class="text-[9px] font-mono tracking-widest text-slate-400 block uppercase">Licence RBQ #5582-0096-01 · Depuis 2008</span>
+        </div>
+      </a>
+
+      <!-- The 5 Core Pillars from eclipseelectrique.com -->
+      <div class="hidden xl:flex items-center gap-7 text-xs font-mono tracking-wider text-slate-300 uppercase">
+        <a href="#residentiel" class="hover:text-amber-300 transition-colors">Résidentiel</a>
+        <a href="#commercial" class="hover:text-amber-300 transition-colors">Commercial</a>
+        <a href="#industriel" class="hover:text-amber-300 transition-colors">Industriel</a>
+        <a href="#maintenance" class="hover:text-amber-300 transition-colors">Maintenance</a>
+        <a href="#generac" class="hover:text-amber-300 transition-colors">Produits Generac</a>
+        <a href="#territoire" class="hover:text-amber-300 transition-colors">50 Villes</a>
+      </div>
+
+      <!-- Action & Lang Toggle -->
+      <div class="flex items-center gap-3">
+        <button onclick="toggleLang()" id="lang-btn" class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-[11px] font-mono text-slate-200 border border-white/10 transition-all">
+          <span class="text-amber-300 font-bold">FR</span> | EN
+        </button>
+
+        <a href="#soumission" class="px-5 py-2 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-bold text-xs font-mono tracking-wider uppercase shadow-xl shadow-amber-500/25 transition-all transform active:scale-95">
+          <span id="nav-cta-text">Soumission Rapide →</span>
+        </a>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- SIDE SCROLL TRACKER HUD (BUILD WITH BEN ARCHITECTURE)                     -->
+  <!-- ========================================================================= -->
+  <aside class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-4">
+    <div id="hud-0" class="text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all">01 · EXPÉRIENCE</div>
+    <div class="h-14 w-[2px] bg-white/10 relative rounded-full overflow-hidden">
+      <div id="hud-bar-1" class="absolute top-0 inset-x-0 h-0 scroll-rail-progress transition-all duration-75"></div>
+    </div>
+    <div id="hud-1" class="text-[10px] font-mono tracking-widest text-slate-500 transition-all">02 · 5 PILIERS</div>
+    <div class="h-14 w-[2px] bg-white/10 relative rounded-full overflow-hidden">
+      <div id="hud-bar-2" class="absolute top-0 inset-x-0 h-0 scroll-rail-progress transition-all duration-75"></div>
+    </div>
+    <div id="hud-2" class="text-[10px] font-mono tracking-widest text-slate-500 transition-all">03 · GARANTIE</div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 320VH STICKY SCROLL CANVAS (BUILD WITH BEN METHODOLOGY)                   -->
+  <!-- ========================================================================= -->
+  <section id="scroll-stage" class="relative h-[320vh]">
+    <div class="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+
+      <!-- BACKGROUND VISUAL 1: ARCHITECTURAL MONTREAL RESIDENTIAL & EV CHARGING -->
+      <div id="hero-bg-1" class="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+           style="background-image: url('/media/landing-hero-exterior.jpg'); transform: scale(1.05);">
+      </div>
+
+      <!-- BACKGROUND VISUAL 2: PRECISION TORQUE WIRING (200A CMEQ PANEL) -->
+      <div id="hero-bg-2" class="absolute inset-0 z-0 bg-cover bg-center opacity-0 transition-opacity duration-700"
+           style="background-image: url('/media/landing-craftsmanship.jpg'); transform: scale(1.05);">
+      </div>
+
+      <!-- VOLUMETRIC VIGNETTE -->
+      <div class="absolute inset-0 z-10 cinematic-vignette pointer-events-none"></div>
+
+      <!-- =================================================================== -->
+      <!-- CHAPTER 0: BUSINESS HOOK (AUTHENTIC ECLIPSE ELECTRIQUE LANGUAGE)    -->
+      <!-- =================================================================== -->
+      <div id="chap-0" class="relative z-20 max-w-5xl mx-auto px-6 text-center space-y-6 transition-all duration-500">
+        
+        <!-- Authentic Slogan Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-hud text-xs font-mono text-amber-300 border border-amber-500/30 shadow-lg">
+          <span>✦</span>
+          <span id="txt-slogan">VOTRE ÉLECTRICIEN DE CHOIX DANS LE GRAND MONTRÉAL</span>
+        </div>
+
+        <!-- Luxury Editorial Title -->
+        <h1 class="font-serif font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.04em] uppercase text-white leading-[0.98]">
+          <span id="txt-h1-1">Notre Expérience</span><br>
+          <span id="txt-h1-2" class="gold-metallic">Fait La Différence</span>
+        </h1>
+
+        <!-- Subtitle from eclipseelectrique.com -->
+        <p id="txt-desc" class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+          Pour tous vos besoins électriques résidentiels, commerciaux et industriels. Électriciens hautement qualifiés, courtois et certifiés CMEQ. Une satisfaction garantie à 100%.
+        </p>
+
+        <!-- CTAs with Emergency Button -->
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
+          <a href="#soumission" class="px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-bold text-xs font-mono tracking-[0.16em] uppercase shadow-2xl shadow-amber-500/30 hover:scale-105 transition-all">
+            <span id="txt-btn-quote">Demander une soumission gratuite →</span>
+          </a>
+
+          <a href="tel:5147179277" class="px-7 py-4 rounded-full glass-hud glass-hud-hover text-slate-200 text-xs font-mono tracking-wider transition-all flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+            <span id="txt-btn-emergency">Urgence 24/7 : (514) 717-9277</span>
+          </a>
+        </div>
+
+        <!-- Scroll Cue -->
+        <div class="pt-6 flex flex-col items-center gap-1.5 text-slate-400 font-mono text-xs tracking-widest uppercase">
+          <span id="txt-scroll-cue">Défiler pour découvrir nos 5 spécialités</span>
+          <span class="animate-bounce">↓</span>
+        </div>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- CHAPTER 1: THE 5 SERVICE PILLARS (DIRECTLY FROM eclipseelectrique.com) -->
+      <!-- =================================================================== -->
+      <div id="chap-1" class="absolute z-20 max-w-6xl mx-auto px-6 text-center space-y-6 opacity-0 pointer-events-none transition-all duration-500 translate-y-8">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-hud text-xs font-mono text-cyan-300 border border-cyan-500/30">
+          <span>01 / NOS SERVICES POUR VOUS</span>
+        </div>
+
+        <h2 class="font-serif font-black text-3xl sm:text-5xl md:text-6xl tracking-[0.04em] uppercase text-white leading-tight">
+          <span id="txt-c1-h1">5 Pôles D'Excellence.</span><br>
+          <span id="txt-c1-h2" class="gold-metallic">Une Maîtrise Totale.</span>
+        </h2>
+
+        <!-- The 5 Exact Pillars Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-2 text-left font-mono">
+          
+          <!-- Pillar 1: Résidentiel -->
+          <div class="p-4 rounded-2xl glass-hud glass-hud-hover space-y-2">
+            <div class="text-amber-300 text-base font-bold flex items-center gap-2">
+              <span>🏠</span><span>RÉSIDENTIEL</span>
+            </div>
+            <ul class="text-[11px] text-slate-300 space-y-1">
+              <li>• Entrée & Panneau électrique</li>
+              <li>• Éclairage & Potlights</li>
+              <li>• Chauffage & Convecteurs</li>
+              <li>• Spa, Piscine & Bornes VE</li>
+              <li>• Domotique & Réparation</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 2: Commercial -->
+          <div class="p-4 rounded-2xl glass-hud glass-hud-hover space-y-2">
+            <div class="text-cyan-300 text-base font-bold flex items-center gap-2">
+              <span>🏢</span><span>COMMERCIAL</span>
+            </div>
+            <ul class="text-[11px] text-slate-300 space-y-1">
+              <li>• Panneaux & Distribution</li>
+              <li>• Contrôle d'éclairage DEL</li>
+              <li>• Câblage réseau structuré</li>
+              <li>• Systèmes de sécurité</li>
+              <li>• Caméras de surveillance</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 3: Industriel -->
+          <div class="p-4 rounded-2xl glass-hud glass-hud-hover space-y-2">
+            <div class="text-emerald-300 text-base font-bold flex items-center gap-2">
+              <span>🏭</span><span>INDUSTRIEL</span>
+            </div>
+            <ul class="text-[11px] text-slate-300 space-y-1">
+              <li>• Alimentation 600V triphasé</li>
+              <li>• Installation machineries</li>
+              <li>• Sous-stations & Transformateurs</li>
+              <li>• Éclairage grande hauteur</li>
+              <li>• Automatisation d'usine</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 4: Maintenance & FLIR -->
+          <div class="p-4 rounded-2xl glass-hud glass-hud-hover space-y-2">
+            <div class="text-purple-300 text-base font-bold flex items-center gap-2">
+              <span>🔧</span><span>MAINTENANCE</span>
+            </div>
+            <ul class="text-[11px] text-slate-300 space-y-1">
+              <li>• Diagnostic préventif FLIR</li>
+              <li>• Inspection de conformité</li>
+              <li>• Étude d'efficacité énergétique</li>
+              <li>• Dépannage urgent 24/7</li>
+              <li>• Solutions sur mesure</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 5: Produits Generac -->
+          <div class="p-4 rounded-2xl glass-hud glass-hud-hover space-y-2">
+            <div class="text-amber-400 text-base font-bold flex items-center gap-2">
+              <span>⚡</span><span>PRODUITS GENERAC</span>
+            </div>
+            <ul class="text-[11px] text-slate-300 space-y-1">
+              <li>• Détaillant autorisé Generac</li>
+              <li>• Génératrices de secours</li>
+              <li>• Commutateurs de transfert</li>
+              <li>• Solaire + Stockage batterie</li>
+              <li>• Pièces & Entretien certifié</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- CHAPTER 2: TERRITORY & ASSURANCE (50 MUNICIPALITIES & CMEQ)        -->
+      <!-- =================================================================== -->
+      <div id="chap-2" class="absolute z-20 max-w-5xl mx-auto px-6 text-center space-y-6 opacity-0 pointer-events-none transition-all duration-500 translate-y-8">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-hud text-xs font-mono text-emerald-300 border border-emerald-500/30">
+          <span>02 / TERRITOIRE & CONFORMITÉ</span>
+        </div>
+
+        <h2 class="font-serif font-black text-3xl sm:text-5xl md:text-6xl tracking-[0.04em] uppercase text-white leading-tight">
+          <span id="txt-c2-h1">50 Villes Desservies.</span><br>
+          <span id="txt-c2-h2" class="gold-metallic">Satisfaction Garantie.</span>
+        </h2>
+
+        <p id="txt-c2-desc" class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+          Montréal, Rive-Sud et Rive-Nord. Nos camions de service sont déployés avec outillage de pointe et respect absolu des normes du Code de l'électricité du Québec.
+        </p>
+
+        <!-- Direct Action Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto pt-2 font-mono text-left">
+          <div class="p-4 rounded-xl glass-hud">
+            <div class="text-xs text-slate-400 uppercase">SIÈGE SOCIAL</div>
+            <div class="text-sm font-bold text-white mt-1">9005 Rue du Champ-d'Eau</div>
+            <div class="text-[11px] text-slate-400">Saint-Léonard, QC H1P 3M3</div>
+          </div>
+          <div class="p-4 rounded-xl glass-hud">
+            <div class="text-xs text-slate-400 uppercase">LIGNE DIRECTE BUREAU</div>
+            <div class="text-sm font-bold text-amber-300 mt-1">(514) 955-1112</div>
+            <div class="text-[11px] text-slate-400">Lun - Ven 7h00 à 17h00</div>
+          </div>
+          <div class="p-4 rounded-xl glass-hud">
+            <div class="text-xs text-slate-400 uppercase">SERVICE D'URGENCE</div>
+            <div class="text-sm font-bold text-red-400 mt-1">(514) 717-9277</div>
+            <div class="text-[11px] text-emerald-400">24 Heures / 7 Jours</div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
+          <a href="#soumission" class="px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-bold text-xs font-mono tracking-[0.16em] uppercase shadow-2xl shadow-amber-500/30 hover:scale-105 transition-all">
+            Demander une soumission →
+          </a>
+          <a href="mailto:info@eclipseelectrique.com" class="px-7 py-4 rounded-full glass-hud glass-hud-hover text-slate-200 text-xs font-mono tracking-wider transition-all">
+            info@eclipseelectrique.com
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- INSTITUTIONAL SEALS RIBBON                                                -->
+  <!-- ========================================================================= -->
+  <section class="border-t border-b border-white/10 bg-black/80 py-8 relative z-30">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center text-[10px] font-mono tracking-[0.24em] text-slate-400 uppercase mb-6">
+        ACCRÉDITATIONS OFFICIELLES & NORMES HYDRO-QUÉBEC
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center font-mono">
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-amber-300">CMEQ</div>
+          <div class="text-[11px] text-slate-400 mt-1">Maître Électricien</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-amber-300">RBQ #5582-0096-01</div>
+          <div class="text-[11px] text-slate-400 mt-1">Licencié Depuis 2008</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-cyan-300">CCQ CERTIFIÉ</div>
+          <div class="text-[11px] text-slate-400 mt-1">Compagnons Qualifiés</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-amber-300">GENERAC</div>
+          <div class="text-[11px] text-slate-400 mt-1">Détaillant Autorisé</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-cyan-300">HYDRO-QUÉBEC</div>
+          <div class="text-[11px] text-slate-400 mt-1">Normes du Code</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-emerald-300">APCHQ</div>
+          <div class="text-[11px] text-slate-400 mt-1">Membre en Règle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: SCROLL CONTROLLER & LANGUAGE TOGGLE                           -->
+  <!-- ========================================================================= -->
+  <script>
+    let currentLang = 'fr';
+
+    const stage = document.getElementById('scroll-stage');
+    const bg1 = document.getElementById('hero-bg-1');
+    const bg2 = document.getElementById('hero-bg-2');
+    const ch0 = document.getElementById('chap-0');
+    const ch1 = document.getElementById('chap-1');
+    const ch2 = document.getElementById('chap-2');
+
+    const hud0 = document.getElementById('hud-0');
+    const hud1 = document.getElementById('hud-1');
+    const hud2 = document.getElementById('hud-2');
+    const hudBar1 = document.getElementById('hud-bar-1');
+    const hudBar2 = document.getElementById('hud-bar-2');
+
+    window.addEventListener('scroll', () => {
+      const stageRect = stage.getBoundingClientRect();
+      const stageHeight = stage.offsetHeight - window.innerHeight;
+      const progress = Math.min(1, Math.max(0, -stageRect.top / stageHeight));
+
+      // 1. Smooth Background Parallax Scale
+      const scale = 1.05 + progress * 0.14;
+      bg1.style.transform = `scale(${scale})`;
+
+      // 2. Crossfade between Architectural Exterior and Master Panel Wiring
+      if (progress > 0.35 && progress < 0.85) {
+        const fade = (progress - 0.35) / 0.35;
+        bg2.style.opacity = Math.min(1, Math.max(0, fade));
+      } else if (progress <= 0.35) {
+        bg2.style.opacity = 0;
+      }
+
+      // 3. Narrative Chapter Transitions
+      if (progress < 0.30) {
+        ch0.style.opacity = 1 - progress * 2.8;
+        ch0.style.transform = `translateY(-${progress * 80}px)`;
+        ch0.style.pointerEvents = 'auto';
+
+        ch1.style.opacity = 0;
+        ch1.style.pointerEvents = 'none';
+        ch2.style.opacity = 0;
+        ch2.style.pointerEvents = 'none';
+
+        hud0.className = "text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all";
+        hud1.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud2.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hudBar1.style.height = `${(progress / 0.35) * 100}%`;
+        hudBar2.style.height = '0%';
+      } 
+      else if (progress >= 0.30 && progress < 0.70) {
+        ch0.style.opacity = 0;
+        ch0.style.pointerEvents = 'none';
+
+        const c1Progress = (progress - 0.30) / 0.40;
+        const c1Opacity = c1Progress < 0.5 ? c1Progress * 2 : (1 - (c1Progress - 0.5) * 2);
+
+        ch1.style.opacity = Math.min(1, Math.max(0, c1Opacity * 1.5));
+        ch1.style.transform = `translateY(${(1 - c1Progress) * 20 - 10}px)`;
+        ch1.style.pointerEvents = c1Opacity > 0.4 ? 'auto' : 'none';
+
+        ch2.style.opacity = 0;
+        ch2.style.pointerEvents = 'none';
+
+        hud0.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud1.className = "text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all";
+        hud2.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hudBar1.style.height = '100%';
+        hudBar2.style.height = `${((progress - 0.35) / 0.35) * 100}%`;
+      } 
+      else {
+        ch0.style.opacity = 0;
+        ch0.style.pointerEvents = 'none';
+        ch1.style.opacity = 0;
+        ch1.style.pointerEvents = 'none';
+
+        const c2Progress = (progress - 0.70) / 0.30;
+        ch2.style.opacity = Math.min(1, c2Progress * 2);
+        ch2.style.transform = `translateY(${(1 - Math.min(1, c2Progress * 1.5)) * 30}px)`;
+        ch2.style.pointerEvents = 'auto';
+
+        hud0.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud1.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud2.className = "text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all";
+        hudBar1.style.height = '100%';
+        hudBar2.style.height = '100%';
+      }
+    });
+
+    const langData = {
+      fr: {
+        slogan: "VOTRE ÉLECTRICIEN DE CHOIX DANS LE GRAND MONTRÉAL",
+        h11: "Notre Expérience",
+        h12: "Fait La Différence",
+        desc: "Pour tous vos besoins électriques résidentiels, commerciaux et industriels. Électriciens hautement qualifiés, courtois et certifiés CMEQ. Une satisfaction garantie à 100%.",
+        quoteBtn: "Demander une soumission gratuite →",
+        emergencyBtn: "Urgence 24/7 : (514) 717-9277",
+        scrollCue: "Défiler pour découvrir nos 5 spécialités",
+        c1h1: "5 Pôles D'Excellence.",
+        c1h2: "Une Maîtrise Totale.",
+        c2h1: "50 Villes Desservies.",
+        c2h2: "Satisfaction Garantie.",
+        c2desc: "Montréal, Rive-Sud et Rive-Nord. Nos camions de service sont déployés avec outillage de pointe et respect absolu des normes du Code de l'électricité du Québec."
+      },
+      en: {
+        slogan: "YOUR ELECTRICIAN OF CHOICE ACROSS GREATER MONTREAL",
+        h11: "Our Experience",
+        h12: "Makes The Difference",
+        desc: "For all your residential, commercial, and industrial electrical needs. Highly skilled, courteous, CMEQ-certified master electricians with 100% guaranteed satisfaction.",
+        quoteBtn: "Request Free Quote →",
+        emergencyBtn: "24/7 Emergency: (514) 717-9277",
+        scrollCue: "Scroll to explore our 5 specialties",
+        c1h1: "5 Pillars Of Mastery.",
+        c1h2: "Zero Compromise.",
+        c2h1: "50 Municipalities Covered.",
+        c2h2: "Guaranteed Satisfaction.",
+        c2desc: "Montreal, South Shore, and North Shore. Dedicated fleet dispatched with cutting-edge equipment and absolute compliance with the Quebec Electrical Code."
+      }
+    };
+
+    function toggleLang() {
+      currentLang = currentLang === 'fr' ? 'en' : 'fr';
+      const d = langData[currentLang];
+      document.getElementById('txt-slogan').textContent = d.slogan;
+      document.getElementById('txt-h1-1').textContent = d.h11;
+      document.getElementById('txt-h1-2').textContent = d.h12;
+      document.getElementById('txt-desc').textContent = d.desc;
+      document.getElementById('txt-btn-quote').textContent = d.quoteBtn;
+      document.getElementById('txt-btn-emergency').textContent = d.emergencyBtn;
+      document.getElementById('txt-scroll-cue').textContent = d.scrollCue;
+      document.getElementById('txt-c1-h1').textContent = d.c1h1;
+      document.getElementById('txt-c1-h2').textContent = d.c1h2;
+      document.getElementById('txt-c2-h1').textContent = d.c2h1;
+      document.getElementById('txt-c2-h2').textContent = d.c2h2;
+      document.getElementById('txt-c2-desc').textContent = d.c2desc;
+
+      document.getElementById('lang-btn').innerHTML = currentLang === 'fr'
+        ? '<span class="text-amber-300 font-bold">FR</span> | EN'
+        : 'FR | <span class="text-amber-300 font-bold">EN</span>';
+    }
+  </script>
+</body>
+</html>

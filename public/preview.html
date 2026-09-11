@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Éclipse Électrique Inc. — Luxury Design Studio (3 Exclusive Concepts)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-serif: 'Cinzel', serif;
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background-color: #05070a;
+      color: #f8fafc;
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease;
+    }
+
+    .font-serif { font-family: var(--font-serif); }
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); }
+
+    .glass-hud {
+      background: rgba(8, 12, 20, 0.72);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .glass-hud-hover:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .gold-metallic {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef08a 25%, #d4af37 60%, #b45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.45));
+    }
+
+    .cyan-metallic {
+      background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 30%, #00f0ff 65%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 35px rgba(0, 240, 255, 0.5));
+    }
+
+    .platinum-metallic {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 45%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.25));
+    }
+
+    .cinematic-vignette {
+      background: 
+        radial-gradient(ellipse 75% 65% at 50% 50%, rgba(5, 7, 10, 0.2) 0%, rgba(5, 7, 10, 0.78) 60%, #05070a 100%),
+        linear-gradient(180deg, rgba(5, 7, 10, 0.85) 0%, transparent 20%, transparent 80%, #05070a 100%);
+    }
+
+    .active-concept-btn {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-color: #f59e0b !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+    }
+  </style>
+</head>
+<body class="selection:bg-amber-400/20 selection:text-amber-200">
+
+  <!-- ========================================================================= -->
+  <!-- DESIGN STUDIO SWITCHER (TOP FLOATING CONTROL DOCK)                        -->
+  <!-- ========================================================================= -->
+  <aside class="fixed top-3 inset-x-0 z-[100] max-w-4xl mx-auto px-4">
+    <div class="glass-hud rounded-full p-1.5 flex items-center justify-between shadow-2xl border border-white/15 bg-black/80">
+      <div class="flex items-center gap-2 pl-3 pr-2 border-r border-white/10 text-xs font-mono">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="text-slate-300 font-bold uppercase tracking-wider text-[11px]">DESIGN STUDIO</span>
+      </div>
+
+      <!-- 3 CONCEPT SELECTORS -->
+      <div class="flex items-center gap-1.5 text-xs font-mono">
+        <button onclick="switchConcept(1)" id="tab-1" class="active-concept-btn px-3 py-1.5 rounded-full border border-transparent text-slate-300 hover:text-white transition-all">
+          ✦ Concept 1: Architectural
+        </button>
+        <button onclick="switchConcept(2)" id="tab-2" class="px-3 py-1.5 rounded-full border border-transparent text-slate-300 hover:text-white transition-all">
+          ⚡ Concept 2: High-Voltage Cyber
+        </button>
+        <button onclick="switchConcept(3)" id="tab-3" class="px-3 py-1.5 rounded-full border border-transparent text-slate-300 hover:text-white transition-all">
+          🏛 Concept 3: Swiss Minimal
+        </button>
+      </div>
+
+      <!-- Quick Language Toggle -->
+      <button onclick="toggleLang()" id="lang-btn" class="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-mono text-slate-200 transition-all mr-1">
+        FR | <span class="text-amber-300 font-bold">EN</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN SITE NAVIGATION BAR                                                  -->
+  <!-- ========================================================================= -->
+  <header class="fixed top-16 inset-x-0 z-50 max-w-6xl mx-auto px-4">
+    <nav class="glass-hud rounded-full px-6 py-3 flex items-center justify-between shadow-2xl border border-white/10">
+      <!-- Monogram & Identity -->
+      <div class="flex items-center gap-3">
+        <div id="brand-badge" class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-amber-200 flex items-center justify-center text-black font-display font-black text-sm shadow-lg shadow-amber-500/20 transition-all">
+          ✦
+        </div>
+        <div>
+          <span class="font-serif tracking-[0.18em] text-sm font-bold text-white uppercase">Éclipse</span>
+          <span id="brand-sub" class="text-[9px] font-mono tracking-widest text-amber-300 block -mt-0.5">MAÎTRE ÉLECTRICIEN · CMEQ</span>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-8 text-xs font-mono tracking-widest text-slate-300 uppercase">
+        <a href="#overview" class="hover:text-amber-300 transition-colors">Overview</a>
+        <a href="#capabilities" class="hover:text-amber-300 transition-colors">Capabilities</a>
+        <a href="#territory" class="hover:text-amber-300 transition-colors">Territory</a>
+        <a href="#contact" class="hover:text-amber-300 transition-colors">Credentials</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="tel:5147179277" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/40 border border-red-500/30 text-red-300 text-xs font-mono hover:bg-red-900/50 transition-all">
+          <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping"></span>
+          <span>(514) 717-9277</span>
+        </a>
+
+        <a href="#quote" id="nav-cta" class="px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-semibold text-xs font-mono tracking-wider uppercase shadow-lg shadow-amber-500/20 transition-all">
+          Book Master →
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- SIDE SCROLL NAVIGATION HUD                                                -->
+  <!-- ========================================================================= -->
+  <aside class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-4">
+    <div id="hud-0" class="text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all">01 · ORIGIN</div>
+    <div class="h-16 w-[2px] bg-white/10 relative rounded-full overflow-hidden">
+      <div id="hud-bar-1" class="absolute top-0 inset-x-0 h-0 bg-gradient-to-b from-cyan-400 to-amber-400 transition-all duration-75"></div>
+    </div>
+    <div id="hud-1" class="text-[10px] font-mono tracking-widest text-slate-500 transition-all">02 · POWER</div>
+    <div class="h-16 w-[2px] bg-white/10 relative rounded-full overflow-hidden">
+      <div id="hud-bar-2" class="absolute top-0 inset-x-0 h-0 bg-gradient-to-b from-cyan-400 to-amber-400 transition-all duration-75"></div>
+    </div>
+    <div id="hud-2" class="text-[10px] font-mono tracking-widest text-slate-500 transition-all">03 · VERIFIED</div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 320VH STICKY SCROLL STAGE                                                 -->
+  <!-- ========================================================================= -->
+  <section id="scroll-stage" class="relative h-[320vh]">
+    <div class="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+
+      <!-- BACKGROUND VISUALS (DYNAMICALLY CONTROLLED BY DESIGN SWITCHER & SCROLL) -->
+      <div id="hero-bg" class="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+           style="background-image: url('/media/landing-hero-exterior.jpg'); transform: scale(1.05);">
+      </div>
+
+      <!-- SECONDARY CROSSFADE LAYER -->
+      <div id="hero-bg-2" class="absolute inset-0 z-0 bg-cover bg-center opacity-0 transition-opacity duration-700"
+           style="background-image: url('/media/landing-craftsmanship.jpg'); transform: scale(1.05);">
+      </div>
+
+      <!-- VOLUMETRIC VIGNETTE OVERLAY -->
+      <div class="absolute inset-0 z-10 cinematic-vignette pointer-events-none"></div>
+
+      <!-- =================================================================== -->
+      <!-- CHAPTER 0: HERO BRAND HOOK (SCROLL 0% - 30%)                        -->
+      <!-- =================================================================== -->
+      <div id="chap-0" class="relative z-20 max-w-5xl mx-auto px-6 text-center space-y-6 transition-all duration-500">
+        
+        <div id="hero-pill" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-hud text-xs font-mono text-amber-300 border border-amber-500/30">
+          <span>✦</span>
+          <span id="txt-pill">LICENSED MASTER ELECTRICIAN · RBQ #5582-0096-01 · CMEQ</span>
+        </div>
+
+        <h1 id="hero-headline" class="font-serif font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.04em] uppercase text-white leading-[0.98]">
+          <span id="txt-title-1">The Art Of</span><br>
+          <span id="txt-title-2" class="gold-metallic">Precision Power</span>
+        </h1>
+
+        <p id="txt-desc" class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+          Montréal's elite master electrical engineering contractor. Delivering uncompromised safety, architectural lighting, and high-voltage reliability for premier residences, commercial sites, and industrial complexes.
+        </p>
+
+        <!-- CTA Action Pair -->
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
+          <a href="#quote" id="btn-primary" class="px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-black font-bold text-xs font-mono tracking-[0.16em] uppercase shadow-2xl shadow-amber-500/30 hover:scale-105 transition-all">
+            <span id="txt-cta-1">Schedule Consultation →</span>
+          </a>
+
+          <a href="tel:5147179277" class="px-7 py-4 rounded-full glass-hud glass-hud-hover text-slate-200 text-xs font-mono tracking-wider transition-all flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+            <span id="txt-cta-2">24/7 Rapid Emergency Dispatch</span>
+          </a>
+        </div>
+
+        <!-- Optional Interactive Breaker Simulator for Concept 2 -->
+        <div id="interactive-breaker-module" class="hidden max-w-2xl mx-auto pt-4 font-mono text-xs">
+          <div class="glass-hud p-4 rounded-2xl border-cyan-500/30 space-y-3">
+            <div class="flex items-center justify-between text-cyan-300 border-b border-white/10 pb-2 text-[11px]">
+              <span>⚡ HIGH-VOLTAGE DIAGNOSTIC CONSOLE</span>
+              <span class="text-emerald-400">● 240V / 60Hz STABLE</span>
+            </div>
+            <div class="grid grid-cols-4 gap-2">
+              <button onclick="toggleLoad(1)" id="load-1" class="p-2 rounded-lg bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-center font-bold">01: 200A [ON]</button>
+              <button onclick="toggleLoad(2)" id="load-2" class="p-2 rounded-lg bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-center font-bold">02: EV [ON]</button>
+              <button onclick="toggleLoad(3)" id="load-3" class="p-2 rounded-lg bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-center font-bold">03: GEN [ON]</button>
+              <button onclick="toggleLoad(4)" id="load-4" class="p-2 rounded-lg bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-center font-bold">04: FLIR [ON]</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 flex flex-col items-center gap-1.5 text-slate-400 font-mono text-xs tracking-widest uppercase">
+          <span id="txt-scroll-cue">Scroll to explore narrative</span>
+          <span class="animate-bounce">↓</span>
+        </div>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- CHAPTER 1: CRAFTSMANSHIP / PERFORMANCE (SCROLL 35% - 70%)           -->
+      <!-- =================================================================== -->
+      <div id="chap-1" class="absolute z-20 max-w-5xl mx-auto px-6 text-center space-y-6 opacity-0 pointer-events-none transition-all duration-500 translate-y-8">
+        
+        <div id="c1-pill" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-hud text-xs font-mono text-cyan-300 border border-cyan-500/30">
+          <span>01 / ENGINEERING INTEGRITY</span>
+        </div>
+
+        <h2 id="c1-headline" class="font-serif font-black text-4xl sm:text-5xl md:text-6xl tracking-[0.04em] uppercase text-white leading-tight">
+          <span id="txt-c1-title-1">Engineered For</span><br>
+          <span id="txt-c1-title-2" class="gold-metallic">Zero Failure</span>
+        </h2>
+
+        <p id="txt-c1-desc" class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+          16+ years of licensed master craftsmanship across 50 municipalities. We modernize electrical infrastructure to the strictest Hydro-Québec & CMEQ safety codes.
+        </p>
+
+        <!-- 3 Feature Glass Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 max-w-3xl mx-auto text-left font-mono">
+          <div class="p-5 rounded-2xl glass-hud glass-hud-hover space-y-1">
+            <div id="card-stat-1" class="text-amber-300 text-xl font-bold">200A / 400A</div>
+            <div class="text-xs text-white font-semibold">Service Modernization</div>
+            <div class="text-[11px] text-slate-400">Eliminate breaker trips & panel overloads.</div>
+          </div>
+          <div class="p-5 rounded-2xl glass-hud glass-hud-hover space-y-1">
+            <div id="card-stat-2" class="text-cyan-300 text-xl font-bold">LEVEL 2 & DC</div>
+            <div class="text-xs text-white font-semibold">Fast EV Infrastructure</div>
+            <div class="text-[11px] text-slate-400">Dedicated high-amperage vehicle stations.</div>
+          </div>
+          <div class="p-5 rounded-2xl glass-hud glass-hud-hover space-y-1">
+            <div id="card-stat-3" class="text-emerald-300 text-xl font-bold">GENERAC</div>
+            <div class="text-xs text-white font-semibold">Automated Backup</div>
+            <div class="text-[11px] text-slate-400">Continuous power in storm outages.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- CHAPTER 2: TERRITORY & STANDARDS (SCROLL 75% - 100%)                -->
+      <!-- =================================================================== -->
+      <div id="chap-2" class="absolute z-20 max-w-5xl mx-auto px-6 text-center space-y-6 opacity-0 pointer-events-none transition-all duration-500 translate-y-8">
+        
+        <div id="c2-pill" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-hud text-xs font-mono text-emerald-300 border border-emerald-500/30">
+          <span>02 / TERRITORY DISPATCH</span>
+        </div>
+
+        <h2 id="c2-headline" class="font-serif font-black text-4xl sm:text-5xl md:text-6xl tracking-[0.04em] uppercase text-white leading-tight">
+          <span id="txt-c2-title-1">50 Municipalities.</span><br>
+          <span id="txt-c2-title-2" class="gold-metallic">One Standard.</span>
+        </h2>
+
+        <p id="txt-c2-desc" class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+          From downtown high-rises to West Island estates and South Shore industrial hubs, our certified journeymen arrive fully equipped with upfront fixed pricing.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
+          <a href="/en/services" id="c2-cta" class="px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-black font-bold text-xs font-mono tracking-[0.16em] uppercase shadow-2xl shadow-amber-500/30 hover:scale-105 transition-all">
+            Explore 7 Core Services →
+          </a>
+          <a href="/en/service-area" class="px-7 py-4 rounded-full glass-hud glass-hud-hover text-slate-200 text-xs font-mono tracking-wider transition-all">
+            View All 50 Cities
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- INSTITUTIONAL ACCREDITATION SEALS TICKER                                  -->
+  <!-- ========================================================================= -->
+  <section class="border-t border-b border-white/10 bg-black/75 py-8 relative z-30">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center text-[10px] font-mono tracking-[0.24em] text-slate-400 uppercase mb-6">
+        INSTITUTIONAL ACCREDITATIONS & GUARANTEED CODE APPROVALS
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center font-mono">
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-amber-300">CMEQ</div>
+          <div class="text-[11px] text-slate-400 mt-1">Master Electrician</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-amber-300">RBQ #5582-0096-01</div>
+          <div class="text-[11px] text-slate-400 mt-1">Licensed Since 2008</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-cyan-300">CCQ CERTIFIÉ</div>
+          <div class="text-[11px] text-slate-400 mt-1">Certified Journeymen</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-amber-300">GENERAC</div>
+          <div class="text-[11px] text-slate-400 mt-1">Authorized Dealer</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-cyan-300">HYDRO-QUÉBEC</div>
+          <div class="text-[11px] text-slate-400 mt-1">Code Compliant</div>
+        </div>
+        <div class="p-4 rounded-xl glass-hud">
+          <div class="text-sm font-bold text-emerald-300">APCHQ</div>
+          <div class="text-[11px] text-slate-400 mt-1">Verified Member</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: CONCEPT SWITCHER & SCROLL CONTROLLER                          -->
+  <!-- ========================================================================= -->
+  <script>
+    let activeConcept = 1;
+    let currentLang = 'en';
+
+    const concepts = {
+      1: {
+        name: "Architectural Luminary",
+        bg1: "/media/landing-hero-exterior.jpg",
+        bg2: "/media/landing-craftsmanship.jpg",
+        fontClass: "font-serif",
+        headlineGradient: "gold-metallic",
+        pillText: "LICENSED MASTER ELECTRICIAN · RBQ #5582-0096-01 · CMEQ",
+        title1: "The Art Of",
+        title2: "Precision Power",
+        desc: "Montréal's elite master electrical engineering contractor. Delivering uncompromised safety, architectural lighting, and high-voltage reliability for premier residences, commercial sites, and industrial complexes.",
+        btnGradient: "from-amber-400 via-amber-300 to-amber-500",
+        showBreakers: false,
+        themeColor: "#f59e0b"
+      },
+      2: {
+        name: "High-Voltage Cyber-Grid",
+        bg1: "/media/concept-cyber-highvoltage.jpg",
+        bg2: "/media/industrial-panel.webp",
+        fontClass: "font-display",
+        headlineGradient: "cyan-metallic",
+        pillText: "⚡ MISSION-CRITICAL POWER GRID · 100% HYDRO-QUÉBEC CODE",
+        title1: "KINETIC POWER.",
+        title2: "ZERO DOWNTIME.",
+        desc: "High-voltage substation engineering, automated backup power systems, and real-time electrical diagnostic solutions across Greater Montréal & South Shore.",
+        btnGradient: "from-cyan-400 via-sky-400 to-blue-500",
+        showBreakers: true,
+        themeColor: "#00f0ff"
+      },
+      3: {
+        name: "Swiss Minimalist Villa",
+        bg1: "/media/concept-swiss-architectural.jpg",
+        bg2: "/media/landing-craftsmanship.jpg",
+        fontClass: "font-display",
+        headlineGradient: "platinum-metallic",
+        pillText: "ARCHITECTURAL ELECTRICAL ENGINEERING · EST. 2008",
+        title1: "INVISIBLE PRECISION.",
+        title2: "TOTAL RELIABILITY.",
+        desc: "Bespoke architectural illumination and high-amperage engineering for distinguished private estates, corporate headquarters, and architectural landmarks.",
+        btnGradient: "from-slate-100 via-white to-slate-200",
+        showBreakers: false,
+        themeColor: "#ffffff"
+      }
+    };
+
+    function switchConcept(id) {
+      activeConcept = id;
+      const c = concepts[id];
+
+      // Update switcher active tab
+      [1, 2, 3].forEach(n => {
+        document.getElementById('tab-' + n).className = (n === id)
+          ? "active-concept-btn px-3 py-1.5 rounded-full border border-transparent text-slate-300 hover:text-white transition-all"
+          : "px-3 py-1.5 rounded-full border border-transparent text-slate-300 hover:text-white transition-all";
+      });
+
+      // Update background imagery
+      document.getElementById('hero-bg').style.backgroundImage = `url('${c.bg1}')`;
+      document.getElementById('hero-bg-2').style.backgroundImage = `url('${c.bg2}')`;
+
+      // Update Typography & Headline
+      const h1 = document.getElementById('hero-headline');
+      h1.className = `${c.fontClass} font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.04em] uppercase text-white leading-[0.98]`;
+      document.getElementById('txt-title-1').textContent = c.title1;
+      
+      const t2 = document.getElementById('txt-title-2');
+      t2.className = c.headlineGradient;
+      t2.textContent = c.title2;
+
+      document.getElementById('txt-desc').textContent = c.desc;
+      document.getElementById('txt-pill').textContent = c.pillText;
+
+      // Update Button Styles
+      const btn = document.getElementById('btn-primary');
+      btn.className = `px-8 py-4 rounded-full bg-gradient-to-r ${c.btnGradient} text-black font-bold text-xs font-mono tracking-[0.16em] uppercase shadow-2xl hover:scale-105 transition-all`;
+
+      // Show/Hide Interactive Console
+      const consoleEl = document.getElementById('interactive-breaker-module');
+      if (c.showBreakers) {
+        consoleEl.classList.remove('hidden');
+      } else {
+        consoleEl.classList.add('hidden');
+      }
+    }
+
+    function toggleLoad(id) {
+      const b = document.getElementById('load-' + id);
+      if (b.classList.contains('bg-emerald-950/50')) {
+        b.className = "p-2 rounded-lg bg-red-950/50 border border-red-500/40 text-red-300 text-center font-bold";
+        b.textContent = b.textContent.replace('[ON]', '[TRIP]');
+      } else {
+        b.className = "p-2 rounded-lg bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-center font-bold";
+        b.textContent = b.textContent.replace('[TRIP]', '[ON]');
+      }
+    }
+
+    // Scroll Scrubbing Engine
+    const stage = document.getElementById('scroll-stage');
+    const bg1 = document.getElementById('hero-bg');
+    const bg2 = document.getElementById('hero-bg-2');
+    const ch0 = document.getElementById('chap-0');
+    const ch1 = document.getElementById('chap-1');
+    const ch2 = document.getElementById('chap-2');
+
+    const hud0 = document.getElementById('hud-0');
+    const hud1 = document.getElementById('hud-1');
+    const hud2 = document.getElementById('hud-2');
+    const hudBar1 = document.getElementById('hud-bar-1');
+    const hudBar2 = document.getElementById('hud-bar-2');
+
+    window.addEventListener('scroll', () => {
+      const stageRect = stage.getBoundingClientRect();
+      const stageHeight = stage.offsetHeight - window.innerHeight;
+      const progress = Math.min(1, Math.max(0, -stageRect.top / stageHeight));
+
+      // 1. Camera Zoom Scale
+      const scale = 1.05 + progress * 0.14;
+      bg1.style.transform = `scale(${scale})`;
+
+      // 2. Layer 2 crossfade
+      if (progress > 0.35 && progress < 0.85) {
+        const fade = (progress - 0.35) / 0.35;
+        bg2.style.opacity = Math.min(1, Math.max(0, fade));
+      } else if (progress <= 0.35) {
+        bg2.style.opacity = 0;
+      }
+
+      // 3. Narrative Chapters
+      if (progress < 0.30) {
+        ch0.style.opacity = 1 - progress * 2.8;
+        ch0.style.transform = `translateY(-${progress * 80}px)`;
+        ch0.style.pointerEvents = 'auto';
+
+        ch1.style.opacity = 0;
+        ch1.style.pointerEvents = 'none';
+        ch2.style.opacity = 0;
+        ch2.style.pointerEvents = 'none';
+
+        hud0.className = "text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all";
+        hud1.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud2.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hudBar1.style.height = `${(progress / 0.35) * 100}%`;
+        hudBar2.style.height = '0%';
+      } 
+      else if (progress >= 0.30 && progress < 0.70) {
+        ch0.style.opacity = 0;
+        ch0.style.pointerEvents = 'none';
+
+        const c1Progress = (progress - 0.30) / 0.40;
+        const c1Opacity = c1Progress < 0.5 ? c1Progress * 2 : (1 - (c1Progress - 0.5) * 2);
+
+        ch1.style.opacity = Math.min(1, Math.max(0, c1Opacity * 1.5));
+        ch1.style.transform = `translateY(${(1 - c1Progress) * 20 - 10}px)`;
+        ch1.style.pointerEvents = c1Opacity > 0.4 ? 'auto' : 'none';
+
+        ch2.style.opacity = 0;
+        ch2.style.pointerEvents = 'none';
+
+        hud0.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud1.className = "text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all";
+        hud2.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hudBar1.style.height = '100%';
+        hudBar2.style.height = `${((progress - 0.35) / 0.35) * 100}%`;
+      } 
+      else {
+        ch0.style.opacity = 0;
+        ch0.style.pointerEvents = 'none';
+        ch1.style.opacity = 0;
+        ch1.style.pointerEvents = 'none';
+
+        const c2Progress = (progress - 0.70) / 0.30;
+        ch2.style.opacity = Math.min(1, c2Progress * 2);
+        ch2.style.transform = `translateY(${(1 - Math.min(1, c2Progress * 1.5)) * 30}px)`;
+        ch2.style.pointerEvents = 'auto';
+
+        hud0.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud1.className = "text-[10px] font-mono tracking-widest text-slate-500 transition-all";
+        hud2.className = "text-[10px] font-mono tracking-widest text-amber-300 font-bold transition-all";
+        hudBar1.style.height = '100%';
+        hudBar2.style.height = '100%';
+      }
+    });
+
+    function toggleLang() {
+      currentLang = currentLang === 'en' ? 'fr' : 'en';
+      document.getElementById('lang-btn').innerHTML = currentLang === 'en'
+        ? 'FR | <span class="text-amber-300 font-bold">EN</span>'
+        : '<span class="text-amber-300 font-bold">FR</span> | EN';
+      switchConcept(activeConcept);
+    }
+  </script>
+</body>
+</html>

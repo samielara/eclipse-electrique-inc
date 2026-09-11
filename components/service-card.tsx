@@ -96,6 +96,16 @@ export function ServiceCard({
       <p className="service-eyebrow">{page.eyebrow}</p>
       <h3 data-testid="service-card-title">{page.title}</h3>
       <p>{page.intro}</p>
+      {page.items && (
+        <ul className="service-card-highlights">
+          {page.items.slice(0, 3).map((highlight) => (
+            <li key={highlight}>
+              <span className="service-highlight-bullet" aria-hidden="true" />
+              <span>{highlight}</span>
+            </li>
+          ))}
+        </ul>
+      )}
       <a data-testid="service-card-link" className="service-card-link" href={pathFor(serviceId, locale)}>
         {actionLabel}
         <ArrowUpRight aria-hidden="true" />

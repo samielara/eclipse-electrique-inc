@@ -16,7 +16,7 @@ import {
   ShieldCheck,
   Zap,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -60,8 +60,85 @@ const regionIcons: Record<CityRegion, typeof MapPin> = {
   southShore: Building,
 };
 
+const serviceMicroCopy: Record<Locale, Record<ServicePageId, string>> = {
+  fr: {
+    residential: "Panneaux, filage & réno",
+    commercial: "Bureaux, commerces & conformité",
+    industrial: "Équipements, moteurs & 600V",
+    maintenance: "Urgence 24/7 & entretien",
+    generators: "Alimentation de secours",
+    thermography: "Diagnostic infrarouge FLIR",
+    security: "Alarmes, caméras & accès",
+  },
+  en: {
+    residential: "Panels, wiring & renovations",
+    commercial: "Offices, retail & compliance",
+    industrial: "Machinery, motors & 600V",
+    maintenance: "24/7 emergency & maintenance",
+    generators: "Backup power & transfer",
+    thermography: "FLIR thermal diagnostics",
+    security: "Fire alarms, access & cameras",
+  },
+};
+
 export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const servicesDropdownRef = useRef<HTMLDetailsElement>(null);
+  const areaDropdownRef = useRef<HTMLDetailsElement>(null);
+
+  const [selectedRegion, setSelectedRegion] = useState<CityRegion>("montreal");
+
+  const closeDropdowns = () => {
+    if (servicesDropdownRef.current) servicesDropdownRef.current.open = false;
+    if (areaDropdownRef.current) areaDropdownRef.current.open = false;
+    if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
+  const handleServicesMouseEnter = () => {
+    if (areaDropdownRef.current) areaDropdownRef.current.open = false;
+  };
+
+  const handleServicesMouseLeave = () => {
+    if (servicesDropdownRef.current) {
+      servicesDropdownRef.current.open = false;
+    }
+    if (
+      typeof document !== "undefined" &&
+      servicesDropdownRef.current?.contains(document.activeElement)
+    ) {
+      (document.activeElement as HTMLElement)?.blur();
+    }
+  };
+
+  const handleAreaMouseEnter = () => {
+    if (servicesDropdownRef.current) servicesDropdownRef.current.open = false;
+  };
+
+  const handleAreaMouseLeave = () => {
+    if (areaDropdownRef.current) {
+      areaDropdownRef.current.open = false;
+    }
+    if (
+      typeof document !== "undefined" &&
+      areaDropdownRef.current?.contains(document.activeElement)
+    ) {
+      (document.activeElement as HTMLElement)?.blur();
+    }
+  };
+
+  const handleServicesToggle = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    if (e.currentTarget.open && areaDropdownRef.current) {
+      areaDropdownRef.current.open = false;
+    }
+  };
+
+  const handleAreaToggle = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    if (e.currentTarget.open && servicesDropdownRef.current) {
+      servicesDropdownRef.current.open = false;
+    }
+  };
   const copy = content[locale];
   const isFrench = locale === "fr";
   const skipLabel = isFrench ? "Aller au contenu" : "Skip to content";
@@ -83,7 +160,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
   const serviceLinks = servicePageIds.map((serviceId) => ({
     serviceId,
     label: copy.pages[serviceId].eyebrow,
-    description: copy.pages[serviceId].title,
+    description: serviceMicroCopy[locale][serviceId],
   }));
 
   useEffect(() => {
@@ -91,6 +168,37 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
     updateScrollState();
     window.addEventListener("scroll", updateScrollState, { passive: true });
     return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
+
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        servicesDropdownRef.current?.open &&
+        !servicesDropdownRef.current.contains(target)
+      ) {
+        servicesDropdownRef.current.open = false;
+      }
+      if (
+        areaDropdownRef.current?.open &&
+        !areaDropdownRef.current.contains(target)
+      ) {
+        areaDropdownRef.current.open = false;
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeDropdowns();
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
@@ -120,7 +228,14 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
           </a>
 
           <nav className="desktop-nav" aria-label={isFrench ? "Navigation principale" : "Main navigation"}>
-            <details className="header-dropdown">
+            <details
+              className="header-dropdown"
+              ref={servicesDropdownRef}
+              name="site-nav-dropdown"
+              onMouseEnter={handleServicesMouseEnter}
+              onMouseLeave={handleServicesMouseLeave}
+              onToggle={handleServicesToggle}
+            >
               <summary
                 className={pageId === "services" || servicePageIds.includes(pageId as (typeof servicePageIds)[number]) ? "is-current" : undefined}
                 aria-current={pageId === "services" || servicePageIds.includes(pageId as (typeof servicePageIds)[number]) ? "page" : undefined}
@@ -129,16 +244,17 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                 <ChevronDown aria-hidden="true" />
               </summary>
               <div className="header-dropdown-panel services-dropdown-panel">
-                <a className="dropdown-view-all" href={pathFor("services", locale)}>
-                  <span>{copy.actions.exploreServices}</span>
-                  <ArrowRight aria-hidden="true" />
-                </a>
-                <div className="services-dropdown-grid">
+                <div className="services-dropdown-list">
                   {serviceLinks.map(({ serviceId, label, description }) => {
                     const Icon = serviceIcons[serviceId];
                     const badge = serviceBadges[serviceId];
                     return (
-                      <a className="dropdown-option" href={pathFor(serviceId, locale)} key={serviceId}>
+                      <a
+                        className="dropdown-option"
+                        href={pathFor(serviceId, locale)}
+                        key={serviceId}
+                        onClick={closeDropdowns}
+                      >
                         <span className="dropdown-option-icon" aria-hidden="true">
                           <Icon strokeWidth={1.8} />
                         </span>
@@ -154,10 +270,23 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                     );
                   })}
                 </div>
+                <div className="dropdown-footer">
+                  <a className="dropdown-view-all" href={pathFor("services", locale)} onClick={closeDropdowns}>
+                    <span>{copy.actions.exploreServices}</span>
+                    <ArrowRight aria-hidden="true" />
+                  </a>
+                </div>
               </div>
             </details>
 
-            <details className="header-dropdown area-dropdown">
+            <details
+              className="header-dropdown area-dropdown"
+              ref={areaDropdownRef}
+              name="site-nav-dropdown"
+              onMouseEnter={handleAreaMouseEnter}
+              onMouseLeave={handleAreaMouseLeave}
+              onToggle={handleAreaToggle}
+            >
               <summary
                 className={pageId === "serviceArea" ? "is-current" : undefined}
                 aria-current={pageId === "serviceArea" ? "page" : undefined}
@@ -166,36 +295,65 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                 <ChevronDown aria-hidden="true" />
               </summary>
               <div className="header-dropdown-panel area-dropdown-panel">
-                <a className="dropdown-view-all" href={pathFor("serviceArea", locale)}>
-                  <span>{copy.actions.checkArea}</span>
-                  <ArrowRight aria-hidden="true" />
-                </a>
-                <div className="city-groups">
+                <div className="area-region-tabs" role="tablist" aria-label={isFrench ? "Régions desservies" : "Service regions"}>
                   {regionOrder.map((region) => {
                     const RegionIcon = regionIcons[region];
                     const cities = cityRoutes.filter((city) => city.region === region);
+                    const isSelected = selectedRegion === region;
                     return (
-                      <section className="city-group" key={region}>
-                        <div className="city-group-header">
-                          <h3>
-                            <span className="region-heading-icon" aria-hidden="true">
-                              <RegionIcon strokeWidth={1.8} />
-                            </span>
-                            <span>{regionLabels[region]}</span>
-                          </h3>
-                          <span className="city-group-badge">{cities.length} {locale === "fr" ? "villes" : "cities"}</span>
-                        </div>
-                        <div className="city-links">
-                          {cities.map((city) => (
-                            <a href={cityPath(locale, city.slug)} key={city.slug} className="city-pill">
-                              <span className="city-pill-dot" aria-hidden="true" />
-                              <span>{city[locale]}</span>
-                            </a>
-                          ))}
-                        </div>
-                      </section>
+                      <button
+                        type="button"
+                        key={region}
+                        role="tab"
+                        aria-selected={isSelected}
+                        data-active={isSelected ? "true" : "false"}
+                        className="area-region-tab"
+                        onClick={() => setSelectedRegion(region)}
+                        onMouseEnter={() => setSelectedRegion(region)}
+                        onFocus={() => setSelectedRegion(region)}
+                      >
+                        <span className="area-tab-title">
+                          <RegionIcon aria-hidden="true" />
+                          <span>{regionLabels[region]}</span>
+                        </span>
+                        <span className="area-tab-count">{cities.length} {locale === "fr" ? "villes" : "cities"}</span>
+                      </button>
                     );
                   })}
+                </div>
+
+                <div className="area-city-panels">
+                  {regionOrder.map((region) => {
+                    const cities = cityRoutes.filter((city) => city.region === region);
+                    const isSelected = selectedRegion === region;
+                    return (
+                      <div
+                        key={region}
+                        role="tabpanel"
+                        data-active={isSelected ? "true" : "false"}
+                        className="area-city-panel"
+                      >
+                        {cities.map((city) => (
+                          <a
+                            href={cityPath(locale, city.slug)}
+                            key={city.slug}
+                            className="city-pill"
+                            onClick={closeDropdowns}
+                          >
+                            <MapPin aria-hidden="true" className="city-pin-icon" />
+                            <span>{city[locale]}</span>
+                          </a>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="dropdown-footer">
+                  <a className="dropdown-view-all" href={pathFor("serviceArea", locale)} onClick={closeDropdowns}>
+                    <span>{copy.actions.checkArea}</span>
+                    <ArrowRight aria-hidden="true" />
+                  </a>
                 </div>
               </div>
             </details>
@@ -214,15 +372,37 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
 
           <div className="desktop-actions">
             <ThemeToggle locale={locale} />
-            <a className="language-link" href={languageHref}>
-              {languageLabel}
+            <a
+              className="language-link language-toggle"
+              href={languageHref}
+              aria-label={languageLabel}
+              title={languageLabel}
+            >
+              <span aria-hidden="true" className="language-toggle-code">
+                {isFrench ? "EN" : "FR"}
+              </span>
+              <span className="sr-only">{languageLabel}</span>
             </a>
+
             <Button asChild size="lg" className="cta-button">
               <a href={quotePath(locale)}>
                 {quoteLabel}
-                <ArrowRight aria-hidden="true" />
               </a>
             </Button>
+
+            <a
+              className="nav-emergency-cta"
+              href={site.emergencyPhoneHref}
+              aria-label={`${copy.actions.emergency}: ${site.emergencyPhoneDisplay}`}
+            >
+              <span className="nav-emergency-icon" aria-hidden="true">
+                <PhoneCall />
+              </span>
+              <span className="nav-emergency-copy">
+                <small>{copy.actions.emergency}</small>
+                <strong>{site.emergencyPhoneDisplay}</strong>
+              </span>
+            </a>
           </div>
 
           <details className="mobile-menu">

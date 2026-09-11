@@ -3,32 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Éclipse électrique inc. — Vitrine Médias & Évaluation Client</title>
+  <title>Éclipse Électrique Inc. — Galerie Médias Complète (27 Œuvres Thématiques)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root[data-theme="dark"] {
-      --bg: #0f1115;
-      --surface: #181b22;
-      --surface-border: #2c333f;
-      --text: #edf4f8;
-      --text-muted: #abc0ce;
-      --accent: #f2a71b;
-      --accent-glow: rgba(242, 167, 27, 0.18);
-      --badge-bg: rgba(242, 167, 27, 0.12);
-      --card-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6);
+      --bg: #05070a;
+      --surface: #0b0e14;
+      --surface-card: #111622;
+      --surface-border: rgba(255, 255, 255, 0.09);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.28);
+      --badge-bg: rgba(245, 158, 11, 0.12);
+      --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+      --font-serif: 'Cinzel', serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
     :root[data-theme="light"] {
-      --bg: #f5f7fa;
+      --bg: #f8fafc;
       --surface: #ffffff;
+      --surface-card: #f1f5f9;
       --surface-border: #e2e8f0;
       --text: #0f172a;
       --text-muted: #64748b;
       --accent: #d97706;
-      --accent-glow: rgba(217, 119, 6, 0.12);
+      --accent-glow: rgba(217, 119, 6, 0.18);
       --badge-bg: rgba(217, 119, 6, 0.1);
       --card-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+      --font-serif: 'Cinzel', serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -37,194 +45,306 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       transition: background-color 0.3s ease, color 0.3s ease;
       line-height: 1.6;
-      padding-bottom: 80px;
+      padding-bottom: 100px;
     }
+    .font-serif { font-family: var(--font-serif); }
+    .font-mono { font-family: var(--font-mono); }
+    .font-display { font-family: var(--font-display); }
+
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(12px);
-      background-color: rgba(15, 17, 21, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background-color: rgba(5, 7, 10, 0.82);
       border-bottom: 1px solid var(--surface-border);
-      padding: 16px 32px;
+      padding: 14px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     :root[data-theme="light"] header {
-      background-color: rgba(255, 255, 255, 0.88);
+      background-color: rgba(255, 255, 255, 0.9);
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
-    .brand-arc {
-      width: 32px;
-      height: 32px;
+    .brand-crest {
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      border: 3px solid var(--accent);
-      border-bottom-color: transparent;
-      transform: rotate(-45deg);
+      background: linear-gradient(135deg, #f59e0b, #d4af37, #b45309);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: 900;
+      font-size: 14px;
+      box-shadow: 0 0 16px var(--accent-glow);
     }
     .brand-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.15rem;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
     .brand-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
       letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
     .controls {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       align-items: center;
     }
     .theme-toggle-btn {
-      background: var(--surface);
+      background: var(--surface-card);
       border: 1px solid var(--surface-border);
       color: var(--text);
-      padding: 8px 18px;
+      padding: 7px 16px;
       border-radius: 9999px;
       cursor: pointer;
+      font-family: var(--font-mono);
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       display: flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s;
+      text-decoration: none;
     }
     .theme-toggle-btn:hover {
       border-color: var(--accent);
       box-shadow: 0 0 12px var(--accent-glow);
     }
     .container {
-      max-width: 1280px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 40px 24px;
+      padding: 36px 24px;
     }
-    .hero-banner {
-      text-align: center;
-      margin-bottom: 60px;
+
+    /* THEME HARMONY BANNER */
+    .harmony-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(17, 22, 34, 0.95) 50%, rgba(5, 7, 10, 0.98) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 45px -15px rgba(245, 158, 11, 0.15);
     }
-    .hero-badge {
-      display: inline-block;
-      padding: 6px 14px;
-      background: var(--badge-bg);
-      color: var(--accent);
-      border-radius: 9999px;
-      font-size: 0.8rem;
+    .harmony-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .harmony-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
       font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 16px;
-    }
-    .hero-banner h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.8rem;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-    .hero-banner p {
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto;
-      font-size: 1.1rem;
-    }
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.8rem;
-      margin: 48px 0 24px;
+      color: #fff;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 12px;
-      border-bottom: 2px solid var(--surface-border);
-      padding-bottom: 12px;
     }
-    .section-title span.number {
-      color: var(--accent);
-      font-size: 1.2rem;
+    .harmony-title span.badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f59e0b;
+      color: #000;
+      font-weight: 800;
+      letter-spacing: 0.04em;
     }
+    .harmony-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      max-width: 900px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .swatch-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .swatch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .swatch-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    /* FILTER TABS */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      font-weight: 800;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    /* GRID & CARDS */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 28px;
     }
     .card {
-      background: var(--surface);
+      background: var(--surface-card);
       border: 1px solid var(--surface-border);
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
     .card:hover {
       transform: translateY(-4px);
-      border-color: var(--accent);
+      border-color: rgba(245, 158, 11, 0.5);
+      box-shadow: 0 24px 48px -12px rgba(245, 158, 11, 0.2);
     }
     .card-media {
       position: relative;
       width: 100%;
-      height: 240px;
-      background: #050608;
+      height: 250px;
+      background: #020305;
       overflow: hidden;
+      cursor: pointer;
     }
     .card-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s ease;
     }
     .card:hover .card-media img {
-      transform: scale(1.03);
+      transform: scale(1.04);
     }
     .card-tag {
       position: absolute;
       top: 12px;
-      right: 12px;
-      background: rgba(15, 17, 21, 0.85);
-      backdrop-filter: blur(8px);
+      left: 12px;
+      background: rgba(5, 7, 10, 0.88);
+      backdrop-filter: blur(10px);
       color: var(--accent);
-      border: 1px solid rgba(242, 167, 27, 0.4);
-      font-size: 0.72rem;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 6px;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .card-res {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.75);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: #cbd5e1;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .card-content {
-      padding: 24px;
+      padding: 22px;
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
     .card-title {
-      font-size: 1.2rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      color: #fff;
     }
     .card-route {
       display: inline-block;
-      font-family: monospace;
-      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
       color: var(--accent);
       background: var(--badge-bg);
+      border: 1px solid rgba(245, 158, 11, 0.2);
       padding: 3px 8px;
       border-radius: 4px;
       margin-bottom: 12px;
     }
     .card-desc {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       margin-bottom: 16px;
       line-height: 1.5;
+    }
+    .card-prompt {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+      max-height: 60px;
+      overflow-y: hidden;
+      text-overflow: ellipsis;
     }
     .card-actions {
       display: flex;
@@ -235,326 +355,804 @@
       flex: 1;
       text-align: center;
       padding: 8px 14px;
-      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
       font-weight: 600;
       border-radius: 8px;
       text-decoration: none;
       transition: all 0.2s;
+      cursor: pointer;
     }
     .btn-primary {
       background: var(--accent);
       color: #000;
+      border: none;
+      font-weight: 700;
     }
     .btn-primary:hover {
       opacity: 0.9;
+      box-shadow: 0 0 12px var(--accent-glow);
     }
     .btn-outline {
+      background: transparent;
       border: 1px solid var(--surface-border);
       color: var(--text);
     }
     .btn-outline:hover {
       border-color: var(--accent);
-    }
-    .canva-guide {
-      margin-top: 60px;
-      padding: 32px;
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: 14px;
-    }
-    .canva-guide h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      margin-bottom: 12px;
       color: var(--accent);
+    }
+
+    /* LIGHTBOX MODAL */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(5, 7, 10, 0.94);
+      backdrop-filter: blur(24px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox-content {
+      max-width: 1200px;
+      width: 100%;
+      background: #0b0e14;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 92vh;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+    }
+    .lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .lightbox-body {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      overflow-y: auto;
+    }
+    .lightbox-img-wrap {
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .lightbox-img-wrap img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+    .lightbox-details {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
     }
   </style>
 </head>
 <body>
+
+  <!-- HEADER -->
   <header>
     <div class="brand">
-      <div class="brand-arc"></div>
+      <div class="brand-crest">✦</div>
       <div>
-        <div class="brand-title">ÉCLIPSE ÉLECTRIQUE INC.</div>
-        <div class="brand-sub">Vitrine Médias & Modernisation</div>
+        <div class="brand-title">Éclipse Électrique Inc.</div>
+        <div class="brand-sub">Vitrine Médias Complète · Collection de 27 Œuvres Thématiques</div>
       </div>
     </div>
     <div class="controls">
+      <a href="/docs/COMPLETE-MEDIA-SHOT-LIST.md" target="_blank" class="theme-toggle-btn" style="border-color: #f59e0b; color: #f59e0b;">
+        <span>📋</span> <span>Shot List (122 Prompts)</span>
+      </a>
       <button class="theme-toggle-btn" id="themeBtn" onclick="toggleTheme()">
-        <span id="themeIcon">☀️</span> <span id="themeText">Passer en mode Clair</span>
+        <span id="themeIcon">☀️</span> <span id="themeText">Mode Clair</span>
       </button>
     </div>
   </header>
 
   <div class="container">
-    <div class="hero-banner">
-      <span class="hero-badge">Validation Client & Canva Media Kit</span>
-      <h1>Collection Médias Haute Définition</h1>
-      <p>Collection cinématographique complète conçue pour sublimer le site d'Éclipse électrique inc., harmonisée pour un rendu impeccable en mode sombre comme en mode clair.</p>
+
+    <!-- THEMATIC COHESION HARMONY BANNER -->
+    <div class="harmony-banner">
+      <div class="harmony-title">
+        <span>Harmonie & Rhyme Visuel</span>
+        <span class="badge">27 Œuvres Homogènes</span>
+      </div>
+      <p class="harmony-desc">
+        Toutes les images de cette collection partagent la même signature photographique et technique : optique <strong>Arri Alexa LF 35mm anamorphic</strong>, atmosphère crépusculaire (dusk/twilight), contraste profond ardoise/obsidienne, et illumination chaleureuse par <strong>lueur ambrée (#F59E0B / 2700K)</strong>. Aucune rupture stylistique — chaque œuvre renforce la stature d'ingénierie et de maître électricien d'Éclipse Électrique.
+      </p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="swatch-dot" style="background:#05070a; border: 1px solid #334155;"></div> Obsidienne (#05070A)</div>
+        <div class="swatch"><div class="swatch-dot" style="background:#f59e0b; box-shadow: 0 0 8px #f59e0b;"></div> Ambre Technique (#F59E0B)</div>
+        <div class="swatch"><div class="swatch-dot" style="background:#38bdf8; box-shadow: 0 0 8px #38bdf8;"></div> Cyan Haute Tension (#38BDF8)</div>
+        <div class="swatch"><div class="swatch-dot" style="background:#b45309;"></div> Cuivre Électrolytique (#B45309)</div>
+        <div class="swatch"><div class="swatch-dot" style="background:#10b981;"></div> Sécurité Norme RBQ/CMEQ</div>
+      </div>
     </div>
 
-    <h2 class="section-title"><span class="number">01</span> Page d'Accueil & Crédibilité</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Bannière Hero</span>
-          <img src="./landing-hero-skyline.png" alt="Électricien Éclipse vue Montréal" />
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterGallery('all', event)">Tous les Médias (27)</button>
+      <button class="filter-btn" onclick="filterGallery('hero', event)">✦ Style-Lock & Heroes (6)</button>
+      <button class="filter-btn" onclick="filterGallery('service', event)">⚡ 7 Services Spécialisés (8)</button>
+      <button class="filter-btn" onclick="filterGallery('diagnostic', event)">🔬 Diagnostics & Technique (5)</button>
+      <button class="filter-btn" onclick="filterGallery('spatial', event)">🌐 3D Spatial & Concepts (4)</button>
+      <button class="filter-btn" onclick="filterGallery('territory', event)">📍 Territoires & Villes (4)</button>
+    </div>
+
+    <!-- GALLERY GRID -->
+    <div class="grid" id="galleryGrid">
+
+      <!-- 01: STYLE-LOCK MASTER -->
+      <div class="card" data-cat="hero" style="border: 2px solid #f59e0b;">
+        <div class="card-media" onclick="openLightbox('./style-lock-master.jpg', '✦ Style-Lock Master 2026', 'Référence Fondatrice de Marque', 'Maître électricien en tenue technique ardoise ajustant un panneau 200A avec témoins ambrés, vue crépusculaire sur la skyline de Montréal.', 'Cinematic architectural photography of premium electrical engineering in Greater Montréal, high-end dusk atmosphere, deep obsidian slate tones with warm luminous amber (#F59E0B) electrical glow, shot on Arri Alexa Mini LF 35mm anamorphic lens.')">
+          <span class="card-tag" style="background:#f59e0b; color:#000; font-weight:800;">✦ Style-Lock Master</span>
+          <span class="card-res">4K · 16:9 · 35mm</span>
+          <img src="./style-lock-master.jpg" alt="Style-Lock Master 2026" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Maître Électricien vue sur Montréal</div>
-            <div class="card-route">Route: / (home-hero)</div>
-            <p class="card-desc">L'uniforme officiel à capuchon et casquette avec logo Éclipse en arc doré, intervenant sur panneau face à la ligne d'horizon montréalaise.</p>
+            <div class="card-title" style="color: #f59e0b;">✦ Style-Lock Master 2026</div>
+            <div class="card-route">Ancre Fondatrice (122 Prompts)</div>
+            <p class="card-desc">Maître électricien en tenue technique ardoise ajustant un panneau 200A avec témoins ambrés, vue crépusculaire sur la skyline de Montréal.</p>
+            <div class="card-prompt">Arri Alexa Mini LF · Lueur ambrée #F59E0B · Câblage au couple calibré</div>
           </div>
           <div class="card-actions">
-            <a href="./landing-hero-skyline.png" download class="btn btn-primary">Télécharger</a>
-            <a href="./landing-hero-skyline.png" target="_blank" class="btn btn-outline">Plein écran</a>
+            <a href="./style-lock-master.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./style-lock-master.jpg', '✦ Style-Lock Master 2026', 'Référence Fondatrice', 'Maître électricien en tenue technique ardoise ajustant un panneau 200A avec témoins ambrés.', 'Cinematic architectural photography of premium electrical engineering in Greater Montréal, deep obsidian slate with luminous amber (#F59E0B) glow.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Hero Alternatif</span>
-          <img src="./landing-hero-exterior.jpg" alt="Résidence moderne avec borne VE" />
+      <!-- 02: GENERAC STANDBY HERO -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./service-generators.jpg', 'Génératrice Automatique Generac', 'Service: Génératrices de Secours', 'Installation sur dalle de béton usinée à l'extérieur d'une résidence contemporaine au crépuscule. Anneau témoin d'état ambré actif.', 'Generac whole-home automatic standby generator installed on precision concrete pad outside luxury modern residence at twilight, glowing amber status indicator ring, EMT conduit.')">
+          <span class="card-tag">Generac 24kW Standby</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-generators.jpg" alt="Génératrice Generac" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Résidence d'Exception & Borne VE</div>
-            <div class="card-route">Route: / (home-hero)</div>
-            <p class="card-desc">Architecture contemporaine au crépuscule avec éclairage encastré chaleureux et borne de recharge pour véhicule électrique.</p>
+            <div class="card-title">Génératrice Automatique Generac</div>
+            <div class="card-route">/fr/services/generatrices</div>
+            <p class="card-desc">Installation sur dalle de béton usinée à l'extérieur d'une résidence contemporaine au crépuscule. Anneau témoin d'état ambré actif.</p>
+            <div class="card-prompt">Résidence moderne · Anneau ambré READY · Raccordement étanche Hydro-Québec</div>
+          </div>
+          <div class="card-actions">
+            <a href="./service-generators.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./service-generators.jpg', 'Génératrice Generac', 'Generac Backup', 'Installation extérieure sur socle béton.', 'Generac whole-home automatic standby generator outside modern residence at twilight.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03: FLIR THERMOGRAPHY HERO -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./service-thermography.jpg', 'Thermographie Infrarouge FLIR', 'Service: Inspection & Prévention', 'Thermographe certifiée scannant un tableau de distribution 600V avec caméra FLIR. Écran radiométrique couleur et pont Jacques-Cartier au crépuscule.', 'Certified infrared thermographer using a professional handheld FLIR thermal camera to inspect a large commercial switchgear panel, display showing false-color thermography, bridge view.')">
+          <span class="card-tag">FLIR Infrarouge CMEQ</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-thermography.jpg" alt="Thermographie Infrarouge" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Thermographie Infrarouge FLIR</div>
+            <div class="card-route">/fr/services/thermographie-infrarouge</div>
+            <p class="card-desc">Thermographe certifiée scannant un tableau de distribution avec caméra FLIR. Écran radiométrique couleur et pont Jacques-Cartier au crépuscule.</p>
+            <div class="card-prompt">Diagnostic FLIR préventif · Isothermes de température · Pont Jacques-Cartier</div>
+          </div>
+          <div class="card-actions">
+            <a href="./service-thermography.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./service-thermography.jpg', 'Thermographie FLIR', 'FLIR Diagnostic', 'Inspection thermographique non destructive.', 'Certified infrared thermographer using professional handheld FLIR camera.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04: COMMERCIAL AUTOMATION CONSOLE -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./service-commercial.jpg', 'Électricien Commercial & Gestion Énergétique', 'Service: Commercial & Affaires', 'Siège social montréalais au crépuscule avec maître électricien configurant une armoire de contrôle d'éclairage et distribution automatisée.', 'Modern commercial office headquarters in Montreal at twilight, linear lighting recessed in concrete ceilings, master electrician configuring automated power control console.')">
+          <span class="card-tag">Commercial & Tour Bureaux</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-commercial.jpg" alt="Commercial Automation" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Commercial & Gestion Énergétique</div>
+            <div class="card-route">/fr/services/electricien-commercial</div>
+            <p class="card-desc">Siège social montréalais au crépuscule avec maître électricien configurant une armoire de contrôle d'éclairage et distribution automatisée.</p>
+            <div class="card-prompt">Downtown Montréal skyline · Écran schématique ambré · Gestion énergétique</div>
+          </div>
+          <div class="card-actions">
+            <a href="./service-commercial.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./service-commercial.jpg', 'Commercial Automation', 'Commercial', 'Siège social avec baie de contrôle automatisée.', 'Modern commercial office headquarters in Montreal at twilight, automated control console.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05: RESIDENTIAL ARCHITECTURAL VILLA & EV -->
+      <div class="card" data-cat="hero">
+        <div class="card-media" onclick="openLightbox('./landing-hero-exterior.jpg', 'Villa Contemporaine & Borne VE', 'Hero: Résidentiel Prestige', 'Résidence architecturale cubique à la tombée de la nuit, éclairage linéaire encastré et borne de recharge véhicule électrique haute intensité.', 'Luxury multi-story architectural residential villa at dusk with illuminated glass, warm linear cove lighting, Level 2 EV charging station, wet asphalt reflections.')">
+          <span class="card-tag">Résidentiel & Borne VE</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./landing-hero-exterior.jpg" alt="Villa Contemporaine" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Villa Contemporaine & Borne VE</div>
+            <div class="card-route">Page d'Accueil (home-hero)</div>
+            <p class="card-desc">Résidence architecturale cubique à la tombée de la nuit, éclairage linéaire encastré et borne de recharge véhicule électrique haute intensité.</p>
+            <div class="card-prompt">Ligne de fuite moderne · Borne VE dédiée · Réflexions sur asphalte mouillé</div>
           </div>
           <div class="card-actions">
             <a href="./landing-hero-exterior.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./landing-hero-exterior.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./landing-hero-exterior.jpg', 'Villa & Borne VE', 'Prestige Hero', 'Architecture cubique au crépuscule.', 'Luxury architectural villa at dusk with illuminated glass.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Accréditation RBQ</span>
-          <img src="./landing-craftsmanship.jpg" alt="Câblage minutieux de panneau" />
+      <!-- 06: SWISS MINIMALIST VILLA -->
+      <div class="card" data-cat="spatial">
+        <div class="card-media" onclick="openLightbox('./concept-swiss-architectural.jpg', 'Concept Minimaliste Suisse (Villa)', 'Concept 03: Haute Architecture', 'Villa d'architecte en porte-à-faux au crépuscule avec baie vitrée monolithique, piscine miroir et éclairage invisible encastré.', 'Ultra-clean Swiss minimalist cantilevered villa at dusk with infinity pool reflections and concealed architectural lighting.')">
+          <span class="card-tag">Concept Suisse Minimal</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./concept-swiss-architectural.jpg" alt="Concept Suisse" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Rigueur & Savoir-Faire Électrique</div>
-            <div class="card-route">Section: Repères de confiance</div>
-            <p class="card-desc">Gros plan sur l'installation soignée d'un panneau avec disjoncteurs témoins LED et conducteurs calibrés au millimètre.</p>
+            <div class="card-title">Concept Minimaliste Suisse</div>
+            <div class="card-route">Design Studio (Concept 3)</div>
+            <p class="card-desc">Villa d'architecte en porte-à-faux au crépuscule avec baie vitrée monolithique, piscine miroir et éclairage invisible encastré.</p>
+            <div class="card-prompt">Porte-à-faux béton brut · Miroir d'eau réfléchissant · Ambiance nocturne haut de gamme</div>
           </div>
           <div class="card-actions">
-            <a href="./landing-craftsmanship.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./landing-craftsmanship.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <a href="./concept-swiss-architectural.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./concept-swiss-architectural.jpg', 'Concept Suisse', 'Concept 3', 'Minimalisme d'architecte au crépuscule.', 'Swiss minimalist cantilevered villa at dusk.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
-    </div>
 
-    <h2 class="section-title"><span class="number">02</span> Les 7 Services Spécialisés</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Service 01</span>
+      <!-- 07: CYBER HIGH-VOLTAGE CONDUIT CUBE -->
+      <div class="card" data-cat="spatial">
+        <div class="card-media" onclick="openLightbox('./concept-cyber-highvoltage.jpg', 'Cube d'Énergie Haute Tension 3D', 'Concept 02: Kinetic Power', 'Cube 3D isométrique lumineux avec conduits d'énergie cyan et ambrée, transformateurs et disjoncteurs cinétiques.', 'High-voltage isometric 3D power cube with glowing cyan and amber energy conduits, substation busbars.')">
+          <span class="card-tag">Kinetic High-Voltage 3D</span>
+          <span class="card-res">4K · 1:1 / 16:9</span>
+          <img src="./concept-cyber-highvoltage.jpg" alt="Cube Énergie 3D" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Cube d'Énergie Haute Tension 3D</div>
+            <div class="card-route">Design Studio (Concept 2)</div>
+            <p class="card-desc">Cube 3D isométrique lumineux avec conduits d'énergie cyan et ambrée, transformateurs et disjoncteurs cinétiques.</p>
+            <div class="card-prompt">Réseau cinétique · Conduits lumineux ambrés et cyan · Précision d'ingénierie</div>
+          </div>
+          <div class="card-actions">
+            <a href="./concept-cyber-highvoltage.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./concept-cyber-highvoltage.jpg', 'Cube Énergie 3D', 'Concept 2', 'Cube isométrique cinétique.', 'High-voltage 3D power cube with cyan and amber conduits.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 08: MASTER CRAFTSMANSHIP PANEL WIRING -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./landing-craftsmanship.jpg', 'Savoir-Faire & Raccordement 200A', 'Section: Confiance CMEQ', 'Gros plan macro sur le câblage méticuleux des conducteurs en cuivre pliés à angle droit et serrés aux normes Hydro-Québec.', 'Master electrician precision torque wiring on 200A main panel with clean parallel copper bends and calibrated breaker terminations.')">
+          <span class="card-tag">Raccordement au Couple 200A</span>
+          <span class="card-res">4K · 4:3</span>
+          <img src="./landing-craftsmanship.jpg" alt="Raccordement 200A" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Raccordement au Couple 200A</div>
+            <div class="card-route">Section: Crédibilité Technique</div>
+            <p class="card-desc">Gros plan macro sur le câblage méticuleux des conducteurs en cuivre pliés à angle droit et serrés aux normes Hydro-Québec.</p>
+            <div class="card-prompt">Cuivre électrolytique · Disjoncteurs QO · Finition millimétrique certifiée</div>
+          </div>
+          <div class="card-actions">
+            <a href="./landing-craftsmanship.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./landing-craftsmanship.jpg', 'Raccordement 200A', 'Precision Craft', 'Câblage minutieux de panneau.', 'Master electrician precision torque wiring on 200A panel.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 09: RESIDENTIAL SERVICE FLAGSHIP -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./service-residential.jpg', 'Électricien Résidentiel', 'Service: Résidentiel', 'Maître électricien intervenant dans une propriété de prestige avec console domotique et éclairage encastré architectural.', 'Residential master electrician working on architectural lighting and smart automation in luxury Montreal residence.')">
+          <span class="card-tag">Service Résidentiel</span>
+          <span class="card-res">4K · 16:9</span>
           <img src="./service-residential.jpg" alt="Électricien Résidentiel" />
         </div>
         <div class="card-content">
           <div>
             <div class="card-title">Électricien Résidentiel</div>
             <div class="card-route">/fr/services/electricien-residentiel</div>
-            <p class="card-desc">Résidence haut de gamme avec écran tactile domotique mural et éclairage encastré architectural.</p>
+            <p class="card-desc">Maître électricien intervenant dans une propriété de prestige avec console domotique et éclairage encastré architectural.</p>
+            <div class="card-prompt">Domotique intégrée · Potlights architecturales · Rénovation électrique 200A</div>
           </div>
           <div class="card-actions">
             <a href="./service-residential.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./service-residential.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./service-residential.jpg', 'Électricien Résidentiel', 'Service 1', 'Résidence de prestige avec domotique.', 'Residential master electrician working in luxury residence.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Service 02</span>
-          <img src="./service-commercial.jpg" alt="Électricien Commercial" />
+      <!-- 10: INDUSTRIAL 600V DISTRIBUTION -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./service-industrial.jpg', 'Électricien Industriel 600V', 'Service: Industriel & Usines', 'Infrastructure industrielle lourde, chemins de câbles rigides en acier et transformateurs abaisseurs triphasés.', 'Heavy industrial 600V 3-phase distribution facility with precision bent steel conduits and substation transformers.')">
+          <span class="card-tag">Industriel 600V Triphasé</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-industrial.jpg" alt="Industriel 600V" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Électricien Commercial</div>
-            <div class="card-route">/fr/services/electricien-commercial</div>
-            <p class="card-desc">Bureaux et espaces ouverts avec chemins de câbles suspendus noirs et luminaires linéaires DEL.</p>
-          </div>
-          <div class="card-actions">
-            <a href="./service-commercial.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./service-commercial.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Service 03</span>
-          <img src="./service-industrial.jpg" alt="Électricien Industriel" />
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">Électricien Industriel</div>
+            <div class="card-title">Électricien Industriel 600V</div>
             <div class="card-route">/fr/services/electricien-industriel</div>
-            <p class="card-desc">Appareillage de distribution haute tension en acier inoxydable et raccordement de machinerie lourde.</p>
+            <p class="card-desc">Infrastructure industrielle lourde, chemins de câbles rigides en acier et transformateurs abaisseurs triphasés.</p>
+            <div class="card-prompt">Alimentation 600V · Conduits rigides · Conformité stricte Hydro-Québec</div>
           </div>
           <div class="card-actions">
             <a href="./service-industrial.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./service-industrial.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./service-industrial.jpg', 'Industriel 600V', 'Service 3', 'Distribution haute tension en usine.', 'Heavy industrial 600V distribution facility.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Service 04</span>
-          <img src="./service-emergency.jpg" alt="Urgence 24/7 & Entretien" />
+      <!-- 11: EMERGENCY DISPATCH 24/7 TRUCK -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./service-emergency.jpg', 'Urgence 24/7 & Entretien Préventif', 'Service: Urgence & Dépannage', 'Camion de service officiel d'Éclipse électrique en intervention nocturne sous la pluie, balises ambrées et outillage lourd.', '24/7 rapid emergency electrical service truck on a rainy Montreal street at night with warm amber warning strobe lights.')">
+          <span class="card-tag">Urgence 24h / 7 jours</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-emergency.jpg" alt="Urgence 24/7" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Entretien & Urgence 24/7</div>
+            <div class="card-title">Urgence 24/7 & Dépannage Immédiat</div>
             <div class="card-route">/fr/services/maintenance-et-urgence</div>
-            <p class="card-desc">Camion d'intervention officiel Éclipse et électricien équipé de multimètre pour dépannage immédiat.</p>
+            <p class="card-desc">Camion de service officiel d'Éclipse électrique en intervention nocturne sous la pluie, balises ambrées et outillage lourd.</p>
+            <div class="card-prompt">Ligne directe (514) 717-9277 · Balises ambrées de sécurité · Déploiement rapide</div>
           </div>
           <div class="card-actions">
             <a href="./service-emergency.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./service-emergency.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./service-emergency.jpg', 'Urgence 24/7', 'Service 4', 'Intervention nocturne immédiate.', '24/7 emergency service truck on a rainy street at night.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Service 05</span>
-          <img src="./service-generators.jpg" alt="Génératrices de secours" />
+      <!-- 12: SECURITY & FIRE ALARM DATA RACK -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./service-security.jpg', 'Alarme, Sécurité & Câblage Réseau', 'Service: Sécurité & Réseau', 'Baie de serveurs et panneaux d'alarme incendie Mircom avec faisceaux Cat6A peignés et voyants d'activité ambrés.', 'Commercial structured data cabling and addressable fire alarm control center with dressed Cat6A bundles and amber indicators.')">
+          <span class="card-tag">Alarme Incendie & Réseau</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-security.jpg" alt="Sécurité et Réseau" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Génératrices de Secours</div>
-            <div class="card-route">/fr/services/generatrices</div>
-            <p class="card-desc">Installation extérieure d'une génératrice automatique avec commutateur de transfert (ATS).</p>
-          </div>
-          <div class="card-actions">
-            <a href="./service-generators.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./service-generators.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Matrice Spécialisée</span>
-          <img src="./service-thermography.jpg" alt="Thermographie infrarouge" />
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">Thermographie Infrarouge</div>
-            <div class="card-route">Section: #thermographie</div>
-            <p class="card-desc">Caméra thermique FLIR tenue par un électricien Éclipse détectant les points chauds et surcharges.</p>
-          </div>
-          <div class="card-actions">
-            <a href="./service-thermography.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./service-thermography.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Matrice Spécialisée</span>
-          <img src="./service-security.jpg" alt="Systèmes de sécurité" />
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">Alarmes & Sécurité Électrique</div>
-            <div class="card-route">Section: #securite</div>
-            <p class="card-desc">Raccordement d'un clavier de contrôle d'accès, panneau d'alarme incendie et caméra dôme.</p>
+            <div class="card-title">Alarme, Sécurité & Réseau</div>
+            <div class="card-route">/fr/services/alarme-et-securite</div>
+            <p class="card-desc">Baie de serveurs et panneaux d'alarme incendie Mircom avec faisceaux Cat6A peignés et voyants d'activité ambrés.</p>
+            <div class="card-prompt">Câblage structuré Cat6A · Contrôle d'accès biométrique · Panneau Mircom certifié</div>
           </div>
           <div class="card-actions">
             <a href="./service-security.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./service-security.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./service-security.jpg', 'Alarme et Réseau', 'Service 7', 'Baie serveurs et alarme incendie.', 'Structured cabling and fire alarm control center.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
-    </div>
 
-    <h2 class="section-title"><span class="number">03</span> Territoires Desservis</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Région 01</span>
-          <img src="./area-montreal.jpg" alt="Montréal et pont Jacques-Cartier" />
+      <!-- 13: AUTOMATIC TRANSFER SWITCH (ATS) -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./service-ats-transfer.jpg', 'Commutateur de Transfert Automatique (ATS)', 'Équipement: Generac ATS', 'Intérieur du boîtier ATS avec contacteurs de puissance ultra-rapides et barres omnibus en cuivre massif.', 'Automatic Transfer Switch (ATS) internal contactor mechanism with solid copper busbars and glowing amber indicator.')">
+          <span class="card-tag">Generac ATS Switch</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-ats-transfer.jpg" alt="Commutateur ATS" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Grand Montréal</div>
-            <div class="card-route">/fr/territoire-desservi/montreal</div>
-            <p class="card-desc">Vue panoramique nocturne avec le pont Jacques-Cartier, le centre-ville et le mont Royal illuminés.</p>
+            <div class="card-title">Commutateur ATS Automatique</div>
+            <div class="card-route">Composant: Basculement Réseau</div>
+            <p class="card-desc">Intérieur du boîtier ATS avec contacteurs de puissance ultra-rapides et barres omnibus en cuivre massif.</p>
+            <div class="card-prompt">Basculement en moins de 10 secondes · Barres de cuivre massif · Sécurité storm-failover</div>
+          </div>
+          <div class="card-actions">
+            <a href="./service-ats-transfer.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./service-ats-transfer.jpg', 'Commutateur ATS', 'Generac Component', 'Intérieur du boîtier ATS automatique.', 'Automatic Transfer Switch internal contactor mechanism.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14: FLIR ISOTHERM SCAN -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./service-thermal-isotherm.jpg', 'Scan Isotherme Thermique Électrique', 'Audit: Conformité FLIR', 'Imagerie thermographique radiométrique révélant les points chauds et l'équilibre des charges sur disjoncteurs principaux.', 'High-resolution FLIR thermal camera display showing an electrical connection hotspot highlighted in glowing amber isotherms.')">
+          <span class="card-tag">Isotherme FLIR Thermique</span>
+          <span class="card-res">4K · 4:3</span>
+          <img src="./service-thermal-isotherm.jpg" alt="Scan Isotherme" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Scan Isotherme Thermique</div>
+            <div class="card-route">Audit Préventif CMEQ</div>
+            <p class="card-desc">Imagerie thermographique radiométrique révélant les points chauds et l'équilibre des charges sur disjoncteurs principaux.</p>
+            <div class="card-prompt">Détection d'échauffement précoce · Rapport pour assurances · Zéro interruption</div>
+          </div>
+          <div class="card-actions">
+            <a href="./service-thermal-isotherm.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./service-thermal-isotherm.jpg', 'Scan Isotherme', 'FLIR Audit', 'Imagerie thermique radiométrique.', 'High-resolution FLIR thermal camera display showing hotspot.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15: EMERGENCY NIGHT RESTORATION -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./service-night-dispatch.jpg', 'Dépannage d'Urgence Tempête de Nuit', 'Dispatch: 24/7 Nocturne', 'Maître électricien restaurant une entrée de service endommagée par les intempéries avec projecteur de travail à faisceau ambré.', 'Master electrician performing emergency night power restoration after storm damage with portable amber work light beam.')">
+          <span class="card-tag">Intervention Nocturne</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-night-dispatch.jpg" alt="Dépannage Nocturne" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Dépannage d'Urgence Nocturne</div>
+            <div class="card-route">Ligne d'Urgence 24/7</div>
+            <p class="card-desc">Maître électricien restaurant une entrée de service endommagée par les intempéries avec projecteur de travail à faisceau ambré.</p>
+            <div class="card-prompt">Sécurisation immédiate · Raccordement d'urgence · Remplacement de mât brisé</div>
+          </div>
+          <div class="card-actions">
+            <a href="./service-night-dispatch.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./service-night-dispatch.jpg', 'Dépannage Nocturne', 'Urgence 24/7', 'Restauration électrique de nuit.', 'Master electrician performing emergency night restoration.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16: STRUCTURED DATA & ACCESS CONTROL -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./service-data-infrastructure.jpg', 'Infrastructure Données & Biométrie', 'Sécurité: Accès Sécurisé', 'Baie télécom avec jarretières réseau organisées au peigne et lecteur de badge RFID à lueur ambrée.', 'Telecom server rack with precision combed network patch cords and biometric access control terminal mounted on dark wall.')">
+          <span class="card-tag">Réseau & Contrôle d'Accès</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./service-data-infrastructure.jpg" alt="Infrastructure Données" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Infrastructure Réseau & Données</div>
+            <div class="card-route">Télécom & Sécurité</div>
+            <p class="card-desc">Baie télécom avec jarretières réseau organisées au peigne et lecteur de badge RFID à lueur ambrée.</p>
+            <div class="card-prompt">Certification Fluke DTX · Câblage blindé Cat6A · Baie fermée climatisée</div>
+          </div>
+          <div class="card-actions">
+            <a href="./service-data-infrastructure.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./service-data-infrastructure.jpg', 'Infrastructure Données', 'Telecom & Security', 'Baie télécom et contrôle d'accès.', 'Telecom server rack with network cords and access terminal.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 17: AREA MONTRÉAL -->
+      <div class="card" data-cat="territory">
+        <div class="card-media" onclick="openLightbox('./area-montreal.jpg', 'Île de Montréal & 15 Arrondissements', 'Territoire: Grand Montréal', 'Ligne d'horizon iconique de Montréal au crépuscule depuis le Mont-Royal, tours illuminées de reflets dorés et ambrés.', 'Iconic twilight view of downtown Montreal skyline from Mount Royal, illuminated glass skyscrapers with warm amber office lighting.')">
+          <span class="card-tag">Montréal & West Island</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./area-montreal.jpg" alt="Montréal Skyline" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Montréal & 15 Arrondissements</div>
+            <div class="card-route">/fr/territoire-desservi</div>
+            <p class="card-desc">Ligne d'horizon iconique de Montréal au crépuscule depuis le Mont-Royal, tours illuminées de reflets dorés et ambrés.</p>
+            <div class="card-prompt">Centre-ville, Westmount, Ahuntsic, Rosemont, Saint-Léonard · Déploiement direct</div>
           </div>
           <div class="card-actions">
             <a href="./area-montreal.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./area-montreal.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./area-montreal.jpg', 'Montréal & West Island', 'Territoire 1', 'Vue panoramique depuis le Mont-Royal.', 'Iconic downtown Montreal skyline view from Mount Royal at twilight.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Région 02</span>
-          <img src="./area-north-shore.jpg" alt="Rive-Nord et Laval" />
+      <!-- 18: AREA NORTH SHORE -->
+      <div class="card" data-cat="territory">
+        <div class="card-media" onclick="openLightbox('./area-north-shore.jpg', 'Rive-Nord & Basses-Laurentides', 'Territoire: Rive-Nord (11 Villes)', 'Domaine architectural boisé dans les Laurentides au crépuscule, toiture d'acier foncé et illumination de façade.', 'Luxury Laurentian estate home surrounded by pine trees at dusk, stone exterior with warm architectural lighting and standby power.')">
+          <span class="card-tag">Rive-Nord & Laurentides</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./area-north-shore.jpg" alt="Rive-Nord" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Rive-Nord & Laval</div>
-            <div class="card-route">/fr/territoire-desservi/laval</div>
-            <p class="card-desc">Quartiers résidentiels modernes et pôles d'affaires de Laval, Blainville et les Laurentides.</p>
+            <div class="card-title">Rive-Nord & Laurentides</div>
+            <div class="card-route">11 Municipalités Desservies</div>
+            <p class="card-desc">Domaine architectural boisé dans les Laurentides au crépuscule, toiture d'acier foncé et illumination de façade.</p>
+            <div class="card-prompt">Blainville, Mirabel, Saint-Jérôme, Saint-Sauveur, Deux-Montagnes</div>
           </div>
           <div class="card-actions">
             <a href="./area-north-shore.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./area-north-shore.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./area-north-shore.jpg', 'Rive-Nord & Laurentides', 'Territoire 2', 'Domaine contemporain sous les pins.', 'Luxury Laurentian estate home at dusk with warm lighting.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-media">
-          <span class="card-tag">Région 03</span>
-          <img src="./area-south-shore.jpg" alt="Rive-Sud et pont Champlain" />
+      <!-- 19: AREA SOUTH SHORE -->
+      <div class="card" data-cat="territory">
+        <div class="card-media" onclick="openLightbox('./area-south-shore.jpg', 'Rive-Sud & Montérégie', 'Territoire: Rive-Sud (24 Villes)', 'Développement contemporain et pôle commercial de la Rive-Sud au crépuscule, bornes VE et résidences riveraines.', 'Modern South Shore urban and residential development at twilight, high-rise luxury towers with amber architectural lighting, EV hub.')">
+          <span class="card-tag">Rive-Sud (24 Villes)</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./area-south-shore.jpg" alt="Rive-Sud" />
         </div>
         <div class="card-content">
           <div>
-            <div class="card-title">Rive-Sud & Longueuil</div>
-            <div class="card-route">/fr/territoire-desservi/longueuil</div>
-            <p class="card-desc">Le dynamisme de Brossard, Quartier DIX30, Longueuil et le pont Samuel-De Champlain au crépuscule.</p>
+            <div class="card-title">Rive-Sud & Montérégie</div>
+            <div class="card-route">24 Municipalités Desservies</div>
+            <p class="card-desc">Développement contemporain et pôle commercial de la Rive-Sud au crépuscule, bornes VE et résidences riveraines.</p>
+            <div class="card-prompt">Brossard (DIX30), Boucherville, Longueuil, Saint-Lambert, Belœil</div>
           </div>
           <div class="card-actions">
             <a href="./area-south-shore.jpg" download class="btn btn-primary">Télécharger</a>
-            <a href="./area-south-shore.jpg" target="_blank" class="btn btn-outline">Plein écran</a>
+            <button onclick="openLightbox('./area-south-shore.jpg', 'Rive-Sud & Montérégie', 'Territoire 3', 'Architecture riveraine et pôle urbain.', 'Modern South Shore urban development at twilight.')" class="btn btn-outline">Plein écran</button>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="canva-guide">
-      <h3>Intégration Directe dans Canva</h3>
-      <p>Ces fichiers sont prêts à être glissés-déposés directement dans <strong>Canva</strong> pour concevoir vos maquettes, présentations clients ou visuels publicitaires :</p>
-      <ol style="margin: 16px 0 0 24px; color: var(--text-muted);">
-        <li>Ouvrez votre projet sur <strong>Canva.com</strong>.</li>
-        <li>Glissez-déposez n'importe quel fichier depuis <code>public/media/</code> vers la barre latérale <strong>Importations</strong> de Canva.</li>
-        <li>Toutes les images respectent le ratio d'aspect idéal pour les cartes (4:3) et les bannières grand écran (16:9).</li>
-      </ol>
+      <!-- 20: 3D SPATIAL BENTO -->
+      <div class="card" data-cat="spatial">
+        <div class="card-media" onclick="openLightbox('./concept-spatial-bento.jpg', 'Interface Spatiale Bento 3D', 'Concept: UI Bento Moderne', 'Interface utilisateur tridimensionnelle avec modules Bento translucides en verre fumé, télémétrie de charge et voyants ambrés.', 'Modern spatial Bento box electrical engineering interface with frosted smoked glass containers, voltage meters and amber indicators.')">
+          <span class="card-tag">3D Bento Spatial UI</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./concept-spatial-bento.jpg" alt="Interface Bento 3D" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Interface Spatiale Bento 3D</div>
+            <div class="card-route">Architecture de Navigation 2026</div>
+            <p class="card-desc">Interface utilisateur tridimensionnelle avec modules Bento translucides en verre fumé, télémétrie de charge et voyants ambrés.</p>
+            <div class="card-prompt">Glassmorphisme sombre · Télémétrie 240V/600V · Design futuriste d'ingénierie</div>
+          </div>
+          <div class="card-actions">
+            <a href="./concept-spatial-bento.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./concept-spatial-bento.jpg', 'Interface Bento 3D', 'Spatial Concept', 'Architecture Bento en verre fumé.', 'Spatial Bento box electrical engineering interface.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 21: 3D POWER GLOBE -->
+      <div class="card" data-cat="spatial">
+        <div class="card-media" onclick="openLightbox('./concept-power-globe.jpg', 'Globe du Réseau Électrique 3D', 'Concept: Topologie Réseau', 'Sphère holographique représentant le réseau de distribution électrique du Grand Montréal avec flux énergétiques dorés.', '3D holographic Earth globe highlighting the Montreal electrical power distribution grid with glowing golden and cyan energy vectors.')">
+          <span class="card-tag">3D Hologram Grid</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./concept-power-globe.jpg" alt="Globe Réseau 3D" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Globe du Réseau Électrique 3D</div>
+            <div class="card-route">Topologie Énergétique</div>
+            <p class="card-desc">Sphère holographique représentant le réseau de distribution électrique du Grand Montréal avec flux énergétiques dorés.</p>
+            <div class="card-prompt">Flux d'électrons animés · Topologie 50 villes · Rendu cinématographique</div>
+          </div>
+          <div class="card-actions">
+            <a href="./concept-power-globe.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./concept-power-globe.jpg', 'Globe Réseau 3D', 'Network Concept', 'Sphère holographique du réseau.', '3D holographic globe of the power distribution grid.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 22: DIAGNOSTICS CONSOLE -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./craft-diagnostics-console.jpg', 'Console de Diagnostic Électrique', 'Ingénierie: Mesure Haute Précision', 'Station d'analyse numérique mesurant les harmoniques et la tension avec écrans LCD rétroéclairés ambrés.', 'High-precision digital electrical diagnostic workstation measuring harmonics and waveform distortion with amber backlit screens.')">
+          <span class="card-tag">Diagnostic Harmonique</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./craft-diagnostics-console.jpg" alt="Diagnostic Console" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Console de Diagnostic Électrique</div>
+            <div class="card-route">Instrument de Mesure</div>
+            <p class="card-desc">Station d'analyse numérique mesurant les harmoniques et la tension avec écrans LCD rétroéclairés ambrés.</p>
+            <div class="card-prompt">Analyse de sinusoïde · Diagnostic préventif · Étalonnage conforme CMEQ</div>
+          </div>
+          <div class="card-actions">
+            <a href="./craft-diagnostics-console.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./craft-diagnostics-console.jpg', 'Console Diagnostic', 'Diagnostic Tool', 'Station d'analyse numérique.', 'Digital electrical diagnostic workstation with amber screens.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 23: DISPATCH HUB -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./craft-dispatch-hub.jpg', 'Centre de Répartition & Flotte', 'Opérations: Saint-Léonard Hub', 'Poste de commandement et de déploiement des équipes d'électriciens avec cartographie GPS en temps réel.', 'Electrician fleet dispatch command center with real-time GPS tracking and glowing amber logistics map.')">
+          <span class="card-tag">Poste de Commandement</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./craft-dispatch-hub.jpg" alt="Centre de Répartition" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Centre de Répartition & Flotte</div>
+            <div class="card-route">Saint-Léonard Headquarters</div>
+            <p class="card-desc">Poste de commandement et de déploiement des équipes d'électriciens avec cartographie GPS en temps réel.</p>
+            <div class="card-prompt">Déploiement 50 municipalités · Géolocalisation camions · Réponse en direct</div>
+          </div>
+          <div class="card-actions">
+            <a href="./craft-dispatch-hub.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./craft-dispatch-hub.jpg', 'Centre Répartition', 'Operations Hub', 'Poste de commandement.', 'Electrician fleet dispatch command center.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 24: ENGINEERING CAD SCHEMATIC -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./craft-engineering-cad.jpg', 'Plans Électriques & DAO Ingénierie', 'Conception: Dessin Technique', 'Bureau d'études avec plans unifilaires 600V ouverts sur table lumineuse et tablette graphique d'ingénieur.', 'Master electrician reviewing single-line electrical CAD engineering schematics on illuminated work table with warm amber light.')">
+          <span class="card-tag">Schémas Unifilaires CAD</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./craft-engineering-cad.jpg" alt="Plans DAO" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Plans Électriques & DAO</div>
+            <div class="card-route">Bureau d'Études & Conformité</div>
+            <p class="card-desc">Bureau d'études avec plans unifilaires 600V ouverts sur table lumineuse et tablette graphique d'ingénieur.</p>
+            <div class="card-prompt">Plans unifilaires certifiés · Calcul de charge électrique · Approbation ville</div>
+          </div>
+          <div class="card-actions">
+            <a href="./craft-engineering-cad.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./craft-engineering-cad.jpg', 'Plans DAO', 'Engineering CAD', 'Schémas unifilaires certifiés.', 'Single-line electrical CAD schematics on illuminated table.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 25: MASTER ELECTRICIAN PORTRAIT -->
+      <div class="card" data-cat="hero">
+        <div class="card-media" onclick="openLightbox('./electrician-master-portrait.jpg', 'Portrait Maître Électricien Certifié', 'Identité: Équipe Certifiée CMEQ', 'Portrait photographique d'un maître électricien en uniforme officiel avec écusson Éclipse, regard confiant et équipement sécurisé.', 'Cinematic portrait of a licensed master electrician in dark technical uniform with amber accents, confident expression in front of electrical control center.')">
+          <span class="card-tag">Maître Électricien Certifié</span>
+          <span class="card-res">4K · 16:9</span>
+          <img src="./electrician-master-portrait.jpg" alt="Portrait Électricien" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Portrait Maître Électricien</div>
+            <div class="card-route">À Propos & Équipe</div>
+            <p class="card-desc">Portrait photographique d'un maître électricien en uniforme officiel avec écusson Éclipse, regard confiant et équipement sécurisé.</p>
+            <div class="card-prompt">Compagnon CCQ · Licence RBQ #5582-0096-01 · 16+ ans d'expérience</div>
+          </div>
+          <div class="card-actions">
+            <a href="./electrician-master-portrait.jpg" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./electrician-master-portrait.jpg', 'Portrait Électricien', 'Master Portrait', 'Maître électricien certifié.', 'Cinematic portrait of licensed master electrician in dark uniform.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 26: INDUSTRIAL SWITCHGEAR PANEL WEBP -->
+      <div class="card" data-cat="service">
+        <div class="card-media" onclick="openLightbox('./industrial-panel.webp', 'Appareillage Industriel Lourd', 'Infrastructure: Haute Puissance', 'Installation de sectionneurs industriels et de disjoncteurs à haute capacité d'interruption pour complexe manufacturier.', 'Industrial electrical power distribution switchgear panel in factory environment with heavy-duty circuit breakers.')">
+          <span class="card-tag">Distribution Haute Puissance</span>
+          <span class="card-res">HD WebP</span>
+          <img src="./industrial-panel.webp" alt="Appareillage Industriel" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Appareillage Industriel Lourd</div>
+            <div class="card-route">Réseaux 600V Triphasé</div>
+            <p class="card-desc">Installation de sectionneurs industriels et de disjoncteurs à haute capacité d'interruption pour complexe manufacturier.</p>
+            <div class="card-prompt">Sectionneurs à fusibles · Barres omnibus de puissance · Sécurité maximale</div>
+          </div>
+          <div class="card-actions">
+            <a href="./industrial-panel.webp" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./industrial-panel.webp', 'Appareillage Industriel', 'Industrial Switchgear', 'Sectionneurs industriels.', 'Industrial power distribution switchgear panel in factory.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 27: ELECTRICAL TESTING INSTRUMENTS -->
+      <div class="card" data-cat="diagnostic">
+        <div class="card-media" onclick="openLightbox('./electrical-testing.webp', 'Vérification & Mesures de Sécurité', 'Qualité: Tolérance Zéro Défaut', 'Mesure au multimètre numérique et tests d'isolement avant mise sous tension officielle d'un nouveau bâtiment.', 'Electrician verifying circuit safety with digital multimeter and insulation tester before commissioning.')">
+          <span class="card-tag">Essais & Vérifications</span>
+          <span class="card-res">HD WebP</span>
+          <img src="./electrical-testing.webp" alt="Mesures de Sécurité" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="card-title">Vérification & Mesures de Sécurité</div>
+            <div class="card-route">Contrôle Qualité CMEQ</div>
+            <p class="card-desc">Mesure au multimètre numérique et tests d'isolement avant mise sous tension officielle d'un nouveau bâtiment.</p>
+            <div class="card-prompt">Test de continuité · Résistance de mise à la terre · Tolérance zéro défaut</div>
+          </div>
+          <div class="card-actions">
+            <a href="./electrical-testing.webp" download class="btn btn-primary">Télécharger</a>
+            <button onclick="openLightbox('./electrical-testing.webp', 'Vérification Sécurité', 'Quality Testing', 'Mesures de sécurité avant mise sous tension.', 'Electrician verifying circuit safety with digital multimeter.')" class="btn btn-outline">Plein écran</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox" id="lightboxModal" onclick="if(event.target === this) closeLightbox()">
+    <div class="lightbox-content">
+      <div class="lightbox-header">
+        <div>
+          <h3 id="lbTitle" style="color: #fff; font-family: var(--font-display); font-size: 1.25rem;">Titre</h3>
+          <span id="lbSub" style="color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem;">Sous-titre</span>
+        </div>
+        <button onclick="closeLightbox()" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;">✕</button>
+      </div>
+      <div class="lightbox-body">
+        <div class="lightbox-img-wrap">
+          <img id="lbImg" src="" alt="" />
+        </div>
+        <div class="lightbox-details">
+          <div>
+            <strong style="color: #fff; font-size: 0.9rem; display: block; margin-bottom: 6px;">Description & Contexte :</strong>
+            <p id="lbDesc" style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;"></p>
+          </div>
+          <div>
+            <strong style="color: #f59e0b; font-size: 0.85rem; display: block; margin-bottom: 6px; font-family: var(--font-mono);">Prompt de Production Éclipse :</strong>
+            <div id="lbPrompt" style="font-family: var(--font-mono); font-size: 0.75rem; background: rgba(0,0,0,0.6); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); color: #cbd5e1; max-height: 180px; overflow-y: auto;"></div>
+          </div>
+          <div style="margin-top: auto; display: flex; gap: 10px;">
+            <button onclick="copyPromptText()" class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b;">Copier le Prompt</button>
+            <a id="lbDlBtn" href="" download class="btn btn-primary">Télécharger l'Image Haute Résolution</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
     function toggleTheme() {
-      const root = document.documentElement;
-      const isDark = root.getAttribute('data-theme') === 'dark';
-      const newTheme = isDark ? 'light' : 'dark';
-      root.setAttribute('data-theme', newTheme);
-      document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
-      document.getElementById('themeText').textContent = isDark ? 'Passer en mode Sombre' : 'Passer en mode Clair';
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      document.getElementById('themeIcon').textContent = next === 'dark' ? '☀️' : '🌙';
+      document.getElementById('themeText').textContent = next === 'dark' ? 'Mode Clair' : 'Mode Sombre';
     }
+
+    function filterGallery(category, event) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      if (event && event.target) {
+        event.target.classList.add('active');
+      }
+
+      const cards = document.querySelectorAll('#galleryGrid .card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-cat') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    let currentPromptText = '';
+
+    function openLightbox(imgSrc, title, sub, desc, prompt) {
+      document.getElementById('lbImg').src = imgSrc;
+      document.getElementById('lbTitle').textContent = title;
+      document.getElementById('lbSub').textContent = sub;
+      document.getElementById('lbDesc').textContent = desc;
+      document.getElementById('lbPrompt').textContent = prompt;
+      document.getElementById('lbDlBtn').href = imgSrc;
+      currentPromptText = prompt;
+      document.getElementById('lightboxModal').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightboxModal').classList.remove('active');
+    }
+
+    function copyPromptText() {
+      navigator.clipboard.writeText(currentPromptText).then(() => {
+        alert('Prompt copié dans le presse-papier !');
+      });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
   </script>
 </body>
 </html>

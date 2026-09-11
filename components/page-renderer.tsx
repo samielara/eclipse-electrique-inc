@@ -14,9 +14,11 @@ import { HeroVideo } from "@/components/motion/hero-video";
 import { Interactive3DScene } from "@/components/motion/interactive-3d-scene";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { FullPageScroll } from "@/components/motion/full-page-scroll";
 import { ServiceCarousel } from "@/components/motion/service-carousel";
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
 import { AiAssistant } from "@/components/ai-assistant";
+import { DispatchCoverageConsole } from "@/components/motion/dispatch-coverage-console";
 import { ServiceCard } from "@/components/service-card";
 import { ThermographyProof } from "@/components/thermography-proof";
 import { MobileActionBar } from "@/components/mobile-action-bar";
@@ -47,20 +49,21 @@ function ActionPair({ locale, dark = false }: { locale: Locale; dark?: boolean }
 
   return (
     <div className="action-pair">
-      <Button asChild size="lg" className="primary-action">
+      <Button asChild size="lg" className="primary-action hero-primary-cta">
         <a href={quotePath(locale)}>
           {copy.actions.quote}
-          <ArrowRight aria-hidden="true" />
         </a>
       </Button>
       <Button
         asChild
         size="lg"
         variant="outline"
-        className={dark ? "secondary-action secondary-action-dark" : "secondary-action"}
+        className={dark ? "secondary-action secondary-action-dark hero-emergency-cta" : "secondary-action hero-emergency-cta"}
       >
         <a href={site.emergencyPhoneHref}>
-          <span className="emergency-action-icon" aria-hidden="true"><PhoneCall /></span>
+          <span className="emergency-action-icon" aria-hidden="true">
+            <PhoneCall />
+          </span>
           <span><small>{copy.actions.emergency}</small><strong>{site.emergencyPhoneDisplay}</strong></span>
         </a>
       </Button>
@@ -103,6 +106,104 @@ function ServicesGrid({ locale, compact = false, homepage = false }: { locale: L
           serviceId={serviceId}
         />
       ))}
+    </div>
+  );
+}
+
+function BentoServicesSection({ locale }: { locale: Locale }) {
+  const isFrench = locale === "fr";
+  return (
+    <div className="bento-services-grid mb-12">
+      <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+        <span className="text-xs font-mono uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3.5 py-1 rounded-full border border-amber-500/20 inline-block">
+          {isFrench ? "Pôles d'Ingénierie & Services" : "Engineering & Service Hubs"}
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold font-display">
+          {isFrench ? "Une Expertise Technique Sans Équivalent." : "Unrivaled Technical Electrical Expertise."}
+        </h2>
+        <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
+          {isFrench 
+            ? "Chaque projet bénéficie d'une rigueur absolue : plans certifiés, pièces homologuées CSA et conformité intégrale au Code de construction du Québec."
+            : "Every project meets absolute engineering rigor: certified schematics, CSA-approved equipment, and 100% Quebec Construction Code compliance."}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Tile 1: 200A Panel Upgrade */}
+        <div className="md:col-span-2 glass-card rounded-2xl p-8 relative overflow-hidden group">
+          <div className="relative z-10 max-w-md space-y-4">
+            <span className="text-xs font-mono text-amber-400 uppercase tracking-wider font-bold">01 // {isFrench ? "RÉSIDENTIEL & COMMERCIAL" : "RESIDENTIAL & COMMERCIAL"}</span>
+            <h3 className="text-2xl font-bold font-display text-white">{isFrench ? "Surclassement de Panneaux 100A ➔ 200A" : "100A ➔ 200A Electrical Panel Upgrade"}</h3>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              {isFrench 
+                ? "Préparez votre résidence pour bornes VE, thermopompes et génératrices. Remplacement complet avec mise à la terre certifiée et approbation Hydro-Québec."
+                : "Equip your home for EV chargers, heat pumps, and backup power. Complete replacement with master grounding and Hydro-Québec sign-off."}
+            </p>
+            <ul className="text-xs font-mono space-y-2 text-slate-400 pt-2">
+              <li className="flex items-center gap-2"><span className="text-emerald-400">✔</span> {isFrench ? "Coupure et rebranchement Hydro-Québec coordonnés" : "Seamless Hydro-Québec disconnection and reconnection"}</li>
+              <li className="flex items-center gap-2"><span className="text-emerald-400">✔</span> {isFrench ? "Protection de surtension intégrée pour toute la maison" : "Whole-home integrated surge suppression system"}</li>
+            </ul>
+          </div>
+          <div className="absolute right-0 bottom-0 top-0 w-1/2 opacity-35 group-hover:opacity-60 transition-opacity">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/media/style-lock-master.jpg" alt="Panneau 200A" className="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        {/* Tile 2: Urgence 24/7 */}
+        <div className="glass-card rounded-2xl p-8 space-y-4 border-red-500/20 relative overflow-hidden flex flex-col justify-between">
+          <div className="space-y-3">
+            <span className="text-xs font-mono text-red-400 uppercase tracking-wider font-bold">02 // {isFrench ? "DÉPÊCHE RAPIDE" : "RAPID DISPATCH"}</span>
+            <h3 className="text-2xl font-bold font-display text-white">{isFrench ? "Urgence Électrique 24/7" : "24/7 Electrical Emergency"}</h3>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              {isFrench 
+                ? "Panne partielle ou totale, odeur de surchauffe, disjoncteur qui déclenche. Déploiement immédiat de camions-ateliers entièrement équipés."
+                : "Complete or partial outage, burning smell, breaker tripping. Immediate dispatch of fully stocked mobile emergency trucks."}
+            </p>
+          </div>
+          <a href={site.emergencyPhoneHref} className="btn-glass-danger w-full py-2.5 rounded-lg text-xs font-bold text-center block font-mono">
+            {isFrench ? "Ligne Directe 24/7 →" : "Direct 24/7 Line →"}
+          </a>
+        </div>
+
+        {/* Tile 3: Thermographie FLIR */}
+        <div className="glass-card rounded-2xl p-8 space-y-4 relative overflow-hidden">
+          <span className="text-xs font-mono text-amber-400 uppercase tracking-wider font-bold">03 // {isFrench ? "PRÉVENTION INCENDIE" : "FIRE PREVENTION"}</span>
+          <h3 className="text-xl font-bold font-display text-white">{isFrench ? "Thermographie Infrarouge FLIR" : "FLIR Infrared Thermography"}</h3>
+          <p className="text-slate-300 text-sm leading-relaxed">
+            {isFrench
+              ? "Détectez les anomalies thermiques invisibles à l'œil nu sans interrompre vos opérations industrielles ou commerciales."
+              : "Detect invisible thermal anomalies without interrupting commercial or industrial plant operations."}
+          </p>
+          <div className="text-xs font-mono text-emerald-400 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
+            {isFrench ? "Rapport certifié pour assureurs" : "Certified underwriter insurance report"}
+          </div>
+        </div>
+
+        {/* Tile 4: Industriel 600V */}
+        <div className="glass-card rounded-2xl p-8 space-y-4 relative overflow-hidden">
+          <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider font-bold">04 // {isFrench ? "HAUTE PUISSANCE" : "HIGH VOLTAGE"}</span>
+          <h3 className="text-xl font-bold font-display text-white">{isFrench ? "Industriel 600V Triphasé" : "600V 3-Phase Industrial"}</h3>
+          <p className="text-slate-300 text-sm leading-relaxed">
+            {isFrench
+              ? "Alimentation de machinerie lourde, centres de contrôle de moteurs (MCC), transformateurs secs et éclairage industriel."
+              : "Heavy machinery distribution, motor control centers (MCC), dry transformers, and factory lighting."}
+          </p>
+          <span className="text-xs font-mono text-slate-400 block pt-1">{isFrench ? "Maintenance programmée & arrêts d'usine" : "Scheduled shutdowns & turnkey hookups"}</span>
+        </div>
+
+        {/* Tile 5: Génératrices Generac */}
+        <div className="glass-card rounded-2xl p-8 space-y-4 relative overflow-hidden">
+          <span className="text-xs font-mono text-amber-400 uppercase tracking-wider font-bold">05 // {isFrench ? "CONTINUITÉ" : "BACKUP POWER"}</span>
+          <h3 className="text-xl font-bold font-display text-white">{isFrench ? "Génératrices Automatiques" : "Automatic Standby Generators"}</h3>
+          <p className="text-slate-300 text-sm leading-relaxed">
+            {isFrench
+              ? "Installation de commutateurs de transfert automatique (ATS) Generac pour une alimentation ininterrompue en cas de panne réseau."
+              : "Turnkey Generac automatic transfer switch (ATS) installations ensuring seamless power through winter storms."}
+          </p>
+          <span className="text-xs font-mono text-slate-400 block pt-1">{isFrench ? "Détaillant et installateur certifié" : "Certified dealer & installer"}</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -198,11 +299,11 @@ function ProjectGallery({ locale }: { locale: Locale }) {
           alt: "Technicien testant un panneau électrique avec un multimètre",
         },
         {
-          src: "/media/landing-hero-exterior.jpg",
-          eyebrow: "Environnements connectés",
-          title: "L’électricité intégrée à l’architecture moderne",
-          description: "Distribution, contrôle et éclairage pensés comme un système cohérent.",
-          alt: "Architecture moderne avec distribution électrique et éclairage intégrés",
+          src: "/media/style-lock-master.jpg",
+          eyebrow: "Surclassement 200A",
+          title: "Précision d'ingénierie et conformité Hydro-Québec",
+          description: "Raccordement de panneaux 200A certifiés CMEQ avec protection de surtension intégrée.",
+          alt: "Maître électricien raccordant un panneau électrique 200A avec équipement de précision",
         },
       ]
     : [
@@ -221,11 +322,11 @@ function ProjectGallery({ locale }: { locale: Locale }) {
           alt: "Technician testing an electrical panel with a multimeter",
         },
         {
-          src: "/media/landing-hero-exterior.jpg",
-          eyebrow: "Connected environments",
-          title: "Electrical systems integrated into modern architecture",
-          description: "Distribution, controls and lighting designed as one coherent system.",
-          alt: "Modern architecture with integrated electrical distribution and lighting",
+          src: "/media/style-lock-master.jpg",
+          eyebrow: "200A Panel Upgrade",
+          title: "Engineering precision and Hydro-Québec compliance",
+          description: "CMEQ-certified 200A panel upgrades with integrated surge protection and clean conduit lines.",
+          alt: "Master electrician wiring a 200A electrical panel with precision tools",
         },
       ];
 
@@ -309,12 +410,9 @@ function HomePage({ locale }: { locale: Locale }) {
   const copy = content[locale];
   const page = copy.pages.home;
   const isFrench = locale === "fr";
-  const heroTitle = isFrench
-    ? "L’électricité, maîtrisée."
-    : "Power, mastered.";
   const heroIntro = isFrench
-    ? "De la maison à l’industrie, une expertise claire et précise dans le Grand Montréal — pour vos projets, votre entretien et vos urgences."
-    : "From homes to industry, clear and precise expertise across Greater Montreal — for projects, maintenance and emergencies.";
+    ? "Des réparations d’urgence aux installations commerciales complètes, nos maîtres électriciens certifiés offrent des solutions de premier ordre avec une tarification transparente sans frais cachés."
+    : "From urgent emergency repairs to complete commercial installations, our licensed master electricians deliver top-tier solutions with upfront pricing and zero hidden fees.";
 
   const trustBadgeIcon = (index: number) => {
     if (index === 0) return <ShieldCheck aria-hidden="true" />;
@@ -325,152 +423,205 @@ function HomePage({ locale }: { locale: Locale }) {
   return (
     <div className="home-page">
       <ScrollProgress />
-      <CinematicHero
-        actions={<ActionPair locale={locale} dark />}
-        background={
-          <>
-            {/* Decorative motion background; the image remains the no-motion fallback. */}
-            <HeroVideo />
-            <Interactive3DScene />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt=""
-              className="home-hero-image"
-              decoding="async"
-              fetchPriority="high"
-              height="936"
-              src="/media/eclipse-hero-electrician-v2.png"
-              width="1664"
-            />
-            <div className="home-hero-overlay" />
-            <AnimatedGridPattern />
-            <div className="hero-energy-orbit" aria-hidden="true">
-              <span className="hero-energy-orbit-ring hero-energy-orbit-ring-a" />
-              <span className="hero-energy-orbit-ring hero-energy-orbit-ring-b" />
-              <span className="hero-energy-orbit-core" />
-            </div>
-          </>
-        }
-        eyebrow={<p className="eyebrow eyebrow-amber">{page.eyebrow}</p>}
-        heading={<h1>{heroTitle}</h1>}
-        intro={<p>{heroIntro}</p>}
-        sideNote={
-          <div className="hero-side-note" aria-hidden="true">
-            <span>MTL</span>
-            <span>45.5019° N</span>
-            <span>{isFrench ? "Défiler pour explorer" : "Scroll to explore"}</span>
-          </div>
-        }
-        trustMarkers={
-          <div
-            aria-label={isFrench ? "Repères de confiance" : "Trust markers"}
-            className="hero-trust-badges"
-          >
-            {copy.home.trustBadges.map((badge, index) => (
-              <div className="hero-trust-badge" key={badge.label}>
-                <span className="hero-trust-badge-icon">
-                  {trustBadgeIcon(index)}
-                </span>
+      <FullPageScroll />
+      <div className="home-snap-section home-snap-hero">
+        <CinematicHero
+          actions={<ActionPair locale={locale} dark />}
+          background={<HeroVideo />}
+          bottomBar={
+            <>
+              <div className="bottom-bar-left">
+                <span className="bottom-bar-icon" aria-hidden="true">⚡</span>
                 <span>
-                  <small>{badge.label}</small>
-                  <strong>{badge.value}</strong>
+                  {isFrench ? (
+                    <>
+                      SERVICES ÉLECTRIQUES <span className="accent-yellow">RÉSIDENTIELS &amp; COMMERCIAUX</span>
+                    </>
+                  ) : (
+                    <>
+                      ELECTRICAL SERVICES <span className="accent-yellow">RESIDENTIAL &amp; COMMERCIAL</span>
+                    </>
+                  )}
                 </span>
               </div>
-            ))}
-          </div>
-        }
-      />
 
-      <ScrollReveal className="home-flow-block">
-        <section className="section-pad services-section" id="expertise">
-          <div className="site-container">
-            <HomepageServices locale={locale} />
-            <div className="section-link-row">
-              <a className="arrow-link" href={pathFor("services", locale)}>
-                {copy.actions.exploreServices}<ArrowRight aria-hidden="true" />
-              </a>
+              <div className="bottom-badge-divider" aria-hidden="true" />
+
+              <div
+                aria-label={isFrench ? "Repères de confiance" : "Trust markers"}
+                className="hero-trust-badges bottom-bar-badges"
+              >
+                <div className="hero-trust-badge bottom-badge-item">
+                  <span className="hero-trust-badge-icon">
+                    <ShieldCheck aria-hidden="true" />
+                  </span>
+                  <span className="bottom-badge-content">
+                    <strong className="bottom-badge-label">{copy.home.trustBadges[0].label} :</strong>{" "}
+                    <span className="bottom-badge-value">{copy.home.trustBadges[0].value}</span>
+                  </span>
+                </div>
+
+                <div className="bottom-badge-divider" aria-hidden="true" />
+
+                <div className="hero-trust-badge bottom-badge-item">
+                  <span className="hero-trust-badge-icon">
+                    <BadgeCheck aria-hidden="true" />
+                  </span>
+                  <span className="bottom-badge-content">
+                    <strong className="bottom-badge-label">{copy.home.trustBadges[1].label} :</strong>{" "}
+                    <span className="bottom-badge-value">{copy.home.trustBadges[1].value}</span>
+                  </span>
+                </div>
+
+                <div className="bottom-badge-divider" aria-hidden="true" />
+
+                <div className="hero-trust-badge bottom-badge-item">
+                  <span className="hero-trust-badge-icon">
+                    <MapPin aria-hidden="true" />
+                  </span>
+                  <span className="bottom-badge-content">
+                    <strong className="bottom-badge-label">{copy.home.trustBadges[2].label} :</strong>{" "}
+                    <span className="bottom-badge-value">{copy.home.trustBadges[2].value}</span>
+                  </span>
+                </div>
+              </div>
+            </>
+          }
+          heading={
+            <div className="hero-heading-group">
+              <h1 className="hero-display-title">
+                {isFrench ? (
+                  <>
+                    <span className="hero-title-line">VOTRE MAÎTRE</span>
+                    <span className="hero-title-line hero-amber-gradient">ÉLECTRICIEN</span>
+                    <span className="hero-title-line">DE CONFIANCE</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="hero-title-line">YOUR TRUSTED</span>
+                    <span className="hero-title-line hero-amber-gradient">MASTER</span>
+                    <span className="hero-title-line">ELECTRICIAN</span>
+                  </>
+                )}
+              </h1>
+              <div className="lightning-divider" aria-hidden="true">
+                <span className="lightning-divider-icon">⚡</span>
+              </div>
             </div>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal className="home-flow-block" delay={50}>
-        <ProjectGallery locale={locale} />
-      </ScrollReveal>
-
-      <ScrollReveal className="home-flow-block">
-        <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />
-      </ScrollReveal>
-
-      <ScrollReveal className="home-flow-block">
-      <section className="section-pad process-section">
-        <div className="site-container split-heading">
-          <SectionHeading
-            eyebrow={copy.home.processEyebrow}
-            title={copy.home.processTitle}
-            intro={copy.home.processIntro}
-          />
-          <div className="process-grid">
-            {copy.process.map((step, index) => (
-              <article key={step.title}>
-                <span>0{index + 1}</span>
-                <div><h3>{step.title}</h3><p>{step.description}</p></div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      </ScrollReveal>
-
-      <ScrollReveal className="home-flow-block">
-      <section className="section-pad territory-preview">
-        <div className="site-container territory-layout">
-          <div>
-            <SectionHeading
-              eyebrow={copy.home.territoryEyebrow}
-              title={copy.home.territoryTitle}
-              intro={copy.home.territoryIntro}
+          }
+          intro={
+            <p className="hero-intro-text">
+              {isFrench
+                ? "Des solutions électriques sécuritaires, certifiées et durables pour votre résidence, commerce et industrie dans le Grand Montréal."
+                : "Safe, certified, and durable electrical solutions for your residential, commercial, and industrial property in Greater Montreal."}
+            </p>
+          }
+          media={
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              alt={
+                isFrench
+                  ? "Équipe de maîtres électriciens certifiés Éclipse Électrique et camions de service dans le Grand Montréal"
+                  : "Éclipse Électrique certified master electrician team and service fleet in Greater Montreal"
+              }
+              className="banner-media-img"
+              decoding="async"
+              fetchPriority="high"
+              height="768"
+              src="/media/eclipse-hero-electrician-v2.png"
+              width="1376"
             />
-            <a className="arrow-link" href={pathFor("serviceArea", locale)}>
-              {copy.actions.checkArea}<ArrowRight aria-hidden="true" />
-            </a>
-          </div>
-          <div className="region-preview-grid">
-            {copy.regions.map((region, index) => {
-              const regionImages = [
-                "/media/area-montreal.jpg",
-                "/media/area-north-shore.jpg",
-                "/media/area-south-shore.jpg",
-              ];
-              return (
-                <article key={region.name}>
-                  <div className="region-preview-media" style={{ marginBottom: "1.25rem", borderRadius: "0.375rem", overflow: "hidden", height: "160px" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      alt={region.name}
-                      decoding="async"
-                      height="320"
-                      loading="lazy"
-                      src={regionImages[index % regionImages.length]}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                      width="480"
-                    />
-                  </div>
-                  <span>0{index + 1}</span>
-                  <MapPin aria-hidden="true" />
-                  <h3>{region.name}</h3>
-                  <p>{region.description}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-      </ScrollReveal>
+          }
+          signature={
+            <div className="banner-signature-block">
+              <div>
+                <div className="signature-text">Éclipse Électrique Inc.</div>
+                <div className="signature-sub">
+                  {isFrench
+                    ? "RBQ : 5582-0096-01 · MAÎTRE ÉLECTRICIEN CCQ"
+                    : "RBQ : 5582-0096-01 · CERTIFIED MASTER ELECTRICIAN CCQ"}
+                </div>
+              </div>
+            </div>
+          }
+        />
+      </div>
 
-      <ScrollReveal className="home-flow-block home-flow-final">
-        <CtaBand locale={locale} />
-      </ScrollReveal>
+      <div className="home-snap-section home-snap-expertise">
+        <ScrollReveal className="home-flow-block">
+          <section className="section-pad services-section" id="expertise">
+            <div className="site-container">
+              <BentoServicesSection locale={locale} />
+              <HomepageServices locale={locale} />
+              <div className="section-link-row">
+                <a className="arrow-link" href={pathFor("services", locale)}>
+                  {copy.actions.exploreServices}<ArrowRight aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </section>
+        </ScrollReveal>
+      </div>
+
+      <div className="home-snap-section home-snap-gallery">
+        <ScrollReveal className="home-flow-block" delay={50}>
+          <ProjectGallery locale={locale} />
+        </ScrollReveal>
+      </div>
+
+      <div className="home-snap-section home-snap-thermography">
+        <ScrollReveal className="home-flow-block">
+          <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />
+        </ScrollReveal>
+      </div>
+
+      <div className="home-snap-section home-snap-process">
+        <ScrollReveal className="home-flow-block">
+          <section className="section-pad process-section">
+            <div className="site-container split-heading">
+              <SectionHeading
+                eyebrow={copy.home.processEyebrow}
+                title={copy.home.processTitle}
+                intro={copy.home.processIntro}
+              />
+              <div className="process-grid">
+                {copy.process.map((step, index) => (
+                  <article key={step.title}>
+                    <span>0{index + 1}</span>
+                    <div><h3>{step.title}</h3><p>{step.description}</p></div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        </ScrollReveal>
+      </div>
+
+      <div className="home-snap-section home-snap-territory">
+        <ScrollReveal className="home-flow-block">
+          <section className="section-pad territory-preview" id="dispatch-hub">
+            <div className="site-container">
+              <div className="territory-header-block mb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                <SectionHeading
+                  eyebrow={copy.home.territoryEyebrow}
+                  title={copy.home.territoryTitle}
+                  intro={copy.home.territoryIntro}
+                />
+                <a className="arrow-link shrink-0" href={pathFor("serviceArea", locale)}>
+                  {copy.actions.checkArea}<ArrowRight aria-hidden="true" />
+                </a>
+              </div>
+              <DispatchCoverageConsole locale={locale} />
+            </div>
+          </section>
+        </ScrollReveal>
+      </div>
+
+      <div className="home-snap-section home-snap-cta">
+        <ScrollReveal className="home-flow-block home-flow-final">
+          <CtaBand locale={locale} />
+        </ScrollReveal>
+      </div>
     </div>
   );
 }

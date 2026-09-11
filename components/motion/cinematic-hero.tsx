@@ -1,28 +1,35 @@
 "use client";
 
-import { m, stagger, useAnimate } from "motion/react";
+import { m, stagger, useAnimate, useScroll, useTransform } from "motion/react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { useEffect, useState } from "react";
 
-import { ElectricTrace } from "@/components/motion/electric-trace";
 import { cinematicTransition, cinematicVariants } from "@/components/motion/tokens";
 
 interface CinematicHeroProps {
   actions: ReactNode;
-  background: ReactNode;
-  eyebrow: ReactNode;
+  background?: ReactNode;
+  bottomBar?: ReactNode;
+  eyebrow?: ReactNode;
   heading: ReactNode;
   intro: ReactNode;
+  media?: ReactNode;
+  mediaCard?: ReactNode;
+  signature?: ReactNode;
   sideNote?: ReactNode;
-  trustMarkers: ReactNode;
+  trustMarkers?: ReactNode;
 }
 
 export function CinematicHero({
   actions,
   background,
+  bottomBar,
   eyebrow,
   heading,
   intro,
+  media,
+  mediaCard,
+  signature,
   sideNote,
   trustMarkers,
 }: CinematicHeroProps) {
@@ -30,6 +37,16 @@ export function CinematicHero({
   const [motionState, setMotionState] = useState<"opening" | "settled">("settled");
   const [motionPreference, setMotionPreference] = useState<"pending" | "normal" | "reduce">("pending");
   const reducedMotion = motionPreference === "reduce";
+
+  const { scrollYProgress } = useScroll({
+    target: scope,
+    offset: ["start start", "end start"],
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0.2]);
+  const contentY = useTransform(scrollYProgress, [0, 0.65], [0, -25]);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -65,7 +82,7 @@ export function CinematicHero({
         },
         {
           ...cinematicTransition,
-          delay: stagger(0.11, { startDelay: 0.04 }),
+          delay: stagger(0.09, { startDelay: 0.03 }),
         },
       );
       void entrance.then(() => {
@@ -123,20 +140,44 @@ export function CinematicHero({
       onPointerMove={handlePointerMove}
       style={{ "--hero-depth-x": "0px", "--hero-depth-y": "0px" } as CSSProperties}
     >
-      <div className="cinematic-depth-layer" aria-hidden="true">
-        {background}
-      </div>
-      <div className="site-container home-hero-inner">
-        <div className="home-hero-copy">
-          <m.div className="cinematic-hero-item" initial={false}>{eyebrow}</m.div>
-          <m.div className="cinematic-hero-item" initial={false}>{heading}</m.div>
-          <m.div className="cinematic-hero-item" initial={false}>{intro}</m.div>
-          <m.div className="cinematic-hero-item" initial={false}>{trustMarkers}</m.div>
-          <m.div className="cinematic-hero-item" initial={false}>{actions}</m.div>
-          <ElectricTrace className="cinematic-hero-trace" />
+      {background ? (
+        <div className="hero-video-deferred-holder" aria-hidden="true">
+          {background}
         </div>
-        {sideNote}
+      ) : null}
+      <div className="unified-hero-container">
+        <m.div
+          className="unified-hero-banner"
+          style={reducedMotion ? undefined : { opacity: contentOpacity, y: contentY }}
+        >
+          {/* Main Upper Zone: Image spans right & background with fade starting at subtitle, copy on left */}
+          <div className="banner-main">
+            <m.div className="cinematic-hero-item banner-image-layer" initial={false}>
+              {media || mediaCard}
+            </m.div>
+
+            <div className="banner-copy">
+              {eyebrow ? <m.div className="cinematic-hero-item" initial={false}>{eyebrow}</m.div> : null}
+              <m.div className="cinematic-hero-item" initial={false}>{heading}</m.div>
+              <m.div className="cinematic-hero-item" initial={false}>{intro}</m.div>
+              {signature ? <m.div className="cinematic-hero-item" initial={false}>{signature}</m.div> : null}
+              <m.div className="cinematic-hero-item" initial={false}>{actions}</m.div>
+            </div>
+          </div>
+
+          {/* Integrated Bottom Credential Bar (Acadia style) */}
+          {bottomBar ? (
+            <div className="banner-bottom-bar">
+              {bottomBar}
+            </div>
+          ) : trustMarkers ? (
+            <div className="banner-bottom-bar">
+              {trustMarkers}
+            </div>
+          ) : null}
+        </m.div>
       </div>
+      {sideNote ? sideNote : null}
     </m.section>
   );
 }
