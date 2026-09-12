@@ -17,6 +17,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -223,13 +224,13 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
         </div>
 
         <div className="site-container nav-shell">
-          <a className="brand-link" href={pathFor("home", locale)}>
+          <Link className="brand-link" href={pathFor("home", locale)}>
             <BrandMark />
-          </a>
+          </Link>
 
           <nav className="desktop-nav" aria-label={isFrench ? "Navigation principale" : "Main navigation"}>
             <details
-              className="header-dropdown"
+              className="header-dropdown header-dropdown-services"
               ref={servicesDropdownRef}
               name="site-nav-dropdown"
               onMouseEnter={handleServicesMouseEnter}
@@ -249,7 +250,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                     const Icon = serviceIcons[serviceId];
                     const badge = serviceBadges[serviceId];
                     return (
-                      <a
+                      <Link
                         className="dropdown-option"
                         href={pathFor(serviceId, locale)}
                         key={serviceId}
@@ -266,21 +267,21 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                           <small>{description}</small>
                         </div>
                         <ArrowRight aria-hidden="true" className="dropdown-option-arrow" />
-                      </a>
+                      </Link>
                     );
                   })}
                 </div>
                 <div className="dropdown-footer">
-                  <a className="dropdown-view-all" href={pathFor("services", locale)} onClick={closeDropdowns}>
+                  <Link className="dropdown-view-all" href={pathFor("services", locale)} onClick={closeDropdowns}>
                     <span>{copy.actions.exploreServices}</span>
                     <ArrowRight aria-hidden="true" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </details>
 
             <details
-              className="header-dropdown area-dropdown"
+              className="header-dropdown area-dropdown header-dropdown-area"
               ref={areaDropdownRef}
               name="site-nav-dropdown"
               onMouseEnter={handleAreaMouseEnter}
@@ -334,7 +335,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                         className="area-city-panel"
                       >
                         {cities.map((city) => (
-                          <a
+                          <Link
                             href={cityPath(locale, city.slug)}
                             key={city.slug}
                             className="city-pill"
@@ -342,7 +343,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                           >
                             <MapPin aria-hidden="true" className="city-pin-icon" />
                             <span>{city[locale]}</span>
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     );
@@ -350,44 +351,46 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                 </div>
 
                 <div className="dropdown-footer">
-                  <a className="dropdown-view-all" href={pathFor("serviceArea", locale)} onClick={closeDropdowns}>
+                  <Link className="dropdown-view-all" href={pathFor("serviceArea", locale)} onClick={closeDropdowns}>
                     <span>{copy.actions.checkArea}</span>
                     <ArrowRight aria-hidden="true" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </details>
 
             {simpleLinks.map((link) => (
-              <a
-                className={pageId === link.pageId ? "is-current" : undefined}
+              <Link
+                className={`nav-link-${link.pageId} ${pageId === link.pageId ? "is-current" : ""}`}
                 href={pathFor(link.pageId, locale)}
                 key={link.pageId}
                 aria-current={pageId === link.pageId ? "page" : undefined}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="desktop-actions">
             <ThemeToggle locale={locale} />
-            <a
+            <Link
               className="language-link language-toggle"
               href={languageHref}
               aria-label={languageLabel}
               title={languageLabel}
+              scroll={false}
+              prefetch={true}
             >
               <span aria-hidden="true" className="language-toggle-code">
                 {isFrench ? "EN" : "FR"}
               </span>
               <span className="sr-only">{languageLabel}</span>
-            </a>
+            </Link>
 
             <Button asChild size="lg" className="cta-button">
-              <a href={quotePath(locale)}>
+              <Link href={quotePath(locale)}>
                 {quoteLabel}
-              </a>
+              </Link>
             </Button>
 
             <a
@@ -419,13 +422,13 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                     <ChevronDown aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
-                    <a className="mobile-submenu-all" href={pathFor("services", locale)}>
+                    <Link className="mobile-submenu-all" href={pathFor("services", locale)}>
                       {copy.actions.exploreServices}
-                    </a>
+                    </Link>
                     {serviceLinks.map(({ serviceId, label }) => (
-                      <a href={pathFor(serviceId, locale)} key={serviceId}>
+                      <Link href={pathFor(serviceId, locale)} key={serviceId}>
                         {label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </details>
@@ -436,18 +439,18 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                     <ChevronDown aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
-                    <a className="mobile-submenu-all" href={pathFor("serviceArea", locale)}>
+                    <Link className="mobile-submenu-all" href={pathFor("serviceArea", locale)}>
                       {copy.actions.checkArea}
-                    </a>
+                    </Link>
                     {regionOrder.map((region) => (
                       <div className="mobile-city-group" key={region}>
                         <strong>{regionLabels[region]}</strong>
                         {cityRoutes
                           .filter((city) => city.region === region)
                           .map((city) => (
-                            <a href={cityPath(locale, city.slug)} key={city.slug}>
+                            <Link href={cityPath(locale, city.slug)} key={city.slug}>
                               {city[locale]}
-                            </a>
+                            </Link>
                           ))}
                       </div>
                     ))}
@@ -455,21 +458,23 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                 </details>
 
                 {simpleLinks.map((link) => (
-                  <a
+                  <Link
                     href={pathFor(link.pageId, locale)}
                     key={link.pageId}
                     aria-current={pageId === link.pageId ? "page" : undefined}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
               <div className="mobile-menu-actions">
                 <ThemeToggle locale={locale} />
-                <a href={languageHref}>{languageLabel}</a>
-                <a className="mobile-quote" href={quotePath(locale)}>
+                <Link href={languageHref} scroll={false} prefetch={true}>
+                  {languageLabel}
+                </Link>
+                <Link className="mobile-quote" href={quotePath(locale)}>
                   {quoteLabel}
-                </a>
+                </Link>
                 <a className="mobile-emergency" href={site.emergencyPhoneHref}>
                   {copy.actions.emergency}: {site.emergencyPhoneDisplay}
                 </a>

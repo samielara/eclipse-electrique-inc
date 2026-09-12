@@ -475,8 +475,36 @@ textarea {
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: clamp(0.9rem, 1.8vw, 1.65rem);
+  gap: clamp(0.75rem, 1.4vw, 1.4rem);
   margin-left: auto;
+}
+
+.header-dropdown-services > summary {
+  min-width: 84px;
+  justify-content: center;
+}
+
+.header-dropdown-area > summary {
+  min-width: 112px;
+  justify-content: center;
+}
+
+.nav-link-about {
+  min-width: 68px;
+  justify-content: center;
+  text-align: center;
+}
+
+.nav-link-faq {
+  min-width: 36px;
+  justify-content: center;
+  text-align: center;
+}
+
+.nav-link-contact {
+  min-width: 64px;
+  justify-content: center;
+  text-align: center;
 }
 
 .desktop-nav a,
@@ -1208,6 +1236,37 @@ textarea {
 
 [data-theme="light"] .nav-emergency-copy strong {
   color: #0f172a;
+}
+
+.desktop-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.desktop-actions .cta-button {
+  width: 196px;
+  min-width: 196px;
+  max-width: 196px;
+  padding-inline: 0.5rem;
+  text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.desktop-actions .cta-button a {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  display: inline-flex;
+}
+
+.desktop-actions .nav-emergency-cta {
+  width: 154px;
+  min-width: 154px;
+  max-width: 154px;
+  box-sizing: border-box;
 }
 
 .cta-button {
@@ -2197,16 +2256,26 @@ textarea {
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 26px;
-  padding: clamp(1.5rem, 2.4vh, 2.25rem) clamp(1.75rem, 2.5vw, 2.5rem);
+  padding: clamp(2.2rem, 3.8vh, 3.25rem) clamp(2rem, 2.8vw, 2.75rem);
   box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 0 1px rgba(245, 158, 11, 0.08);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: clamp(460px, 42vw, 590px);
+  align-items: center;
+  text-align: center;
+  max-width: clamp(470px, 42vw, 590px);
+  height: min(calc(100% - 3.5rem), 740px);
+  min-height: clamp(540px, 76vh, 740px);
+  gap: clamp(1.1rem, 2.2vh, 1.8rem);
 }
 
 .hero-heading-group {
-  margin-bottom: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 0.2rem;
 }
 
 .hero-display-title {
@@ -2222,13 +2291,17 @@ textarea {
   margin-bottom: 0.25rem !important;
   color: #ffffff !important;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+  text-align: center !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
 }
 
 .lightning-divider {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 4px 0 8px 0;
+  margin: 6px auto 8px auto;
   width: 90%;
   max-width: 380px;
 }
@@ -2252,14 +2325,27 @@ textarea {
   filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
 }
 
+.hero-intro-text {
+  text-align: center;
+  margin: 0 auto;
+}
+
 .banner-signature-block {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
-  margin-bottom: 10px;
+  margin: 0 auto;
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   max-width: 440px;
+  width: 100%;
+  text-align: center;
+}
+
+.home-hero .action-pair {
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .signature-text {
@@ -2422,7 +2508,10 @@ textarea {
 /* Height-aware adjustments for shorter screens (laptops, displays with toolbars) */
 @media (max-height: 800px) and (min-width: 769px) {
   .banner-copy {
-    padding: clamp(0.85rem, 1.8vh, 1.5rem) clamp(1.4rem, 2.5vw, 2.2rem) !important;
+    height: min(calc(100% - 2rem), 620px) !important;
+    min-height: clamp(480px, 76vh, 620px) !important;
+    padding: clamp(1.2rem, 2.4vh, 1.8rem) clamp(1.5rem, 2.5vw, 2.2rem) !important;
+    gap: clamp(0.75rem, 1.8vh, 1.25rem) !important;
   }
   .hero-display-title {
     font-size: clamp(1.6rem, 2.3vw, 2.25rem) !important;
@@ -2446,12 +2535,15 @@ textarea {
     margin: 0.85rem 0.75rem !important;
     padding: 1.5rem 1.25rem 1.25rem !important;
     max-width: calc(100% - 1.5rem) !important;
+    height: auto !important;
+    min-height: auto !important;
     background: rgba(7, 12, 22, 0.84) !important;
     backdrop-filter: blur(20px) saturate(150%) !important;
     -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
     border-radius: 20px !important;
     box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    gap: 1rem !important;
   }
 
   .hero-display-title {
