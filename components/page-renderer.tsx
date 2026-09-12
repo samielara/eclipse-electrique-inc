@@ -512,8 +512,8 @@ function HomePage({ locale }: { locale: Locale }) {
           intro={
             <p className="hero-intro-text">
               {isFrench
-                ? "Des solutions électriques sécuritaires, certifiées et durables pour votre résidence, commerce et industrie dans le Grand Montréal."
-                : "Safe, certified, and durable electrical solutions for your residential, commercial, and industrial property in Greater Montreal."}
+                ? "Services de maître électricien certifié pour vos propriétés résidentielles, commerciales et industrielles dans le Grand Montréal. Ligne d'urgence accessible 24/7."
+                : "Certified master electrician services for residential, commercial, and industrial properties across Greater Montreal. 24/7 emergency line available."}
             </p>
           }
           media={
