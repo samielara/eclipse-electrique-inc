@@ -59,32 +59,32 @@ const assistantCopy = {
   fr: {
     launcher: "Assistant 24/7",
     openLabel: "Ouvrir l’assistant Éclipse",
-    title: "Assistant Éclipse",
-    description: "Orientation automatique pour vos besoins électriques",
-    status: "Réponses instantanées · 24/7",
+    title: "Éclipse · Maître Électricien",
+    description: "Orientation d’experts CMEQ & RBQ pour vos travaux et urgences",
+    status: "En ligne · Réponse immédiate",
     close: "Fermer l’assistant",
     conversation: "Conversation avec l’assistant Éclipse",
     quickReplies: "Choisissez un sujet",
     inputLabel: "Votre message",
-    placeholder: "Décrivez votre besoin…",
+    placeholder: "Décrivez votre besoin électrique…",
     send: "Envoyer",
-    thinking: "L’assistant prépare une réponse…",
-    disclaimer: "Assistant automatique · Orientation générale, sans diagnostic à distance.",
+    thinking: "Le maître électricien prépare une réponse…",
+    disclaimer: "Assistant automatique · Orientation d’experts CMEQ & RBQ, sans diagnostic à distance.",
   },
   en: {
     launcher: "24/7 assistant",
     openLabel: "Open the Éclipse assistant",
-    title: "Éclipse assistant",
-    description: "Automated guidance for your electrical needs",
-    status: "Instant replies · 24/7",
+    title: "Éclipse · Master Electrician",
+    description: "CMEQ & RBQ certified guidance for projects and emergencies",
+    status: "Online · Instant response",
     close: "Close the assistant",
     conversation: "Conversation with the Éclipse assistant",
     quickReplies: "Choose a topic",
     inputLabel: "Your message",
-    placeholder: "Describe what you need…",
+    placeholder: "Describe your electrical need…",
     send: "Send",
-    thinking: "The assistant is preparing a reply…",
-    disclaimer: "Automated assistant · General guidance, not a remote diagnosis.",
+    thinking: "Master electrician is preparing a reply…",
+    disclaimer: "Automated assistant · CMEQ & RBQ expert guidance, not a remote diagnosis.",
   },
 } as const;
 
@@ -95,6 +95,39 @@ export function assistantVisibilityReducer(
   if (action.type === "open") return true;
   if (action.type === "close") return false;
   return state;
+}
+
+export function FormattedMessageText({ text }: { text: string }) {
+  const paragraphs = text.split(/\n\n+/);
+  return (
+    <div className="assistant-message-content">
+      {paragraphs.map((para, i) => {
+        const lines = para.split(/\n/);
+        return (
+          <p key={i}>
+            {lines.map((line, lineIdx) => {
+              const parts = line.split(/(\*\*[^*]+\*\*)/g);
+              const isBullet = line.trimStart().startsWith("•") || /^\d+\./.test(line.trimStart());
+              return (
+                <span
+                  className={isBullet ? "assistant-bullet-line" : undefined}
+                  key={lineIdx}
+                  style={isBullet ? { display: "block", marginTop: lineIdx > 0 ? "0.28rem" : undefined } : undefined}
+                >
+                  {parts.map((part, j) => {
+                    if (part.startsWith("**") && part.endsWith("**")) {
+                      return <strong key={j}>{part.slice(2, -2)}</strong>;
+                    }
+                    return part;
+                  })}
+                </span>
+              );
+            })}
+          </p>
+        );
+      })}
+    </div>
+  );
 }
 
 export function AssistantReplyCard({
@@ -111,7 +144,7 @@ export function AssistantReplyCard({
           <AlertTriangle aria-hidden="true" />
           <strong>{isFrench ? "Urgence électrique" : "Electrical emergency"}</strong>
         </div>
-        <p>{reply.message}</p>
+        <FormattedMessageText text={reply.message} />
         {action && (
           <a
             className="assistant-emergency-action"
@@ -128,7 +161,7 @@ export function AssistantReplyCard({
 
   return (
     <div className="assistant-reply-card">
-      <p>{reply.message}</p>
+      <FormattedMessageText text={reply.message} />
       {action && (
         <a
           className="assistant-reply-action"
@@ -233,6 +266,8 @@ export function AiAssistant({ locale }: { locale: Locale }) {
         clearTimeout(timer);
         if (requestId === requestIdRef.current) requestRef.current = null;
       }
+    } else if (!reply.emergency) {
+      await new Promise((resolve) => setTimeout(resolve, 380));
     }
     if (requestId !== requestIdRef.current) return;
     setMessages((current) => [
@@ -359,6 +394,10 @@ export function AiAssistant({ locale }: { locale: Locale }) {
                   onAction={handleReplyAction}
                   reply={message.reply}
                 />
+              ) : message.role === "assistant" ? (
+                <div className="assistant-reply-card">
+                  <FormattedMessageText text={message.text} />
+                </div>
               ) : (
                 <p>{message.text}</p>
               )}
