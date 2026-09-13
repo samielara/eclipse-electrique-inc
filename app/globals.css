@@ -363,6 +363,13 @@ textarea {
   flex: 0 0 auto;
 }
 
+@media (min-width: 72.01rem) {
+  /* Shift logo left on desktop homepage so its center aligns directly above the hero card headline */
+  .site-header[data-home="true"] .brand-link {
+    transform: translateX(-63px);
+  }
+}
+
 .brand-lockup {
   display: inline-flex;
   align-items: center;
@@ -1194,19 +1201,21 @@ textarea {
 }
 
 .nav-emergency-copy {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  line-height: 1;
   text-align: left;
+  white-space: nowrap;
 }
 
 .nav-emergency-copy small {
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: #fca5a5;
-  display: block;
+  display: inline;
 }
 
 .nav-emergency-copy strong {
@@ -1214,8 +1223,8 @@ textarea {
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.02em;
-  display: block;
-  margin-top: 0.12rem;
+  display: inline;
+  margin-top: 0;
 }
 
 [data-theme="light"] .nav-emergency-cta {
@@ -1263,9 +1272,10 @@ textarea {
 }
 
 .desktop-actions .nav-emergency-cta {
-  width: 154px;
-  min-width: 154px;
-  max-width: 154px;
+  width: auto;
+  min-width: fit-content;
+  max-width: none;
+  flex-shrink: 0;
   box-sizing: border-box;
 }
 
