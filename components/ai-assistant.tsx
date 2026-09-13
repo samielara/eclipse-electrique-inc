@@ -58,7 +58,7 @@ interface AssistantReplyCardProps {
 const assistantCopy = {
   fr: {
     launcher: "Assistant 24/7",
-    openLabel: "Ouvrir le Chatbot IA Éclipse",
+    openLabel: "Ouvrir l’assistant Éclipse",
     title: "Éclipse AI Chatbot",
     description: "Orientation et assistance en direct 24/7 pour vos besoins électriques",
     status: "En ligne · Réponse immédiate",
@@ -73,7 +73,7 @@ const assistantCopy = {
   },
   en: {
     launcher: "24/7 assistant",
-    openLabel: "Open the Éclipse AI chatbot",
+    openLabel: "Open the Éclipse assistant",
     title: "Éclipse AI Chatbot",
     description: "24/7 interactive guidance for your electrical projects and emergencies",
     status: "Online · Instant response",
@@ -325,7 +325,7 @@ export function AiAssistant({ locale }: { locale: Locale }) {
             type="button"
           >
             <span className="ai-assistant-launcher-icon" aria-hidden="true">
-              <MessageSquare />
+              <Bot />
             </span>
             <span>{copy.launcher}</span>
             {unread && (

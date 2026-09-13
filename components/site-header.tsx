@@ -5,15 +5,19 @@ import {
   BatteryCharging,
   Building,
   Building2,
+  Calendar,
   ChevronDown,
   Compass,
   Factory,
+  HelpCircle,
   House,
   MapPin,
   Menu,
   PhoneCall,
   ScanSearch,
+  Send,
   ShieldCheck,
+  X,
   Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -88,10 +92,19 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
   const areaDropdownRef = useRef<HTMLDetailsElement>(null);
 
   const [selectedRegion, setSelectedRegion] = useState<CityRegion>("montreal");
+  const mobileMenuRef = useRef<HTMLDetailsElement>(null);
+
+  const closeMobileMenu = () => {
+    if (mobileMenuRef.current) mobileMenuRef.current.open = false;
+    if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
 
   const closeDropdowns = () => {
     if (servicesDropdownRef.current) servicesDropdownRef.current.open = false;
     if (areaDropdownRef.current) areaDropdownRef.current.open = false;
+    if (mobileMenuRef.current) mobileMenuRef.current.open = false;
     if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
@@ -185,6 +198,12 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
         !areaDropdownRef.current.contains(target)
       ) {
         areaDropdownRef.current.open = false;
+      }
+      if (
+        mobileMenuRef.current?.open &&
+        !mobileMenuRef.current.contains(target)
+      ) {
+        mobileMenuRef.current.open = false;
       }
     };
 
@@ -408,76 +427,184 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
             </a>
           </div>
 
-          <details className="mobile-menu">
-            <summary>
-              <Menu aria-hidden="true" />
-              <span>{copy.nav.menu}</span>
-              <ChevronDown className="menu-chevron" aria-hidden="true" />
+          <details className="mobile-menu" ref={mobileMenuRef}>
+            <summary aria-label={copy.nav.menu}>
+              <Menu aria-hidden="true" className="menu-open-icon" />
+              <X aria-hidden="true" className="menu-close-icon" />
+              <span className="sr-only">{copy.nav.menu}</span>
             </summary>
             <div className="mobile-menu-panel">
-              <nav aria-label={isFrench ? "Navigation mobile" : "Mobile navigation"}>
-                <details className="mobile-submenu">
-                  <summary>
-                    <span>{copy.nav.services}</span>
-                    <ChevronDown aria-hidden="true" />
+              <div className="mobile-drawer-header">
+                <BrandMark compact inverse={true} />
+                <button
+                  type="button"
+                  className="mobile-drawer-close"
+                  aria-label={isFrench ? "Fermer le menu" : "Close menu"}
+                  onClick={closeMobileMenu}
+                >
+                  <X aria-hidden="true" />
+                </button>
+              </div>
+
+              <nav className="mobile-nav-list" aria-label={isFrench ? "Navigation mobile" : "Mobile navigation"}>
+                <Link
+                  className={`mobile-nav-item ${pageId === "home" ? "is-active" : ""}`}
+                  href={pathFor("home", locale)}
+                  onClick={closeMobileMenu}
+                  aria-current={pageId === "home" ? "page" : undefined}
+                >
+                  <span className="mobile-item-icon" aria-hidden="true">
+                    <House />
+                  </span>
+                  <span className="mobile-item-text">{isFrench ? "Accueil" : "Home"}</span>
+                </Link>
+
+                <details
+                  className="mobile-submenu mobile-nav-accordion"
+                  open={pageId === "services" || servicePageIds.includes(pageId as (typeof servicePageIds)[number])}
+                >
+                  <summary
+                    className={`mobile-nav-item mobile-nav-trigger ${
+                      pageId === "services" || servicePageIds.includes(pageId as (typeof servicePageIds)[number])
+                        ? "is-active"
+                        : ""
+                    }`}
+                  >
+                    <span className="mobile-item-icon" aria-hidden="true">
+                      <Zap />
+                    </span>
+                    <span className="mobile-item-text">{copy.nav.services}</span>
+                    <ChevronDown className="mobile-nav-arrow" aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
-                    <Link className="mobile-submenu-all" href={pathFor("services", locale)}>
-                      {copy.actions.exploreServices}
+                    <Link className="mobile-submenu-all" href={pathFor("services", locale)} onClick={closeMobileMenu}>
+                      <span>{copy.actions.exploreServices}</span>
+                      <ArrowRight aria-hidden="true" />
                     </Link>
-                    {serviceLinks.map(({ serviceId, label }) => (
-                      <Link href={pathFor(serviceId, locale)} key={serviceId}>
-                        {label}
-                      </Link>
-                    ))}
+                    {serviceLinks.map(({ serviceId, label }) => {
+                      const ServiceIcon = serviceIcons[serviceId];
+                      return (
+                        <Link
+                          href={pathFor(serviceId, locale)}
+                          key={serviceId}
+                          onClick={closeMobileMenu}
+                          className={pageId === serviceId ? "is-current-service" : undefined}
+                          aria-current={pageId === serviceId ? "page" : undefined}
+                        >
+                          <span className="mobile-subitem-icon" aria-hidden="true">
+                            <ServiceIcon strokeWidth={1.8} />
+                          </span>
+                          <span>{label}</span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </details>
 
-                <details className="mobile-submenu mobile-area-submenu">
-                  <summary>
-                    <span>{copy.nav.serviceArea}</span>
-                    <ChevronDown aria-hidden="true" />
+                <details
+                  className="mobile-submenu mobile-area-submenu mobile-nav-accordion"
+                  open={pageId === "serviceArea" || !!citySlug}
+                >
+                  <summary
+                    className={`mobile-nav-item mobile-nav-trigger ${
+                      pageId === "serviceArea" || !!citySlug ? "is-active" : ""
+                    }`}
+                  >
+                    <span className="mobile-item-icon" aria-hidden="true">
+                      <MapPin />
+                    </span>
+                    <span className="mobile-item-text">{copy.nav.serviceArea}</span>
+                    <ChevronDown className="mobile-nav-arrow" aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
-                    <Link className="mobile-submenu-all" href={pathFor("serviceArea", locale)}>
-                      {copy.actions.checkArea}
+                    <Link className="mobile-submenu-all" href={pathFor("serviceArea", locale)} onClick={closeMobileMenu}>
+                      <span>{copy.actions.checkArea}</span>
+                      <ArrowRight aria-hidden="true" />
                     </Link>
                     {regionOrder.map((region) => (
                       <div className="mobile-city-group" key={region}>
                         <strong>{regionLabels[region]}</strong>
-                        {cityRoutes
-                          .filter((city) => city.region === region)
-                          .map((city) => (
-                            <Link href={cityPath(locale, city.slug)} key={city.slug}>
-                              {city[locale]}
-                            </Link>
-                          ))}
+                        <div className="mobile-city-chips">
+                          {cityRoutes
+                            .filter((city) => city.region === region)
+                            .map((city) => (
+                              <Link href={cityPath(locale, city.slug)} key={city.slug} onClick={closeMobileMenu}>
+                                {city[locale]}
+                              </Link>
+                            ))}
+                        </div>
                       </div>
                     ))}
                   </div>
                 </details>
 
-                {simpleLinks.map((link) => (
-                  <Link
-                    href={pathFor(link.pageId, locale)}
-                    key={link.pageId}
-                    aria-current={pageId === link.pageId ? "page" : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                <Link
+                  className={`mobile-nav-item ${pageId === "about" ? "is-active" : ""}`}
+                  href={pathFor("about", locale)}
+                  onClick={closeMobileMenu}
+                  aria-current={pageId === "about" ? "page" : undefined}
+                >
+                  <span className="mobile-item-icon" aria-hidden="true">
+                    <ShieldCheck />
+                  </span>
+                  <span className="mobile-item-text">{copy.nav.about}</span>
+                </Link>
+
+                <Link
+                  className={`mobile-nav-item ${pageId === "faq" ? "is-active" : ""}`}
+                  href={pathFor("faq", locale)}
+                  onClick={closeMobileMenu}
+                  aria-current={pageId === "faq" ? "page" : undefined}
+                >
+                  <span className="mobile-item-icon" aria-hidden="true">
+                    <HelpCircle />
+                  </span>
+                  <span className="mobile-item-text">{copy.nav.faq}</span>
+                </Link>
+
+                <Link
+                  className={`mobile-nav-item ${pageId === "contact" ? "is-active" : ""}`}
+                  href={pathFor("contact", locale)}
+                  onClick={closeMobileMenu}
+                  aria-current={pageId === "contact" ? "page" : undefined}
+                >
+                  <span className="mobile-item-icon" aria-hidden="true">
+                    <Send />
+                  </span>
+                  <span className="mobile-item-text">{copy.nav.contact}</span>
+                </Link>
               </nav>
-              <div className="mobile-menu-actions">
-                <ThemeToggle locale={locale} />
-                <Link href={languageHref} scroll={false} prefetch={true}>
-                  {languageLabel}
+
+              <div className="mobile-drawer-bottom">
+                <Link
+                  className="mobile-drawer-cta mobile-quote"
+                  href={quotePath(locale)}
+                  onClick={closeMobileMenu}
+                >
+                  <Calendar aria-hidden="true" />
+                  <span>{quoteLabel}</span>
                 </Link>
-                <Link className="mobile-quote" href={quotePath(locale)}>
-                  {quoteLabel}
-                </Link>
-                <a className="mobile-emergency" href={site.emergencyPhoneHref}>
-                  {copy.actions.emergency}: {site.emergencyPhoneDisplay}
+
+                <a className="mobile-drawer-emergency mobile-emergency" href={site.emergencyPhoneHref}>
+                  <PhoneCall aria-hidden="true" />
+                  <span>{copy.actions.emergency}: {site.emergencyPhoneDisplay}</span>
                 </a>
+
+                <div className="mobile-drawer-actions">
+                  <ThemeToggle locale={locale} />
+                  <Link
+                    className="mobile-drawer-lang"
+                    href={languageHref}
+                    scroll={false}
+                    prefetch={true}
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="mobile-lang-code" aria-hidden="true">
+                      {isFrench ? "EN" : "FR"}
+                    </span>
+                    <span>{languageLabel}</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </details>
