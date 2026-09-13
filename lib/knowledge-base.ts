@@ -131,7 +131,7 @@ const quickReplies: Record<Locale, readonly AssistantQuickReply[]> = {
 const copy = {
   fr: {
     greeting:
-      "Bonjour ! Je suis votre conseiller technique chez Éclipse Électrique inc. Maîtres électriciens certifiés CMEQ et RBQ dans le Grand Montréal, nous intervenons pour vos panneaux électriques, bornes de recharge, génératrices, rénovations et urgences 24/7. Comment puis-je vous aider aujourd’hui ?",
+      "Bonjour ! Je suis votre conseiller virtuel chez Éclipse Électrique inc. Nous intervenons dans tout le Grand Montréal pour vos panneaux électriques, bornes de recharge, génératrices, rénovations et urgences 24/7. Comment puis-je vous aider aujourd’hui ?",
     hazard:
       "⚠️ Situation dangereuse : ne touchez à aucun équipement. Éloignez-vous de la zone. En présence de feu ou de fumée, quittez les lieux et composez le 911. Pour la répartition électrique d’urgence, appelez maintenant.",
     emergencyAction: "Appeler l’urgence · 514-717-9277",
@@ -179,7 +179,7 @@ const copy = {
   },
   en: {
     greeting:
-      "Hello! I’m your technical advisor at Éclipse Électrique Inc. As certified master electricians (CMEQ & RBQ) in Greater Montreal, we handle electrical panel upgrades, EV chargers, generators, renovations, and 24/7 emergency dispatch. How can I help you today?",
+      "Hello! I’m your virtual advisor at Éclipse Électrique Inc. We handle electrical panel upgrades, EV chargers, generators, renovations, and 24/7 emergency dispatch across Greater Montreal. How can I help you today?",
     hazard:
       "⚠️ Dangerous situation: do not touch any equipment. Move away from the area. If you see fire or smoke, leave the premises and call 911. Call electrical emergency dispatch now.",
     emergencyAction: "Call emergency dispatch · 514-717-9277",

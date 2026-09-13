@@ -58,33 +58,33 @@ interface AssistantReplyCardProps {
 const assistantCopy = {
   fr: {
     launcher: "Assistant 24/7",
-    openLabel: "Ouvrir l’assistant Éclipse",
-    title: "Éclipse · Maître Électricien",
-    description: "Orientation d’experts CMEQ & RBQ pour vos travaux et urgences",
+    openLabel: "Ouvrir le Chatbot IA Éclipse",
+    title: "Éclipse AI Chatbot",
+    description: "Orientation et assistance en direct 24/7 pour vos besoins électriques",
     status: "En ligne · Réponse immédiate",
-    close: "Fermer l’assistant",
-    conversation: "Conversation avec l’assistant Éclipse",
+    close: "Fermer le chatbot",
+    conversation: "Conversation avec le Chatbot IA Éclipse",
     quickReplies: "Choisissez un sujet",
     inputLabel: "Votre message",
     placeholder: "Décrivez votre besoin électrique…",
     send: "Envoyer",
-    thinking: "Le maître électricien prépare une réponse…",
-    disclaimer: "Assistant automatique · Orientation d’experts CMEQ & RBQ, sans diagnostic à distance.",
+    thinking: "Éclipse AI Chatbot prépare une réponse…",
+    disclaimer: "Assistant automatique · Conseils d'orientation, sans diagnostic à distance.",
   },
   en: {
     launcher: "24/7 assistant",
-    openLabel: "Open the Éclipse assistant",
-    title: "Éclipse · Master Electrician",
-    description: "CMEQ & RBQ certified guidance for projects and emergencies",
+    openLabel: "Open the Éclipse AI chatbot",
+    title: "Éclipse AI Chatbot",
+    description: "24/7 interactive guidance for your electrical projects and emergencies",
     status: "Online · Instant response",
-    close: "Close the assistant",
-    conversation: "Conversation with the Éclipse assistant",
+    close: "Close the chatbot",
+    conversation: "Conversation with the Éclipse AI chatbot",
     quickReplies: "Choose a topic",
     inputLabel: "Your message",
     placeholder: "Describe your electrical need…",
     send: "Send",
-    thinking: "Master electrician is preparing a reply…",
-    disclaimer: "Automated assistant · CMEQ & RBQ expert guidance, not a remote diagnosis.",
+    thinking: "Éclipse AI Chatbot is preparing a reply…",
+    disclaimer: "Automated assistant · General guidance, not a remote diagnosis.",
   },
 } as const;
 
@@ -367,7 +367,7 @@ export function AiAssistant({ locale }: { locale: Locale }) {
               </button>
             </DialogClose>
           </div>
-          <DialogDescription>{copy.description}</DialogDescription>
+          <DialogDescription className="sr-only">{copy.description}</DialogDescription>
         </DialogHeader>
 
         <div
