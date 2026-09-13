@@ -160,43 +160,43 @@ p { text-wrap: pretty; }
     "Liberation Mono", "Courier New", monospace;
 }
 
- [data-theme="light"] {
+  [data-theme="light"] {
     color-scheme: light;
-    --background: #f5f7f9;
-    --foreground: #101b27;
-    --card: #ffffff;
-    --card-foreground: #101b27;
-    --popover: #ffffff;
-    --popover-foreground: #101b27;
+    --background: #f4eee5;
+    --foreground: #1c1815;
+    --card: #faf6f0;
+    --card-foreground: #1c1815;
+    --popover: #faf6f0;
+    --popover-foreground: #1c1815;
     --primary: #f2a71b;
     --primary-foreground: #111820;
-    --secondary: #e9eef2;
-    --secondary-foreground: #102338;
-    --muted: #edf1f4;
-    --muted-foreground: #536372;
-    --accent: #dce9f5;
-    --accent-foreground: #103f63;
+    --secondary: #eae2d5;
+    --secondary-foreground: #1c1815;
+    --muted: #eee7dc;
+    --muted-foreground: #685f54;
+    --accent: #e5ddcf;
+    --accent-foreground: #1c1815;
     --destructive: #b42318;
-    --border: #ccd5dc;
-    --input: #aebbc5;
+    --border: #dad1c2;
+    --input: #c5bcad;
     --ring: #d98e00;
-    --sidebar: #ffffff;
-    --sidebar-foreground: #101b27;
-    --sidebar-primary: #0a1b2f;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #e9eef2;
-    --sidebar-accent-foreground: #102338;
-    --sidebar-border: #ccd5dc;
+    --sidebar: #faf6f0;
+    --sidebar-foreground: #1c1815;
+    --sidebar-primary: #1c1815;
+    --sidebar-primary-foreground: #faf6f0;
+    --sidebar-accent: #eae2d5;
+    --sidebar-accent-foreground: #1c1815;
+    --sidebar-border: #dad1c2;
     --sidebar-ring: #d98e00;
-    --ink: #101b27;
-    --navy: #0a1b2f;
-    --navy-soft: #1b1f27;
-    --steel: #5c6e7d;
-    --steel-light: #a9b8c4;
+    --ink: #1c1815;
+    --navy: #1c1815;
+    --navy-soft: #24201c;
+    --steel: #685f54;
+    --steel-light: #9c9284;
     --amber: #f2a71b;
     --amber-dark: #c97800;
     --electric: #1976a8;
-    --paper: #ffffff;
+    --paper: #faf6f0;
   }
 
 * {
@@ -270,7 +270,7 @@ textarea {
 }
 
 [data-theme="light"] .site-header {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(244, 238, 229, 0.96);
   border-bottom: 1px solid var(--border);
 }
 
@@ -295,9 +295,9 @@ textarea {
 }
 
 [data-theme="light"] .site-header[data-scroll-state="scrolled"] {
-  background: rgba(255, 255, 255, 0.98) !important;
+  background: rgba(244, 238, 229, 0.98) !important;
   border-bottom: 1px solid var(--border) !important;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 14px 34px rgba(45, 36, 24, 0.08) !important;
 }
 
 .utility-bar {
@@ -618,12 +618,12 @@ textarea {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -0.35rem);
-  border: 1px solid rgba(203, 214, 221, 0.85);
+  border: 1px solid rgba(218, 209, 194, 0.85);
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(250, 246, 240, 0.96);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: 0 24px 60px rgba(10, 27, 47, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  box-shadow: 0 24px 60px rgba(45, 36, 24, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   transition:
     opacity 180ms ease,
     transform 180ms ease,
@@ -1201,21 +1201,20 @@ textarea {
 }
 
 .nav-emergency-copy {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.38rem;
-  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
   text-align: left;
   white-space: nowrap;
 }
 
 .nav-emergency-copy small {
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   color: #fca5a5;
-  display: inline;
+  display: block;
 }
 
 .nav-emergency-copy strong {
@@ -1223,8 +1222,8 @@ textarea {
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.02em;
-  display: inline;
-  margin-top: 0;
+  display: block;
+  margin-top: 0.12rem;
 }
 
 [data-theme="light"] .nav-emergency-cta {
@@ -3224,11 +3223,11 @@ textarea {
 }
 
 .services-section {
-  background: #f7f9fa;
+  background: var(--background);
 }
 
 .capabilities-section {
-  background: #fff;
+  background: var(--card);
 }
 
 .capabilities-grid {
@@ -3244,7 +3243,7 @@ textarea {
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: #fff;
+  background: var(--card);
 }
 
 .capability-index {
@@ -3291,7 +3290,7 @@ textarea {
 .sector-matrix-section {
   position: relative;
   overflow: hidden;
-  background: #f7f9fa;
+  background: var(--background);
 }
 
 .sector-matrix-section::after {
@@ -3335,8 +3334,8 @@ textarea {
   padding: 0.75rem 0.9rem;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  background: #fff;
-  color: var(--navy);
+  background: var(--card);
+  color: var(--foreground);
   cursor: pointer;
   text-align: left;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
@@ -3426,9 +3425,9 @@ textarea {
   display: flex;
   flex-direction: column;
   padding: clamp(1.5rem, 3.2vw, 2.65rem);
-  border: 1px solid #b9c6ce;
+  border: 1px solid var(--border);
   border-radius: 0.6rem;
-  background: #fff;
+  background: var(--card);
   box-shadow: 0 18px 42px rgba(18, 39, 55, 0.08);
   animation: sector-panel-in 220ms ease both;
 }
@@ -4778,7 +4777,7 @@ textarea {
 .process-section {
   position: relative;
   overflow: hidden;
-  background: #e9eef2;
+  background: var(--card);
 }
 
 .process-section::after {
@@ -5045,7 +5044,7 @@ textarea {
 }
 
 .service-detail-section {
-  background: #fff;
+  background: var(--card);
 }
 
 .service-visual-wrap {
@@ -5274,7 +5273,7 @@ textarea {
 }
 
 .faq-section {
-  background: #edf1f4;
+  background: var(--background);
 }
 
 .narrow-container {
@@ -5282,11 +5281,11 @@ textarea {
 }
 
 .faq-list {
-  border-top: 1px solid #bac7d0;
+  border-top: 1px solid var(--border);
 }
 
 .faq-list details {
-  border-bottom: 1px solid #bac7d0;
+  border-bottom: 1px solid var(--border);
 }
 
 .faq-list summary {
@@ -5339,7 +5338,7 @@ textarea {
 }
 
 .related-section {
-  background: #fff;
+  background: var(--background);
 }
 
 .services-grid.is-compact .service-card {
@@ -5358,7 +5357,7 @@ textarea {
   padding: clamp(1.5rem, 4vw, 2.8rem);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  background: #fff;
+  background: var(--card);
 }
 
 .region-list header {
@@ -5402,10 +5401,10 @@ textarea {
 
 .region-list li {
   padding: 0.45rem 0.7rem;
-  border: 1px solid #d5dde3;
+  border: 1px solid var(--border);
   border-radius: 0.25rem;
-  background: #f7f9fa;
-  color: #344b5c;
+  background: var(--background);
+  color: var(--foreground);
   font-size: 0.85rem;
   font-weight: 700;
 }
@@ -5431,7 +5430,7 @@ textarea {
 }
 
 .city-service-section {
-  background: #f7f9fa;
+  background: var(--background);
 }
 
 .city-service-section .section-heading {
@@ -5447,7 +5446,7 @@ textarea {
 }
 
 .about-section {
-  background: #fff;
+  background: var(--card);
 }
 
 .about-grid {
@@ -5543,7 +5542,7 @@ textarea {
 }
 
 .contact-section {
-  background: #fff;
+  background: var(--background);
 }
 
 .contact-layout {
@@ -5567,7 +5566,7 @@ textarea {
   padding: 1.5rem;
   border: 1px solid var(--border);
   border-radius: 0.45rem;
-  background: #f8fafb;
+  background: var(--card);
 }
 
 .contact-methods article > svg {
@@ -7582,15 +7581,15 @@ textarea {
 
 [data-theme="light"] .ai-assistant-messages {
   background:
-    linear-gradient(rgba(245, 247, 249, 0.94), rgba(237, 241, 244, 0.98)),
+    linear-gradient(rgba(244, 238, 229, 0.94), rgba(238, 231, 220, 0.98)),
     linear-gradient(120deg, rgba(217, 119, 6, 0.06), transparent 45%);
 }
 
 [data-theme="light"] .ai-assistant-message > p,
 [data-theme="light"] .assistant-reply-card {
-  border-color: #ccd5dc;
-  background: #ffffff;
-  color: #101b27;
+  border-color: #dad1c2;
+  background: #faf6f0;
+  color: #1c1815;
 }
 
 [data-theme="light"] .assistant-reply-action {
@@ -8329,26 +8328,26 @@ textarea {
   }
 
   [data-theme="light"] .mobile-action-bar {
-    border-color: #cbd5e1;
-    background: rgba(248, 250, 252, 0.96);
-    box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.16);
+    border-color: #dad1c2;
+    background: rgba(244, 238, 229, 0.96);
+    box-shadow: 0 -12px 30px rgba(45, 36, 24, 0.12);
   }
 
   [data-theme="light"] .mobile-action-link {
-    border-color: #cbd5e1;
-    color: #0f172a;
+    border-color: #dad1c2;
+    color: #1c1815;
   }
 
   [data-theme="light"] .mobile-action-office {
-    background: #e2e8f0;
+    background: #eae2d5;
   }
 
   [data-theme="light"] .mobile-action-copy small {
-    color: #475569;
+    color: #685f54;
   }
 
   [data-theme="light"] .mobile-action-copy strong {
-    color: #0f172a;
+    color: #1c1815;
   }
 
   .service-card,
