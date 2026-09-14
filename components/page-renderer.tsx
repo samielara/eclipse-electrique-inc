@@ -18,8 +18,18 @@ import { FullPageScroll } from "@/components/motion/full-page-scroll";
 import { ServiceCarousel } from "@/components/motion/service-carousel";
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
 import { AiAssistant } from "@/components/ai-assistant";
+import { HomeContextSelector } from "@/components/home/home-context-selector";
+import { PopularServicesSlider } from "@/components/home/popular-services-slider";
+import { ProblemIntentGrid } from "@/components/home/problem-intent-grid";
+import { VisualProcessStepper } from "@/components/home/visual-process-stepper";
+import { TrustProofBand } from "@/components/home/trust-proof-band";
+import { TechnicalExpertiseTabs } from "@/components/home/technical-expertise-tabs";
+import { VisualCoverageHub } from "@/components/home/visual-coverage-hub";
+import { HomeFaqTeaser } from "@/components/home/home-faq-teaser";
 import { DispatchCoverageConsole } from "@/components/motion/dispatch-coverage-console";
+import { HeroMediaTransition } from "@/components/motion/hero-media-transition";
 import { ServiceCard } from "@/components/service-card";
+import { VisualServicesGrid } from "@/components/visual-services-grid";
 import { ThermographyProof } from "@/components/thermography-proof";
 import { MobileActionBar } from "@/components/mobile-action-bar";
 import { QuoteIntakeWizard } from "@/components/quote-intake-wizard";
@@ -238,26 +248,139 @@ function FaqList({ items }: { items: readonly FaqItem[] }) {
   );
 }
 
-function InnerHero({ locale, pageId }: PageRendererProps) {
-  const page = content[locale].pages[pageId];
+const pageHeroImages: Partial<Record<PageId, string>> = {
+  home: "/media/eclipse-team-fleet-hero.jpg",
+  services: "/media/services-overview-master.jpg",
+  residential: "/media/service-residential-master.jpg",
+  commercial: "/media/service-commercial-master.jpg",
+  industrial: "/media/service-industrial-master.jpg",
+  maintenance: "/media/service-emergency-master.jpg",
+  generators: "/media/service-generators-master.jpg",
+  thermography: "/media/service-thermography-master.jpg",
+  security: "/media/service-security-master.jpg",
+  serviceArea: "/media/service-coverage-map.png",
+  about: "/media/about-craft-master.jpg",
+  faq: "/media/faq-master-consultation.jpg",
+  contact: "/media/contact-master-dispatch.jpg",
+  privacy: "/media/service-commercial-master.jpg",
+};
+
+interface InnerHeroProps {
+  locale: Locale;
+  pageId?: PageId;
+  citySlug?: string;
+  customImage?: string;
+  secondaryImage?: string;
+}
+
+function InnerHero({ locale, pageId, citySlug, customImage, secondaryImage }: InnerHeroProps) {
   const isFrench = locale === "fr";
+  const city = citySlug ? cityBySlug(citySlug) : undefined;
+  const page = pageId ? content[locale].pages[pageId] : undefined;
+
+  const regionName = city
+    ? isFrench
+      ? { montreal: "Montréal", northShore: "Rive-Nord", southShore: "Rive-Sud" }[city.region]
+      : { montreal: "Montréal", northShore: "North Shore", southShore: "South Shore" }[city.region]
+    : undefined;
+
+  const eyebrow = city
+    ? isFrench
+      ? `${regionName} · Territoire desservi`
+      : `${regionName} · Service area`
+    : page?.eyebrow || "";
+
+  const title = city
+    ? isFrench
+      ? `Électricien à ${city[locale]}`
+      : `Electrician in ${city[locale]}`
+    : page?.title || "";
+
+  const intro = city
+    ? isFrench
+      ? `Services de maître électricien certifié déployés à ${city[locale]} et dans le ${regionName}. Déplacement rapide pour travaux résidentiels, commerciaux et urgences 24/7.`
+      : `Certified master electrician services deployed in ${city[locale]} and across the ${regionName}. Rapid dispatch for residential, commercial, and 24/7 emergencies.`
+    : page?.intro || "";
+
+  const imageSrc =
+    customImage ||
+    (city
+      ? city.region === "northShore"
+        ? "/media/area-north-shore.jpg"
+        : city.region === "southShore"
+        ? "/media/area-south-shore.jpg"
+        : "/media/service-area-montreal-fleet.jpg"
+      : (pageId && pageHeroImages[pageId]) || "/media/service-residential-master.jpg");
+
+  const resolvedSecondary =
+    secondaryImage || (pageId === "serviceArea" ? "/media/service-coverage-map.png" : undefined);
 
   return (
-    <section className="inner-hero">
-      <div className="technical-grid" aria-hidden="true" />
-      <div className="site-container inner-hero-layout">
-        <div>
-          <p className="eyebrow eyebrow-light">{page.eyebrow}</p>
-          <h1>{page.title}</h1>
-          <p className="inner-hero-intro">{page.intro}</p>
+    <section className={`inner-hero inner-hero-cinematic inner-hero-${pageId || "default"}`} data-testid="inner-hero-cinematic">
+      <div className="inner-hero-media-bg" aria-hidden="true">
+        {resolvedSecondary ? (
+          <HeroMediaTransition
+            locale={locale}
+            primarySrc={imageSrc}
+            primaryAlt={title}
+            secondarySrc={resolvedSecondary}
+            secondaryAlt={
+              isFrench
+                ? "Carte radar de couverture du territoire couvert par Éclipse Électrique (Montréal, Laval, Longueuil, Brossard)"
+                : "Éclipse Électrique service territory radar coverage map (Montreal, Laval, Longueuil, Brossard)"
+            }
+            transitionDelayMs={3000}
+            showIndicators={true}
+          />
+        ) : (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            alt={title}
+            className="inner-hero-img"
+            decoding="async"
+            fetchPriority="high"
+            height="900"
+            src={imageSrc}
+            width="1600"
+          />
+        )}
+        <div className="inner-hero-gradient-overlay" />
+      </div>
+
+      <div className="site-container inner-hero-container">
+        <div className="inner-hero-glass-card">
+          <p className="eyebrow eyebrow-amber">{eyebrow}</p>
+          <h1 className="inner-hero-title">{title}</h1>
+          <div className="lightning-divider" aria-hidden="true">
+            <span className="lightning-divider-icon">⚡</span>
+          </div>
+          <p className="inner-hero-intro-text">{intro}</p>
           {pageId !== "privacy" && <ActionPair locale={locale} dark />}
+
+          <div className="inner-hero-trust-pill">
+            <ShieldCheck aria-hidden="true" />
+            <span>
+              <strong>RBQ {site.rbq}</strong> · {isFrench ? "Maître électricien CMEQ / CCQ" : "Certified Master Electrician"}
+            </span>
+          </div>
         </div>
-        <aside className="hero-credential" aria-label={isFrench ? "Licence" : "Licence information"}>
-          <ShieldCheck aria-hidden="true" />
-          <span>{isFrench ? "Licence d’entrepreneur" : "Contractor licence"}</span>
-          <strong>RBQ {site.rbq}</strong>
-          <small>{isFrench ? "Délivrée en 2008" : "Issued in 2008"}</small>
-        </aside>
+      </div>
+
+      <div className="inner-hero-bottom-bar" aria-hidden="true">
+        <div className="site-container inner-hero-bottom-inner">
+          <div className="inner-hero-bottom-item">
+            <span className="accent-yellow">⚡</span>
+            <span>{isFrench ? "MAÎTRE ÉLECTRICIEN CERTIFIÉ" : "CERTIFIED MASTER ELECTRICIAN"}</span>
+          </div>
+          <div className="inner-hero-bottom-divider" />
+          <div className="inner-hero-bottom-item">
+            <span>RBQ : {site.rbq} · NEQ : {site.neq}</span>
+          </div>
+          <div className="inner-hero-bottom-divider" />
+          <div className="inner-hero-bottom-item">
+            <span>{isFrench ? "GARANTIE 100% CONFORMITÉ HYDRO-QUÉBEC" : "100% HYDRO-QUÉBEC CODE COMPLIANCE"}</span>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -517,19 +640,57 @@ function HomePage({ locale }: { locale: Locale }) {
             </p>
           }
           media={
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              alt={
-                isFrench
-                  ? "Équipe de maîtres électriciens certifiés Éclipse Électrique et camions de service dans le Grand Montréal"
-                  : "Éclipse Électrique certified master electrician team and service fleet in Greater Montreal"
-              }
-              className="banner-media-img"
-              decoding="async"
-              fetchPriority="high"
-              height="768"
-              src="/media/eclipse-hero-electrician-v2.png"
-              width="1376"
+            <HeroMediaTransition
+              locale={locale}
+              intervalMs={4000}
+              showIndicators={true}
+              items={[
+                {
+                  src: "/media/eclipse-team-fleet-hero.jpg",
+                  alt: isFrench
+                    ? "Équipe de maîtres électriciens certifiés Éclipse Électrique et camions de service dans le Grand Montréal"
+                    : "Éclipse Électrique certified master electrician team and service fleet in Greater Montreal",
+                  label: isFrench ? "01 Flotte" : "01 Fleet",
+                  id: "fleet",
+                  objectPosition: "46% 75%",
+                },
+                {
+                  src: "/media/service-coverage-map.png",
+                  alt: isFrench
+                    ? "Carte satellite de couverture du territoire desservi par Éclipse Électrique Inc. avec zone dorée éclairée et zone extérieure sombre"
+                    : "Éclipse Électrique service territory coverage map showing golden service zone and dark exterior unserved area",
+                  label: isFrench ? "02 Carte" : "02 Coverage Map",
+                  id: "map",
+                  objectPosition: "center center",
+                },
+                {
+                  src: "/media/about-craft-master.jpg",
+                  alt: isFrench
+                    ? "Maître électricien Éclipse Électrique à côté du panneau électrique avec tablette numérique et camion de service à l'extérieur"
+                    : "Éclipse Électrique master electrician beside electrical panel with digital tablet and service van outside",
+                  label: isFrench ? "03 À propos" : "03 About",
+                  id: "about",
+                  objectPosition: "center 35%",
+                },
+                {
+                  src: "/media/faq-master-consultation.jpg",
+                  alt: isFrench
+                    ? "Maître électricien Éclipse Électrique expliquant le système électrique et le panneau aux propriétaires"
+                    : "Éclipse Électrique master electrician explaining the electrical system and panel to homeowners",
+                  label: isFrench ? "04 FAQ" : "04 FAQ",
+                  id: "faq",
+                  objectPosition: "center 35%",
+                },
+                {
+                  src: "/media/contact-master-dispatch.jpg",
+                  alt: isFrench
+                    ? "Membre de l'équipe Éclipse Électrique au poste de travail avec casque d'écoute pour le service à la clientèle et la répartition d'urgence"
+                    : "Éclipse Électrique team member at computer workstation with headset taking customer calls and dispatching emergency service",
+                  label: isFrench ? "05 Contact" : "05 Contact",
+                  id: "contact",
+                  objectPosition: "center 35%",
+                },
+              ]}
             />
           }
           signature={
@@ -547,76 +708,47 @@ function HomePage({ locale }: { locale: Locale }) {
         />
       </div>
 
-      <div className="home-snap-section home-snap-expertise">
-        <ScrollReveal className="home-flow-block">
-          <section className="section-pad services-section" id="expertise">
-            <div className="site-container">
-              <BentoServicesSection locale={locale} />
-              <HomepageServices locale={locale} />
-              <div className="section-link-row">
-                <a className="arrow-link" href={pathFor("services", locale)}>
-                  {copy.actions.exploreServices}<ArrowRight aria-hidden="true" />
-                </a>
-              </div>
-            </div>
-          </section>
-        </ScrollReveal>
-      </div>
+      {/* 2. Context Selector: "Comment pouvons-nous vous aider ?" */}
+      <ScrollReveal className="home-flow-block">
+        <HomeContextSelector locale={locale} />
+      </ScrollReveal>
 
-      <div className="home-snap-section home-snap-gallery">
-        <ScrollReveal className="home-flow-block" delay={50}>
-          <ProjectGallery locale={locale} />
-        </ScrollReveal>
-      </div>
+      {/* 3. Main Feature: Visual Service Navigator ("Services populaires" - 6 services, no autoplay) */}
+      <ScrollReveal className="home-flow-block">
+        <PopularServicesSlider locale={locale} />
+      </ScrollReveal>
 
-      <div className="home-snap-section home-snap-thermography">
-        <ScrollReveal className="home-flow-block">
-          <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />
-        </ScrollReveal>
-      </div>
+      {/* 4. Problem-based Navigation: "Que souhaitez-vous faire ?" */}
+      <ScrollReveal className="home-flow-block">
+        <ProblemIntentGrid locale={locale} />
+      </ScrollReveal>
 
-      <div className="home-snap-section home-snap-process">
-        <ScrollReveal className="home-flow-block">
-          <section className="section-pad process-section">
-            <div className="site-container split-heading">
-              <SectionHeading
-                eyebrow={copy.home.processEyebrow}
-                title={copy.home.processTitle}
-                intro={copy.home.processIntro}
-              />
-              <div className="process-grid">
-                {copy.process.map((step, index) => (
-                  <article key={step.title}>
-                    <span>0{index + 1}</span>
-                    <div><h3>{step.title}</h3><p>{step.description}</p></div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-        </ScrollReveal>
-      </div>
+      {/* 5. Visual 3-Step Process: Parlez-nous → Envoyez les détails → Planifiez la suite */}
+      <ScrollReveal className="home-flow-block">
+        <VisualProcessStepper locale={locale} />
+      </ScrollReveal>
 
-      <div className="home-snap-section home-snap-territory">
-        <ScrollReveal className="home-flow-block">
-          <section className="section-pad territory-preview" id="dispatch-hub">
-            <div className="site-container">
-              <div className="territory-header-block mb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-                <SectionHeading
-                  eyebrow={copy.home.territoryEyebrow}
-                  title={copy.home.territoryTitle}
-                  intro={copy.home.territoryIntro}
-                />
-                <a className="arrow-link shrink-0" href={pathFor("serviceArea", locale)}>
-                  {copy.actions.checkArea}<ArrowRight aria-hidden="true" />
-                </a>
-              </div>
-              <DispatchCoverageConsole locale={locale} />
-            </div>
-          </section>
-        </ScrollReveal>
-      </div>
+      {/* 6. "Pourquoi Éclipse ?" 4 Proof points */}
+      <ScrollReveal className="home-flow-block">
+        <TrustProofBand locale={locale} />
+      </ScrollReveal>
 
+      {/* 7. Technical Expertise Progressive Disclosure Tabs */}
+      <ScrollReveal className="home-flow-block">
+        <TechnicalExpertiseTabs locale={locale} />
+      </ScrollReveal>
+
+      {/* 8. Regional Coverage Hub Map (Montréal, Rive-Nord, Rive-Sud) */}
+      <ScrollReveal className="home-flow-block">
+        <VisualCoverageHub locale={locale} />
+      </ScrollReveal>
+
+      {/* 9. FAQ Teaser: 3 Homeowner Questions */}
+      <ScrollReveal className="home-flow-block">
+        <HomeFaqTeaser locale={locale} />
+      </ScrollReveal>
+
+      {/* 10. Final Conversion Section */}
       <div className="home-snap-section home-snap-cta">
         <ScrollReveal className="home-flow-block home-flow-final">
           <CtaBand locale={locale} />
@@ -634,6 +766,7 @@ function ServicesPage({ locale }: { locale: Locale }) {
       <section className="section-pad">
         <div className="site-container">
           <ServicesGrid locale={locale} />
+          <VisualServicesGrid locale={locale} />
         </div>
       </section>
       <section className="section-pad process-section">
@@ -731,6 +864,7 @@ function ServiceDetailPage({ locale, pageId }: { locale: Locale; pageId: Service
 
 function ServiceAreaPage({ locale }: { locale: Locale }) {
   const copy = content[locale];
+  const isFrench = locale === "fr";
   const regionImages = [
     "/media/area-montreal.jpg",
     "/media/area-north-shore.jpg",
@@ -740,7 +874,46 @@ function ServiceAreaPage({ locale }: { locale: Locale }) {
     <>
       <InnerHero locale={locale} pageId="serviceArea" />
       <section className="section-pad">
-        <div className="site-container region-list">
+        <div className="site-container">
+          {/* Featured Territory Radar Showcase Card */}
+          <div className="service-area-radar-card mb-12 rounded-2xl overflow-hidden border border-amber-500/30 bg-slate-950/80 p-6 md:p-8 backdrop-blur-xl shadow-2xl relative">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-5 space-y-4">
+                <span className="text-xs font-mono uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 inline-block font-bold">
+                  {isFrench ? "CARTE OFFICIELLE DU TERRITOIRE" : "OFFICIAL DISPATCH COVERAGE"}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-white">
+                  {isFrench
+                    ? "Déploiement Rapide dans Tout le Grand Montréal."
+                    : "Rapid Master Electrician Dispatch Across Greater Montreal."}
+                </h2>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  {isFrench
+                    ? "Notre siège social et centre technique de Saint-Léonard (9005 Rue du Champ-d'Eau) coordonne les unités d'intervention sur l'Île de Montréal, Laval, Longueuil, Brossard et les couronnes périphériques."
+                    : "Headquartered in Saint-Léonard (9005 Rue du Champ-d'Eau), our technical dispatch hub coordinates fleet vans throughout Montreal, Laval, Longueuil, Brossard, and surrounding shores."}
+                </p>
+                <div className="pt-2 flex flex-wrap gap-2 text-xs font-mono">
+                  <span className="bg-white/10 px-3 py-1.5 rounded-lg text-slate-200 border border-white/10">⚡ Siège Saint-Léonard</span>
+                  <span className="bg-white/10 px-3 py-1.5 rounded-lg text-slate-200 border border-white/10">📍 50+ Villes desservies</span>
+                  <span className="bg-white/10 px-3 py-1.5 rounded-lg text-slate-200 border border-white/10">🚨 24/7 Urgence</span>
+                </div>
+              </div>
+              <div className="lg:col-span-7">
+                <div className="coverage-map-frame rounded-xl overflow-hidden border border-amber-500/30 shadow-inner relative group">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/media/service-coverage-map.png"
+                    alt={isFrench ? "Carte radar du territoire couvert par Éclipse Électrique" : "Éclipse Électrique service territory radar map"}
+                    className="w-full h-auto object-cover rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
+                    width="960"
+                    height="640"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="region-list">
           {copy.regions.map((region, index) => (
             <article key={region.name}>
               <div className="region-card-media" style={{ marginBottom: "1.5rem", borderRadius: "0.5rem", overflow: "hidden", height: "220px" }}>
@@ -771,7 +944,8 @@ function ServiceAreaPage({ locale }: { locale: Locale }) {
           ))}
           <p className="region-note"><BadgeCheck aria-hidden="true" />{copy.regionNote}</p>
         </div>
-      </section>
+      </div>
+    </section>
       <CtaBand locale={locale} />
     </>
   );
@@ -791,29 +965,7 @@ function CityPage({ locale, citySlug }: { locale: Locale; citySlug: string }) {
 
   return (
     <>
-      <section className="inner-hero city-hero">
-        <div className="technical-grid" aria-hidden="true" />
-        <div className="site-container inner-hero-layout">
-          <div>
-            <p className="eyebrow eyebrow-light">
-              {isFrench ? `${regionName} · Territoire desservi` : `${regionName} · Service area`}
-            </p>
-            <h1>{isFrench ? `Électricien à ${cityName}` : `Electrician services in ${cityName}`}</h1>
-            <p className="inner-hero-intro">
-              {isFrench
-                ? `Cette page rassemble les services électriques publiés pour une demande située à ${cityName}. La disponibilité dépend de la nature et de l’emplacement des travaux; confirmez toujours l’adresse avec l’équipe.`
-                : `This page brings together the electrical services published for a request in ${cityName}. Availability depends on the work and exact location; always confirm the service address with the team.`}
-            </p>
-            <ActionPair locale={locale} dark />
-          </div>
-          <aside className="hero-credential" aria-label={isFrench ? "Licence" : "Licence information"}>
-            <MapPin aria-hidden="true" />
-            <span>{isFrench ? "Ville publiée" : "Published city"}</span>
-            <strong>{cityName}</strong>
-            <small>RBQ {site.rbq}</small>
-          </aside>
-        </div>
-      </section>
+      <InnerHero locale={locale} citySlug={citySlug} />
 
       <section className="section-pad city-service-section">
         <div className="site-container service-detail-grid">

@@ -231,17 +231,6 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
         data-home={pageId === "home" ? "true" : "false"}
         data-scroll-state={isScrolled ? "scrolled" : "top"}
       >
-        <div className="utility-bar">
-          <div className="site-container utility-inner">
-            <div className="utility-actions">
-              <a className="emergency-link" href={site.emergencyPhoneHref}>
-                <PhoneCall aria-hidden="true" />
-                {copy.actions.emergency}: {site.emergencyPhoneDisplay}
-              </a>
-            </div>
-          </div>
-        </div>
-
         <div className="site-container nav-shell">
           <Link className="brand-link" href={pathFor("home", locale)}>
             <BrandMark />
