@@ -7,6 +7,7 @@ import {
   MessageSquare,
   PhoneCall,
   Send,
+  Sparkles,
   X,
 } from "lucide-react";
 import {
@@ -324,10 +325,26 @@ export function AiAssistant({ locale }: { locale: Locale }) {
             data-assistant-launcher="true"
             type="button"
           >
+            {/* Ambient Outer Aura Glow */}
+            <span className="ai-assistant-aura" aria-hidden="true" />
+
+            {/* Glowing Orb Center */}
             <span className="ai-assistant-launcher-icon" aria-hidden="true">
-              <Bot />
+              <Sparkles className="ai-orb-sparkle" />
+              <Bot className="ai-orb-bot" />
             </span>
-            <span>{copy.launcher}</span>
+
+            {/* Live Online Pulse Indicator */}
+            <span className="ai-assistant-live-badge" aria-hidden="true">
+              <span className="ai-live-pulse-dot" />
+            </span>
+
+            {/* Ambient Slideout Label Pill */}
+            <span className="ai-assistant-tooltip">
+              <span className="ai-tooltip-title">{copy.launcher}</span>
+              <span className="ai-tooltip-sub">{locale === "fr" ? "Réponse en direct" : "Instant assistance"}</span>
+            </span>
+
             {unread && (
               <span
                 aria-label={locale === "fr" ? "Nouveau message" : "New message"}
