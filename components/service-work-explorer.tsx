@@ -80,9 +80,6 @@ export function ServiceWorkExplorer({ locale, data }: ServiceWorkExplorerProps) 
                 src={activeItem.image}
                 alt={activeItem.title[locale]}
               />
-              <span>
-                {data.eyebrow[locale].split(" ").slice(-2).join(" ")} · {activeItem.number}
-              </span>
             </div>
           </div>
 

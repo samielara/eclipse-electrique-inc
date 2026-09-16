@@ -195,7 +195,6 @@ export function ResidentialWorkExplorer({ locale }: { locale: Locale }) {
           <div className="residential-work-image-shell">
             <div className="residential-work-image-wrap">
               <img key={activeItem.id} data-testid="residential-work-image" src={activeItem.image} alt={activeItem.title[locale]} />
-              <span>{isFrench ? "Résidentiel" : "Residential"} · {activeItem.number}</span>
             </div>
           </div>
           <div className="residential-work-copy" key={`${activeItem.id}-copy`}>
