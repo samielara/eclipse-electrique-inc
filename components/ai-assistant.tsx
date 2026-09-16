@@ -4,8 +4,6 @@ import {
   AlertTriangle,
   ArrowRight,
   Bot,
-  ChevronLeft,
-  ChevronRight,
   MessageSquare,
   PhoneCall,
   Send,
@@ -72,8 +70,6 @@ const assistantCopy = {
     send: "Envoyer",
     thinking: "Éclipse AI Chatbot prépare une réponse…",
     disclaimer: "Assistant automatique · Conseils d'orientation, sans diagnostic à distance.",
-    minimize: "Réduire le bouton de l'assistant",
-    expand: "Agrandir le bouton de l'assistant",
   },
   en: {
     launcher: "24/7 assistant",
@@ -89,8 +85,6 @@ const assistantCopy = {
     send: "Send",
     thinking: "Éclipse AI Chatbot is preparing a reply…",
     disclaimer: "Automated assistant · General guidance, not a remote diagnosis.",
-    minimize: "Minimize assistant launcher",
-    expand: "Expand assistant launcher",
   },
 } as const;
 
@@ -320,54 +314,31 @@ export function AiAssistant({ locale }: { locale: Locale }) {
     }, 240);
   }
 
-  const [isMinimized, setIsMinimized] = useState(true);
-
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <div className="ai-assistant-shell" data-open={open} data-minimized={isMinimized}>
-        <div className={`ai-assistant-launcher-group${isMinimized ? " is-minimized" : ""}`}>
-          <DialogTrigger asChild>
-            <button
-              aria-label={copy.openLabel}
-              className={`ai-assistant-launcher${isMinimized ? " is-minimized" : ""}`}
-              data-assistant-launcher="true"
-              type="button"
-            >
-              <span className="ai-assistant-launcher-icon" aria-hidden="true">
-                <Bot />
-              </span>
-              <span className="ai-assistant-launcher-text">{copy.launcher}</span>
-              {unread && (
-                <span
-                  aria-label={locale === "fr" ? "Nouveau message" : "New message"}
-                  className="ai-assistant-unread"
-                  data-assistant-unread="true"
-                >
-                  1
-                </span>
-              )}
-            </button>
-          </DialogTrigger>
-
+      <div className="ai-assistant-shell" data-open={open}>
+        <DialogTrigger asChild>
           <button
-            aria-expanded={!isMinimized}
-            aria-label={isMinimized ? copy.expand : copy.minimize}
-            className="ai-assistant-toggle-btn"
-            data-assistant-toggle="true"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsMinimized((prev) => !prev);
-            }}
-            title={isMinimized ? copy.expand : copy.minimize}
+            aria-label={copy.openLabel}
+            className="ai-assistant-launcher"
+            data-assistant-launcher="true"
             type="button"
           >
-            {isMinimized ? (
-              <ChevronLeft aria-hidden="true" className="toggle-chevron" />
-            ) : (
-              <ChevronRight aria-hidden="true" className="toggle-chevron" />
+            <span className="ai-assistant-launcher-icon" aria-hidden="true">
+              <Bot />
+            </span>
+            <span>{copy.launcher}</span>
+            {unread && (
+              <span
+                aria-label={locale === "fr" ? "Nouveau message" : "New message"}
+                className="ai-assistant-unread"
+                data-assistant-unread="true"
+              >
+                1
+              </span>
             )}
           </button>
-        </div>
+        </DialogTrigger>
       </div>
 
       <DialogContent
