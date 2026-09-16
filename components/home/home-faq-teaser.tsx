@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { customerFaq, homeFaqIds } from "@/content/customer-faq";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/routes";
 
@@ -12,32 +13,7 @@ export function HomeFaqTeaser({ locale }: HomeFaqTeaserProps) {
   const isFrench = locale === "fr";
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const faqs = [
-    {
-      qFr: "Combien coûte une visite d'évaluation ou d'intervention ?",
-      qEn: "How much does an assessment or service visit cost?",
-      aFr:
-        "Nos tarifs sont transparents et communiqués sans frais cachés. Pour les projets planifiés, nous fournissons une estimation détaillée avant tout engagement. Pour les urgences 24/7, les frais de déplacement et le taux horaire de garde vous sont confirmés en toute transparence dès votre appel initial.",
-      aEn:
-        "Our pricing is completely transparent with zero hidden fees. For scheduled projects, we provide an itemized quote before starting work. For 24/7 emergencies, standard dispatch fees and hourly rates are clearly confirmed over the phone before our electrician departs.",
-    },
-    {
-      qFr: "Faites-vous les urgences électriques 24 heures sur 24 ?",
-      qEn: "Do you handle electrical emergencies 24/7?",
-      aFr:
-        "Oui, absolument. Notre ligne d'urgence (514-717-9277) est ouverte jour et nuit, fin de semaine et jours fériés, avec une réponse humaine immédiate. Un maître électricien certifié CCQ est dépêché avec un camion entièrement équipé de pièces de rechange.",
-      aEn:
-        "Yes, absolutely. Our direct emergency line (514-717-9277) is answered live 24/7, including weekends and holidays. A certified CCQ master electrician is dispatched promptly in a service van stocked with replacement breakers and components.",
-    },
-    {
-      qFr: "Comment savoir si je dois remplacer mon panneau électrique ?",
-      qEn: "How do I know if I need to replace my electrical panel?",
-      aFr:
-        "Si votre résidence utilise encore une boîte à fusibles, des disjoncteurs qui sautent fréquemment, ou si vous prévoyez installer une borne de recharge pour véhicule électrique, une thermopompe ou un spa, un passage à 200A est essentiel pour votre sécurité et exigé par les assureurs.",
-      aEn:
-        "If your home still operates on fuses, experiences frequent breaker trips, or if you plan to install an EV charging station, heat pump, or hot tub, upgrading to a modern 200A breaker panel is essential for safety and required by insurance providers.",
-    },
-  ];
+  const faqs = homeFaqIds.map((id) => customerFaq[locale].find((item) => item.id === id)!);
 
   return (
     <section className="faq-teaser-section py-10 md:py-14 px-4 md:px-8 border-b border-white/5 relative z-10 bg-[#0b0c0e]">
@@ -49,11 +25,6 @@ export function HomeFaqTeaser({ locale }: HomeFaqTeaserProps) {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mb-2">
             {isFrench ? "Réponses rapides aux questions courantes" : "Quick answers to common questions"}
           </h2>
-          <p className="text-slate-400 text-xs sm:text-sm md:text-base">
-            {isFrench
-              ? "Des explications claires pour vous aider à prendre des décisions éclairées sans jargon."
-              : "Clear explanations to help you make informed decisions without electrical jargon."}
-          </p>
         </div>
 
         <div className="max-w-4xl mx-auto space-y-4 mb-10">
@@ -80,7 +51,7 @@ export function HomeFaqTeaser({ locale }: HomeFaqTeaserProps) {
                   <div className="flex items-center gap-3">
                     <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_rgba(251,191,36,0.85)]" />
                     <span className="text-base md:text-lg font-bold text-white">
-                      {isFrench ? item.qFr : item.qEn}
+                      {item.question}
                     </span>
                   </div>
                   <ChevronDown
@@ -90,9 +61,9 @@ export function HomeFaqTeaser({ locale }: HomeFaqTeaserProps) {
                   />
                 </button>
 
-                {isOpen && (
-                  <div className="px-6 pb-6 pt-1 text-slate-300 text-sm md:text-base leading-relaxed border-t border-white/10 relative z-10 animate-fade-in-up">
-                    <p>{isFrench ? item.aFr : item.aEn}</p>
+                {(
+                  <div hidden={!isOpen} className="px-6 pb-6 pt-1 text-slate-300 text-sm md:text-base leading-relaxed border-t border-white/10 relative z-10 animate-fade-in-up">
+                    <p>{item.answer}</p>
                   </div>
                 )}
               </div>

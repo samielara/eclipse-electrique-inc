@@ -141,7 +141,7 @@ const SLIDES: ServiceSlide[] = [
       "Complete interlock protection preventing dangerous backfeeding",
       "Tailored solutions for portable or automatic whole-home units",
     ],
-    image: "/media/service-generators-master.jpg",
+    image: "/media/service-generators-master-patched.png",
     href: "/services/generatrices",
   },
   {
@@ -262,7 +262,7 @@ export function PopularServicesSlider({ locale }: PopularServicesSliderProps) {
       aria-label={isFrench ? "Services électriques populaires" : "Popular electrical services"}
     >
       <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8">
-        {/* Header with Centered Eyebrow, Title and 05 / 06 Counter */}
+        {/* Header with Centered Eyebrow and Title */}
         <div className="text-center max-w-3xl mx-auto mb-8">
           <span className="text-xs font-mono uppercase tracking-widest text-amber-400 bg-amber-500/10 px-3.5 py-1 rounded-full border border-amber-500/20 inline-block mb-2">
             {isFrench ? "SERVICES POPULAIRES" : "POPULAR SERVICES"}
@@ -272,12 +272,6 @@ export function PopularServicesSlider({ locale }: PopularServicesSliderProps) {
               ? "Nos interventions les plus demandées"
               : "Our most requested electrical services"}
           </h2>
-          <div className="inline-flex items-center gap-2 font-mono text-sm px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400">
-            <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.85)]" />
-            <strong className="text-amber-400 text-base font-bold">{currentSlide.number}</strong>
-            <span className="text-slate-600">/</span>
-            <span>0{SLIDES.length}</span>
-          </div>
         </div>
 
         {/* Relative Slider Wrapper with Left & Right Arrows at Center Level */}

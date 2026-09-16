@@ -1,3 +1,4 @@
+import { customerFaq } from "@/content/customer-faq";
 import type { Locale, PageId, ServicePageId } from "@/lib/routes";
 
 export interface SeoCopy {
@@ -623,7 +624,7 @@ const frenchPages: Record<PageId, LocalizedPage> = {
   },
   faq: {
     seo: {
-      title: "Questions fréquentes sur les services électriques | Éclipse",
+      title: "FAQ électricien Montréal : panneaux, bornes et urgences",
       description:
         "Réponses sur les services résidentiels, commerciaux et industriels, la thermographie, les systèmes de sécurité, les urgences, le territoire et la licence RBQ.",
     },
@@ -631,38 +632,7 @@ const frenchPages: Record<PageId, LocalizedPage> = {
     title: "Des réponses claires avant de communiquer avec nous",
     intro:
       "Retrouvez les renseignements essentiels sur les services, le territoire, la ligne d’urgence et les coordonnées d’Éclipse électrique inc.",
-    faq: [
-      {
-        question: "Quels types de services offrez-vous?",
-        answer:
-          "Nous publions des services électriques résidentiels, commerciaux et industriels, de la thermographie infrarouge, des systèmes de sécurité, de l’entretien, une ligne d’urgence 24/7 et des services de génératrices.",
-      },
-      {
-        question: "Quelles régions desservez-vous?",
-        answer:
-          "L’entreprise publie une couverture du Grand Montréal, de la Rive-Nord et de la Rive-Sud. Communiquez avec nous pour confirmer le lieu précis.",
-      },
-      {
-        question: "Comment joindre la ligne d’urgence?",
-        answer:
-          "Appelez directement le 514-717-9277. Aucun délai d’arrivée n’est promis sur ce site; la suite dépend de la situation au moment de l’appel.",
-      },
-      {
-        question: "Installez-vous et réparez-vous des génératrices?",
-        answer:
-          "Oui. Indiquez la marque, le modèle, le type de bâtiment et le service recherché lorsque vous communiquez avec l’équipe.",
-      },
-      {
-        question: "Comment demander un service?",
-        answer:
-          "Appelez le bureau au 514-510-1112 ou écrivez à info@eclipseelectrique.com. Pour une urgence, appelez le 514-717-9277.",
-      },
-      {
-        question: "Détenez-vous une licence RBQ?",
-        answer:
-          "Oui. Le numéro de licence RBQ est 5582-0096-01. La licence a été délivrée le 6 août 2008; le NEQ est 1165326209.",
-      },
-    ],
+    faq: customerFaq.fr,
   },
   contact: {
     seo: {
@@ -913,7 +883,7 @@ const englishPages: Record<PageId, LocalizedPage> = {
   },
   faq: {
     seo: {
-      title: "Electrical service questions | Éclipse électrique",
+      title: "Montréal Electrician FAQ: Panels, EV Charging & Emergencies",
       description:
         "Answers about residential, commercial and industrial services, thermography, security systems, emergency contact, territory and the RBQ licence.",
     },
@@ -921,38 +891,7 @@ const englishPages: Record<PageId, LocalizedPage> = {
     title: "Clear information before you contact us",
     intro:
       "Find essential information about services, territory, the emergency line and how to contact Éclipse électrique inc.",
-    faq: [
-      {
-        question: "What services do you provide?",
-        answer:
-          "Published services include residential, commercial and industrial electrical work, infrared thermography, security systems, maintenance, a 24/7 emergency line, and generator installation or repair.",
-      },
-      {
-        question: "Which areas do you serve?",
-        answer:
-          "The company publishes coverage across Greater Montréal, the North Shore and the South Shore. Contact us to confirm the exact location.",
-      },
-      {
-        question: "How do I reach the emergency line?",
-        answer:
-          "Call 514-717-9277 directly. This website does not promise an arrival time; next steps depend on the situation at the time of the call.",
-      },
-      {
-        question: "Do you install and repair generators?",
-        answer:
-          "Yes. Include the brand, model, property type and requested service when contacting the team.",
-      },
-      {
-        question: "How do I request service?",
-        answer:
-          "Call the office at 514-510-1112 or email info@eclipseelectrique.com. For an emergency, call 514-717-9277.",
-      },
-      {
-        question: "Do you hold an RBQ licence?",
-        answer:
-          "Yes. The RBQ licence number is 5582-0096-01. It was issued on August 6, 2008; the NEQ is 1165326209.",
-      },
-    ],
+    faq: customerFaq.en,
   },
   contact: {
     seo: {
