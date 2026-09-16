@@ -9835,8 +9835,8 @@ textarea {
   content: "";
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(8, 12, 20, 0.3) 0%, rgba(8, 12, 20, 0.5) 45%, rgba(8, 12, 20, 0.9) 100%),
-    linear-gradient(180deg, transparent 40%, rgba(8, 12, 20, 0.8) 100%);
+    linear-gradient(90deg, transparent 0%, rgba(6, 10, 18, 0.15) 45%, rgba(6, 10, 18, 0.45) 100%),
+    linear-gradient(180deg, transparent 60%, rgba(6, 10, 18, 0.6) 100%);
   z-index: 2;
 }
 
@@ -9847,7 +9847,7 @@ textarea {
   position: absolute;
   inset: 0;
   object-fit: cover;
-  object-position: center left;
+  object-position: center;
   animation: residential-work-image-in 360ms ease-out both;
 }
 
@@ -9860,16 +9860,16 @@ textarea {
   margin-top: clamp(1.5rem, 3.5vw, 3.5rem);
   margin-bottom: clamp(1.5rem, 3.5vw, 3.5rem);
   max-width: clamp(28rem, 46vw, 38rem);
-  background: rgba(10, 16, 29, 0.82);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 24px;
+  background: rgba(7, 12, 22, 0.55);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 26px;
   padding: clamp(1.8rem, 3.2vw, 2.75rem);
   box-shadow:
-    0 24px 60px -12px rgba(0, 0, 0, 0.85),
-    inset 0 1.5px 0.5px rgba(255, 255, 255, 0.4),
-    inset 0 -1px 0.5px rgba(255, 255, 255, 0.08);
+    0 24px 60px -12px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 0 0 1px rgba(245, 158, 11, 0.15);
   animation: residential-work-copy-in 300ms ease-out both;
 }
 
@@ -9880,15 +9880,16 @@ textarea {
   font-size: clamp(1.75rem, 2.8vw, 2.75rem);
   line-height: 1.08;
   letter-spacing: -0.045em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .residential-work-copy > p:not(.eyebrow),
 .service-work-copy > p:not(.eyebrow) {
   margin: 0;
-  color: #c9d2e0;
+  color: #e2e8f0;
   font-size: clamp(0.92rem, 1.3vw, 1.05rem);
   line-height: 1.6;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
 }
 
 .residential-work-copy ul,
@@ -9905,13 +9906,16 @@ textarea {
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  color: #e2e8f0;
+  color: #f1f5f9;
   font-size: 0.9rem;
   line-height: 1.4;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 16, 28, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   padding: 0.55rem 0.85rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 .residential-work-copy li svg,
