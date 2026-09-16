@@ -24,6 +24,9 @@ import { ProblemIntentGrid } from "@/components/home/problem-intent-grid";
 import { VisualProcessStepper } from "@/components/home/visual-process-stepper";
 import { TrustProofBand } from "@/components/home/trust-proof-band";
 import { TechnicalExpertiseTabs } from "@/components/home/technical-expertise-tabs";
+import { ResidentialWorkExplorer } from "@/components/residential-work-explorer";
+import { ServiceWorkExplorer } from "@/components/service-work-explorer";
+import { serviceWorkExplorerData } from "@/content/service-work-explorer";
 import { VisualCoverageHub } from "@/components/home/visual-coverage-hub";
 import { HomeFaqTeaser } from "@/components/home/home-faq-teaser";
 import { DispatchCoverageConsole } from "@/components/motion/dispatch-coverage-console";
@@ -255,7 +258,7 @@ const pageHeroImages: Partial<Record<PageId, string>> = {
   commercial: "/media/service-commercial-master.jpg",
   industrial: "/media/service-industrial-master.jpg",
   maintenance: "/media/service-emergency-master.jpg",
-  generators: "/media/service-generators-master.jpg",
+  generators: "/media/service-generators-master-patched.png",
   thermography: "/media/service-thermography-master.jpg",
   security: "/media/service-security-master.jpg",
   serviceArea: "/media/service-coverage-map.png",
@@ -507,23 +510,51 @@ function ServiceVisualPanel({ locale, pageId }: { locale: Locale; pageId: Servic
     security: { src: "/media/service-security.jpg", position: "center" },
   };
   const media = mediaByService[pageId];
+  const highlightImages = pageId === "security"
+    ? [
+        "/media/security-intrusion-alarm-systems.png",
+        "/media/security-fire-detection-systems.png",
+        "/media/security-surveillance-connections.png",
+      ]
+    : [];
 
   return (
-    <section className="service-visual-panel" data-testid="service-visual-panel">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img alt="" decoding="async" height="900" loading="eager" src={media.src}
-        style={{ objectPosition: media.position }} width="1600" />
-      <div className="service-visual-shade" />
-      <div className="service-visual-content">
-        <div>
-          <p className="eyebrow eyebrow-amber">{isFrench ? "L’expertise en contexte" : "Expertise in context"}</p>
-          <h2>{page.title}</h2>
+    <section className="service-visual-section" data-testid="service-visual-section">
+      <header className="service-visual-heading">
+        <p className="eyebrow eyebrow-amber">{isFrench ? "L’expertise en contexte" : "Expertise in context"}</p>
+        <h2>{page.title}</h2>
+      </header>
+      <div className="service-visual-panel" data-testid="service-visual-panel">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img alt="" decoding="async" height="900" loading="eager" src={media.src}
+          style={{ objectPosition: media.position }} width="1600" />
+        <div className="service-visual-shade" />
+        <div className={`service-visual-content${pageId === "security" ? " security-showcase-content" : ""}`}>
+          <ol
+            aria-label={isFrench ? "Points clés du service" : "Service highlights"}
+            className={pageId === "security" ? "security-highlight-showcase" : undefined}
+          >
+            {page.items?.slice(0, 3).map((item, index) => {
+              const imageSrc = highlightImages[index];
+              const itemClassName = [
+                imageSrc ? "has-highlight-image" : "",
+                pageId === "security" && index === 0 ? "is-featured" : "",
+              ].filter(Boolean).join(" ") || undefined;
+              return (
+                <li className={itemClassName} key={item}>
+                  {imageSrc && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img alt="" decoding="async" height="900" loading="lazy" src={imageSrc} width="1600" />
+                  )}
+                  <div className="service-visual-highlight-copy">
+                    <span>0{index + 1}</span>
+                    <strong>{item}</strong>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
         </div>
-        <ol aria-label={isFrench ? "Points clés du service" : "Service highlights"}>
-          {page.items?.slice(0, 3).map((item, index) => (
-            <li key={item}><span>0{index + 1}</span><strong>{item}</strong></li>
-          ))}
-        </ol>
       </div>
     </section>
   );
@@ -644,6 +675,7 @@ function HomePage({ locale }: { locale: Locale }) {
               locale={locale}
               intervalMs={4000}
               showIndicators={true}
+              hideIndicatorsOnMobile={true}
               items={[
                 {
                   src: "/media/eclipse-team-fleet-hero.jpg",
@@ -799,32 +831,14 @@ function ServiceDetailPage({ locale, pageId }: { locale: Locale; pageId: Service
   return (
     <>
       <InnerHero locale={locale} pageId={pageId} />
-      <div className="site-container service-visual-wrap">
-        <ServiceVisualPanel locale={locale} pageId={pageId} />
-      </div>
-      <section className="section-pad service-detail-section">
-        <div className="site-container service-detail-grid">
-          <div>
-            <p className="eyebrow">{copy.offeredWork}</p>
-            <h2>{isFrench ? "Un aperçu des travaux offerts" : "An overview of available work"}</h2>
-            {page.paragraphs?.map((paragraph) => <p className="body-lead" key={paragraph}>{paragraph}</p>)}
-            <ul className="work-list">
-              {page.items?.map((item) => (
-                <li key={item}><Check aria-hidden="true" /><span>{item}</span></li>
-              ))}
-            </ul>
-          </div>
-          <aside className="contact-rail">
-            <span className="rail-icon"><Phone aria-hidden="true" /></span>
-            <p className="eyebrow">{isFrench ? "Discutons-en" : "Let’s talk"}</p>
-            <h2>{isFrench ? "Un accès direct à l’équipe" : "Direct access to the team"}</h2>
-            <p>{isFrench ? "Décrivez le bâtiment, les travaux et l’emplacement au moment de communiquer avec nous." : "Include the property, work and location when you contact us."}</p>
-            <a href={site.officePhoneHref}><strong>{copy.actions.office}</strong><span>{site.officePhoneDisplay}</span></a>
-            <a href={site.emailHref}><strong>{copy.actions.email}</strong><span>{site.email}</span></a>
-            <a href={pathFor("serviceArea", locale)}><strong>{copy.actions.checkArea}</strong><ArrowRight aria-hidden="true" /></a>
-          </aside>
-        </div>
-      </section>
+      {pageId === "residential" ? (
+        <ResidentialWorkExplorer locale={locale} />
+      ) : (
+        <ServiceWorkExplorer
+          locale={locale}
+          data={serviceWorkExplorerData[pageId] ?? serviceWorkExplorerData["commercial"]}
+        />
+      )}
 
       {pageId === "thermography" && (
         <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />

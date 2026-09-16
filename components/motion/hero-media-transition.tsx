@@ -22,6 +22,7 @@ interface HeroMediaTransitionProps {
   transitionDelayMs?: number;
   className?: string;
   showIndicators?: boolean;
+  hideIndicatorsOnMobile?: boolean;
 }
 
 export function HeroMediaTransition({
@@ -35,6 +36,7 @@ export function HeroMediaTransition({
   transitionDelayMs,
   className = "",
   showIndicators = true,
+  hideIndicatorsOnMobile = false,
 }: HeroMediaTransitionProps) {
   const isFrench = locale === "fr";
 
@@ -112,7 +114,9 @@ export function HeroMediaTransition({
       {/* Sleek Minimal Switcher Pills */}
       {showIndicators && resolvedItems.length > 1 && (
         <div
-          className="hero-media-indicators absolute bottom-4 right-6 z-20 flex items-center gap-2 pointer-events-auto"
+          className={`hero-media-indicators absolute bottom-4 right-6 z-20 flex items-center gap-2 pointer-events-auto ${
+            hideIndicatorsOnMobile ? "hero-media-indicators--mobile-hidden" : ""
+          }`}
           aria-label={isFrench ? "Sélecteur de vue visuelle" : "Visual view selector"}
         >
           {resolvedItems.map((item, index) => {

@@ -161,12 +161,12 @@ export function TrustProofBand({ locale }: TrustProofBandProps) {
                 className="proof-card group relative block mt-6"
               >
                 {/* Outside Centered Crest Icon Badge (unclipped) */}
-                <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-2xl border-2 border-amber-400/65 bg-[#0a101d] text-amber-400 flex items-center justify-center shadow-[0_10px_25px_rgba(0,0,0,0.8)] transition-all duration-300 z-30 group-hover:scale-110 group-hover:border-amber-400 group-hover:shadow-[0_0_30px_rgba(245,158,11,0.45)]">
+                <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-2xl border-2 border-amber-400/65 bg-[#0a101d] text-amber-400 flex items-center justify-center shadow-[0_10px_25px_rgba(0,0,0,0.8)] transition-all duration-300 z-30 group-hover:scale-110 group-hover:border-amber-400 group-hover:shadow-[0_0_37.5px_rgba(245,158,11,0.5625)]">
                   <IconComponent className="w-6 h-6" strokeWidth={1.9} />
                 </div>
 
                 {/* Ultra-Glossy Glass Shell */}
-                <div className="relative flex flex-col justify-between rounded-[26px] overflow-hidden bg-[#0a101d]/80 backdrop-blur-2xl border border-white/20 transition-all duration-300 group-hover:-translate-y-1.5 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85),inset_0_1.5px_0.5px_rgba(255,255,255,0.4),inset_0_0_20px_rgba(255,255,255,0.03)] group-hover:border-amber-400/60 group-hover:shadow-[0_32px_80px_-10px_rgba(0,0,0,0.95),0_0_40px_rgba(245,158,11,0.28),inset_0_2px_1px_rgba(255,255,255,0.55)] h-full">
+                <div className="relative flex flex-col justify-between rounded-[26px] overflow-hidden bg-[#0a101d]/80 backdrop-blur-2xl border border-white/20 transition-all duration-300 group-hover:-translate-y-1.5 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85),inset_0_1.5px_0.5px_rgba(255,255,255,0.4),inset_0_0_20px_rgba(255,255,255,0.03)] group-hover:border-amber-400/60 group-hover:shadow-[0_32px_80px_-10px_rgba(0,0,0,0.95),0_0_50px_rgba(245,158,11,0.35),inset_0_2px_1px_rgba(255,255,255,0.55)] h-full">
                   {/* Diagonal Glass Sheen */}
                   <div className="absolute inset-0 pointer-events-none z-10 rounded-[26px] bg-gradient-to-br from-white/[0.16] via-white/[0.04] via-25% to-transparent" />
 
