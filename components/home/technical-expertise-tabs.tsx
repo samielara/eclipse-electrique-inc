@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, Cpu, Layers, ShieldCheck, Thermometer, Zap } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2, Cpu, Layers, ShieldCheck, Thermometer, Zap } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/routes";
 
 interface TechnicalExpertiseTabsProps {
@@ -28,51 +28,51 @@ const TECH_TABS: TechTab[] = [
   {
     id: "distribution",
     number: "01",
-    icon: Layers,
+    icon: Zap,
     tabLabelFr: "Distribution",
     tabLabelEn: "Distribution",
-    titleFr: "Distribution triphasée & transformateurs",
+    titleFr: "Distribution 3-Phases & Transformateurs",
     titleEn: "3-Phase Distribution & Transformers",
     descFr:
-      "Conception, calculs de charge et installation de transformateurs 600V/120-208V, panneaux de distribution maîtres et canalisations électriques industrielles.",
+      "Calculs de charge, ingénierie et raccordement de transformateurs 600V/120-208V, panneaux de distribution maîtres et canalisations lourdes.",
     descEn:
       "Design, load calculations, and installation of 600V/120-208V step-down transformers, master distribution switchboards, and heavy-gauge conduit raceways.",
     highlightsFr: [
-      "Études d'arc flash et coordination sélective des protections",
+      "Études d'arc électrique (arc-flash) et coordination sélective",
       "Équilibrage rigoureux des phases et correction du facteur de puissance",
-      "Raccordement de charges motrices lourdes sans fluctuation",
+      "Raccordement de charges inductives lourdes sans affaissement de tension",
     ],
     highlightsEn: [
       "Arc-flash studies and selective breaker coordination",
       "Rigorous phase balancing and power-factor correction",
       "Heavy inductive motor load connections with zero voltage dip",
     ],
-    image: "/media/service-industrial-master.jpg",
+    image: "/media/service-industrial-01.png",
     href: "/services/industriel",
   },
   {
-    id: "diagnostic",
+    id: "diagnostics",
     number: "02",
     icon: Cpu,
-    tabLabelFr: "Diagnostic",
+    tabLabelFr: "Diagnostics",
     tabLabelEn: "Diagnostics",
-    titleFr: "Diagnostic haute précision & qualité d'onde",
-    titleEn: "High-Precision Diagnostics & Power Quality",
+    titleFr: "Diagnostics & Analyse de Qualité d'Onde",
+    titleEn: "Diagnostics & Power Quality Analysis",
     descFr:
-      "Analyse approfondie avec multimètres industriels étalonnés, détection de transitoires, harmoniques, déséquilibres et fuites à la terre intermittentes.",
+      "Dépannage d'anomalies intermittentes, détection d'harmoniques et enregistrement des creux de tension pour protéger vos équipements sensibles.",
     descEn:
-      "In-depth analysis using calibrated industrial multimeters, recording transients, harmonic distortion, voltage unbalances, and intermittent ground faults.",
+      "Troubleshooting intermittent faults, harmonic detection, and transient voltage recording to safeguard sensitive automated production lines.",
     highlightsFr: [
-      "Enregistreurs de charge triphasés et analyse de tension continue",
-      "Localisation rapide des courts-circuits cachés et câblages altérés",
-      "Rapports d'ingénierie détaillés signés par maître électricien CMEQ",
+      "Analyseurs de réseau Fluke classe A haute précision",
+      "Identification des harmoniques responsables de surchauffe",
+      "Rapport d'ingénierie certifié avec recommandations correctives",
     ],
     highlightsEn: [
-      "3-phase load loggers and continuous voltage monitoring",
-      "Rapid localization of hidden short circuits and compromised wiring",
-      "Comprehensive diagnostic reports certified by CMEQ master electrician",
+      "High-precision Class-A Fluke power network analyzers",
+      "Identification of triplen harmonics causing neutral overheating",
+      "Certified engineering report with prioritized corrective actions",
     ],
-    image: "/media/craft-diagnostics-console.jpg",
+    image: "/media/service-maintenance-03.png",
     href: "/services/maintenance",
   },
   {
@@ -81,66 +81,66 @@ const TECH_TABS: TechTab[] = [
     icon: Thermometer,
     tabLabelFr: "Thermographie",
     tabLabelEn: "Thermography",
-    titleFr: "Thermographie infrarouge préventive certifiée",
-    titleEn: "Certified Preventive Infrared Thermography",
+    titleFr: "Thermographie Infrarouge Prédictive",
+    titleEn: "Predictive Infrared Thermography",
     descFr:
-      "Inspection radiométrique sous pleine charge sans aucune interruption d'activité pour déceler les connexions desserrées et surchauffes avant tout sinistre.",
+      "Inspection thermographique non destructive certifiée niveau II pour repérer les points chauds et défauts de serrage avant toute défaillance.",
     descEn:
-      "Radiometric thermal scanning under full operational load with zero downtime, identifying loose connections, load imbalances, and hotspots before failure.",
+      "Non-destructive certified Level II infrared inspections detecting loose terminations, unbalanced loads, and overloaded breakers before outages occur.",
     highlightsFr: [
-      "Rapport thermique certifié exigé par les assureurs d'entreprise",
-      "Caméras infrarouges haute sensibilité étalonnées",
-      "Prévention proactive des arrêts de production et risques d'incendie",
+      "Conforme aux exigences des assureurs majeurs du Québec",
+      "Rapport complet avec thermogrammes calibrés et matrice de sévérité",
+      "Zéro arrêt de production requis durant l'inspection",
     ],
     highlightsEn: [
-      "Certified thermal audit reports required by commercial insurers",
-      "High-sensitivity calibrated industrial radiometric cameras",
-      "Proactive prevention of costly production halts and electrical fires",
+      "Fully compliant with Quebec commercial underwriter requirements",
+      "Comprehensive reports with calibrated thermograms & delta-T analysis",
+      "Zero facility downtime required during on-load inspections",
     ],
-    image: "/media/service-thermography-master.jpg",
+    image: "/media/service-thermography-01.png",
     href: "/services/thermographie",
   },
   {
-    id: "200a",
+    id: "entrees-electriques",
     number: "04",
-    icon: Zap,
+    icon: ShieldCheck,
     tabLabelFr: "200A / 400A",
     tabLabelEn: "200A / 400A",
-    titleFr: "Mise aux normes 200A & 400A Hydro-Québec",
-    titleEn: "200A & 400A Hydro-Québec Code Upgrades",
+    titleFr: "Mises aux Normes & Entrées 200A à 800A",
+    titleEn: "Service Entrances: 200A to 800A Upgrades",
     descFr:
-      "Remplacement complet de mât d'entrée électrique, nouveau compteur, mise à la terre aux normes 2024 et basculement planifié avec Hydro-Québec.",
+      "Remplacement d'entrées électriques désuètes, coordination directe avec Hydro-Québec et pose de mâts d'entrée conformes au Code de l'électricité du Québec.",
     descEn:
-      "Complete service mast replacement, new meter base, 2024 code-compliant grounding electrodes, and coordinated disconnect/reconnect with Hydro-Québec.",
+      "Complete service entrance replacement, direct Hydro-Québec coordination, and heavy weatherhead masts built strictly to Quebec Electrical Code.",
     highlightsFr: [
-      "Prise en charge intégrale des permis et demandes Hydro-Québec",
-      "Remplacement en une seule journée pour minimiser la coupure",
-      "Garantie décennale sur l'installation et conformité d'assurance",
+      "Prise en charge intégrale des demandes d'autorisation Hydro-Québec",
+      "Coupure et rétablissement coordonnés en une seule journée",
+      "Mise à la terre rigoureuse et protection parafoudre intégrée",
     ],
     highlightsEn: [
-      "Full management of municipal permits and Hydro-Québec liaison",
-      "Completed in a single day to minimize household power downtime",
-      "10-year workmanship guarantee and complete insurance approval",
+      "Turnkey Hydro-Québec utility disconnect/reconnect coordination",
+      "Streamlined single-day turnaround to minimize disruption",
+      "Heavy grounding grid & integrated Type 1 surge protective devices",
     ],
-    image: "/media/style-lock-master.jpg",
-    href: "/services/residentiel",
+    image: "/media/service-panel-installation.jpg",
+    href: "/services/commercial",
   },
   {
     id: "industriel",
     number: "05",
-    icon: ShieldCheck,
+    icon: Layers,
     tabLabelFr: "Industriel",
     tabLabelEn: "Industrial",
-    titleFr: "Automates, variateurs (VFD) & centres MCC",
-    titleEn: "PLCs, VFD Motor Drives & MCC Centers",
+    titleFr: "Automatisation & Contrôle Industriel",
+    titleEn: "Industrial Automation & Controls",
     descFr:
-      "Câblage de commande industrielle, centres de contrôle de moteurs (MCC), variateurs de vitesse et raccordement de machinerie automatisée complexe.",
+      "Câblage de variateurs de fréquence (VFD), automates programmables (PLC), capteurs de sécurité et panneaux de contrôle sur mesure.",
     descEn:
-      "Industrial control wiring, motor control centers (MCC), variable frequency drives (VFD), and electrical automation for manufacturing equipment.",
+      "Wiring for variable frequency drives (VFDs), PLCs, safety interlocks, motor starters, and custom-built CSA/UL508A control enclosures.",
     highlightsFr: [
-      "Armoires de commande étanches NEMA 4X / IP66",
-      "Blindage électromagnétique contre les parasites et harmoniques",
-      "Assistance de dépannage industriel 24/7 en usine",
+      "Boîtiers étanches NEMA 4X / IP66 certifiés pour environnements rudes",
+      "Câblage blindé immunisé contre les interférences électromagnétiques",
+      "Service d'urgence prioritaire 24/7 pour lignes d'assemblage",
     ],
     highlightsEn: [
       "NEMA 4X / IP66 rated waterproof industrial enclosures",
@@ -161,7 +161,7 @@ export function TechnicalExpertiseTabs({ locale }: TechnicalExpertiseTabsProps) 
   return (
     <section
       id="expertise-technique"
-      className="technical-expertise-section py-10 md:py-14 px-4 md:px-8 border-b border-white/5 relative z-10 bg-[#0d0e10]"
+      className="technical-expertise-section py-10 md:py-14 px-4 md:px-8 border-b border-white/5 relative z-10 bg-[#08090b]"
     >
       <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8">
         {/* Section Header (Centered) */}
@@ -215,7 +215,7 @@ export function TechnicalExpertiseTabs({ locale }: TechnicalExpertiseTabsProps) 
           })}
         </div>
 
-        {/* Tab Content Display */}
+        {/* Tab Content Display - Harmonized Modal Card Look & Feel */}
         <div className="relative bg-[#0a101d]/85 backdrop-blur-2xl border border-white/20 rounded-[28px] overflow-hidden shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85),inset_0_1.5px_0.5px_rgba(255,255,255,0.4),inset_0_0_20px_rgba(255,255,255,0.03)] p-6 md:p-10 hover:border-amber-400/40 transition-all duration-300">
           {/* Diagonal Glass Sheen */}
           <div className="absolute inset-0 pointer-events-none z-10 rounded-[28px] bg-gradient-to-br from-white/[0.12] via-white/[0.03] via-25% to-transparent" />
@@ -224,8 +224,8 @@ export function TechnicalExpertiseTabs({ locale }: TechnicalExpertiseTabsProps) 
           <div className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-10 bg-gradient-to-b from-white/[0.08] to-transparent" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
-            {/* Left: High-Res Technical Asset */}
-            <div className="lg:col-span-6 overflow-hidden rounded-2xl aspect-[16/10] bg-[#0a101d] border border-white/15 relative shadow-inner">
+            {/* Left: High-Res Technical Asset (7 cols split matching Popular Services) */}
+            <div className="lg:col-span-7 overflow-hidden rounded-2xl aspect-[16/10] bg-[#0a101d] border border-white/15 relative shadow-inner">
               <img
                 key={currentTab.id + "-tech-img"}
                 src={currentTab.image}
@@ -234,28 +234,33 @@ export function TechnicalExpertiseTabs({ locale }: TechnicalExpertiseTabsProps) 
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 left-4 bg-slate-900/85 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15 text-xs font-mono text-amber-400 shadow-md">
+              <div className="absolute bottom-4 left-4 bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15 text-xs font-mono text-amber-400 shadow-md">
                 {isFrench ? "Norme CCQ / CMEQ" : "CCQ / CMEQ Standard"} · {currentTab.number}
               </div>
             </div>
 
-            {/* Right: Technical Explanation & Highlights */}
+            {/* Right: Technical Explanation & Highlights (5 cols split matching Popular Services) */}
             <div
               key={currentTab.id + "-tech-content"}
-              className="lg:col-span-6 flex flex-col justify-between animate-fade-in-up"
+              className="lg:col-span-5 flex flex-col justify-between animate-fade-in-up"
             >
               <div>
-                <span className="text-xs font-mono text-amber-400 uppercase tracking-widest font-bold">
-                  {isFrench ? currentTab.tabLabelFr : currentTab.tabLabelEn}
+                <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">
+                  {isFrench ? "Norme CCQ / CMEQ" : "CCQ / CMEQ Standard"} · {currentTab.number}
                 </span>
-                <h3 className="text-2xl md:text-3xl font-extrabold text-white mt-1 mb-4">
+                <div className="mt-1 mb-1">
+                  <span className="text-xs font-mono text-amber-400 uppercase tracking-widest font-bold">
+                    {isFrench ? currentTab.tabLabelFr : currentTab.tabLabelEn}
+                  </span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
                   {isFrench ? currentTab.titleFr : currentTab.titleEn}
                 </h3>
                 <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
                   {isFrench ? currentTab.descFr : currentTab.descEn}
                 </p>
 
-                {/* Signature Glowing Bullet Pills */}
+                {/* Benefits Checklist with Amber CheckCircle2 Icons */}
                 <div className="space-y-2.5 mb-8">
                   {(isFrench ? currentTab.highlightsFr : currentTab.highlightsEn).map(
                     (item, idx) => (
@@ -263,22 +268,27 @@ export function TechnicalExpertiseTabs({ locale }: TechnicalExpertiseTabsProps) 
                         key={idx}
                         className="bg-slate-800/60 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3 text-xs md:text-sm text-slate-200 flex items-center gap-3 shadow-sm hover:border-white/20 transition-colors"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.85)] shrink-0" />
-                        <span className="font-medium">{item}</span>
+                        <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0" />
+                        <span className="font-medium leading-tight">{item}</span>
                       </div>
                     )
                   )}
                 </div>
               </div>
 
+              {/* Action Button & Link matching Popular Services */}
               <div className="pt-4 border-t border-white/10 flex items-center justify-between">
                 <a
                   href={currentTab.href}
-                  className="inline-flex items-center gap-2 text-xs font-mono font-bold text-amber-400 hover:text-amber-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors"
                 >
                   <span>{isFrench ? "Consulter la fiche technique" : "View technical details"}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowUpRight className="w-4 h-4" />
                 </a>
+
+                <span className="text-xs font-mono text-slate-500 hidden sm:inline">
+                  {isFrench ? "Certifié CMEQ / RBQ" : "RBQ & CMEQ Certified"}
+                </span>
               </div>
             </div>
           </div>
