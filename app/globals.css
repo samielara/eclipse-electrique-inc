@@ -8218,6 +8218,15 @@ textarea {
     pointer-events: none;
   }
 
+  body:has(.mobile-menu[open]) .mobile-action-bar,
+  body[data-mobile-menu-open="true"] .mobile-action-bar {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    transform: translateY(100%) !important;
+  }
+
   .nav-shell {
     position: relative;
     display: flex;
@@ -8360,12 +8369,18 @@ textarea {
     display: none;
   }
 
+  .mobile-menu[open] > summary {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+
   .mobile-menu[open] > summary .menu-open-icon {
     display: none;
   }
 
   .mobile-menu[open] > summary .menu-close-icon {
-    display: block;
+    display: none;
   }
 
   .mobile-menu > summary > span {
@@ -8392,22 +8407,22 @@ textarea {
     animation: drawerFadeIn 200ms ease;
   }
 
-  /* Mobile Drawer Panel (shifted ~10% to the right per user request) */
+  /* Mobile Drawer Panel */
   .mobile-menu-panel {
     position: fixed;
     top: 0;
-    right: -10%;
+    right: 0;
     bottom: 0;
-    width: min(23rem, 88vw);
+    width: min(22.5rem, 86vw);
     height: 100dvh;
     max-height: 100dvh;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
-    z-index: 100;
+    z-index: 120;
     display: flex;
     flex-direction: column;
-    padding: 1.25rem 1.1rem max(1.5rem, env(safe-area-inset-bottom));
+    padding: 1.25rem 1.4rem max(3.5rem, calc(2.5rem + env(safe-area-inset-bottom))) 1.25rem;
     background: #080c14;
     border-left: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: -12px 0 40px rgba(0, 0, 0, 0.75);
@@ -8425,7 +8440,7 @@ textarea {
   }
 
   @keyframes drawerSlideIn {
-    from { transform: translateX(110%); }
+    from { transform: translateX(100%); }
     to { transform: translateX(0); }
   }
 
@@ -8449,7 +8464,7 @@ textarea {
     background: rgba(255, 255, 255, 0.04);
     color: #cbd5e1;
     cursor: pointer;
-    margin-right: 0.15rem;
+    margin-right: 0.35rem;
     transition: all 150ms ease;
   }
 
@@ -8496,7 +8511,7 @@ textarea {
     display: flex !important;
     align-items: center;
     gap: 1rem;
-    padding: 0.55rem 0.85rem;
+    padding: 0.55rem 0.95rem;
     border-radius: 0.85rem;
     border: 1px solid transparent !important;
     background: transparent !important;

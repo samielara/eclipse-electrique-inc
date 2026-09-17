@@ -95,18 +95,38 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
   const mobileMenuRef = useRef<HTMLDetailsElement>(null);
 
   const closeMobileMenu = () => {
-    if (mobileMenuRef.current) mobileMenuRef.current.open = false;
-    if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
+    if (mobileMenuRef.current) {
+      mobileMenuRef.current.open = false;
+    }
+    if (typeof document !== "undefined") {
+      document.body.removeAttribute("data-mobile-menu-open");
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
     }
   };
 
   const closeDropdowns = () => {
     if (servicesDropdownRef.current) servicesDropdownRef.current.open = false;
     if (areaDropdownRef.current) areaDropdownRef.current.open = false;
-    if (mobileMenuRef.current) mobileMenuRef.current.open = false;
-    if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
+    if (mobileMenuRef.current) {
+      mobileMenuRef.current.open = false;
+    }
+    if (typeof document !== "undefined") {
+      document.body.removeAttribute("data-mobile-menu-open");
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+    }
+  };
+
+  const handleMobileMenuToggle = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    if (typeof document !== "undefined") {
+      if (e.currentTarget.open) {
+        document.body.setAttribute("data-mobile-menu-open", "true");
+      } else {
+        document.body.removeAttribute("data-mobile-menu-open");
+      }
     }
   };
 
@@ -203,7 +223,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
         mobileMenuRef.current?.open &&
         !mobileMenuRef.current.contains(target)
       ) {
-        mobileMenuRef.current.open = false;
+        closeMobileMenu();
       }
     };
 
@@ -416,7 +436,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
             </a>
           </div>
 
-          <details className="mobile-menu" ref={mobileMenuRef}>
+          <details className="mobile-menu" ref={mobileMenuRef} onToggle={handleMobileMenuToggle}>
             <summary aria-label={copy.nav.menu}>
               <Menu aria-hidden="true" className="menu-open-icon" />
               <X aria-hidden="true" className="menu-close-icon" />
