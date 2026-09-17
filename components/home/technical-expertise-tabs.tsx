@@ -122,7 +122,7 @@ const TECH_TABS: TechTab[] = [
       "Streamlined single-day turnaround to minimize disruption",
       "Heavy grounding grid & integrated Type 1 surge protective devices",
     ],
-    image: "/media/service-panel-installation.jpg",
+    image: "/media/residential-service-entrances-panels.png",
     href: "/services/commercial",
   },
   {
