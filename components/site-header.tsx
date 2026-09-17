@@ -463,7 +463,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                       <Zap />
                     </span>
                     <span className="mobile-item-text">{copy.nav.services}</span>
-                    <ChevronDown className="mobile-nav-arrow" aria-hidden="true" />
+                    <ChevronDown className="mobile-nav-arrow mobile-nav-chevron" aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
                     <Link className="mobile-submenu-all" href={pathFor("services", locale)} onClick={closeMobileMenu}>
@@ -503,7 +503,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                       <MapPin />
                     </span>
                     <span className="mobile-item-text">{copy.nav.serviceArea}</span>
-                    <ChevronDown className="mobile-nav-arrow" aria-hidden="true" />
+                    <ChevronDown className="mobile-nav-arrow mobile-nav-chevron" aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
                     <Link className="mobile-submenu-all" href={pathFor("serviceArea", locale)} onClick={closeMobileMenu}>

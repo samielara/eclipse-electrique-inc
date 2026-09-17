@@ -8392,11 +8392,11 @@ textarea {
     animation: drawerFadeIn 200ms ease;
   }
 
-  /* Mobile Drawer Panel (media_1789259455229.png style) */
+  /* Mobile Drawer Panel (shifted ~10% to the right per user request) */
   .mobile-menu-panel {
     position: fixed;
     top: 0;
-    right: 0;
+    right: -10%;
     bottom: 0;
     width: min(23rem, 88vw);
     height: 100dvh;
@@ -8425,7 +8425,7 @@ textarea {
   }
 
   @keyframes drawerSlideIn {
-    from { transform: translateX(100%); }
+    from { transform: translateX(110%); }
     to { transform: translateX(0); }
   }
 
@@ -8449,6 +8449,7 @@ textarea {
     background: rgba(255, 255, 255, 0.04);
     color: #cbd5e1;
     cursor: pointer;
+    margin-right: 0.15rem;
     transition: all 150ms ease;
   }
 
