@@ -213,6 +213,9 @@ export function ResidentialWorkExplorer({ locale }: { locale: Locale }) {
             <ArrowRight aria-hidden="true" />
           </button>
         </div>
+        <span className="residential-work-counter" aria-live="polite">
+          {String(activeIndex + 1).padStart(2, "0")} <i>/</i> {String(RESIDENTIAL_WORK.length).padStart(2, "0")}
+        </span>
       </div>
     </section>
   );

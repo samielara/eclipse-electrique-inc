@@ -78,7 +78,7 @@ export function buildLocalBusinessSchema(locale: Locale) {
       name,
     })),
     knowsLanguage: ["fr-CA", "en-CA"],
-    openingHours: "Mo-Su 00:00-24:00",
+    openingHours: site.officeHours,
     priceRange: "$$",
     contactPoint: [
       {

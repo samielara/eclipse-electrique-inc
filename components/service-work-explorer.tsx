@@ -118,6 +118,9 @@ export function ServiceWorkExplorer({ locale, data }: ServiceWorkExplorerProps) 
             <ArrowRight aria-hidden="true" />
           </button>
         </div>
+        <span className="service-work-counter" aria-live="polite">
+          {String(activeIndex + 1).padStart(2, "0")} <i>/</i> {String(items.length).padStart(2, "0")}
+        </span>
       </div>
     </section>
   );

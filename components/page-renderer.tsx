@@ -973,43 +973,26 @@ function CityPage({ locale, citySlug }: { locale: Locale; citySlug: string }) {
   if (!city) return null;
 
   const cityName = city[locale];
-  const regionName = isFrench
-    ? { montreal: "Montréal", northShore: "Rive-Nord", southShore: "Rive-Sud" }[city.region]
-    : { montreal: "Montréal", northShore: "North Shore", southShore: "South Shore" }[city.region];
 
   return (
     <>
       <InnerHero locale={locale} citySlug={citySlug} />
 
       <section className="section-pad city-service-section">
-        <div className="site-container service-detail-grid">
-          <div>
-            <SectionHeading
-              eyebrow={isFrench ? "Services publiés" : "Published services"}
-              title={isFrench ? `Travaux électriques à ${cityName}` : `Electrical work in ${cityName}`}
-              intro={
-                isFrench
-                  ? "Explorez nos sept parcours de services et indiquez le bâtiment, les travaux envisagés et l'emplacement dans votre demande."
-                  : "Explore our seven service pathways and include the property, work planned and location in your request."
-              }
-            />
-            <ServicesGrid locale={locale} />
-          </div>
-          <aside className="contact-rail city-contact-rail">
-            <span className="rail-icon"><Phone aria-hidden="true" /></span>
-            <p className="eyebrow">{isFrench ? "Votre projet" : "Your project"}</p>
-            <h2>{isFrench ? `Parlons de votre projet à ${cityName}` : `Let’s discuss your ${cityName} project`}</h2>
-            <p>
-              {isFrench
-                ? "Confirmez le lieu précis et la nature des travaux afin que l'équipe puisse discuter des prochaines étapes."
-                : "Confirm the exact location and work required so the team can discuss the next steps."}
-            </p>
-            <a href={site.officePhoneHref}><strong>{copy.actions.office}</strong><span>{site.officePhoneDisplay}</span></a>
-            <a href={site.emailHref}><strong>{copy.actions.email}</strong><span>{site.email}</span></a>
-            <a href={cityPath(locale === "fr" ? "en" : "fr", city.slug)}>
-              <strong>{isFrench ? "English" : "Français"}</strong><ArrowRight aria-hidden="true" />
-            </a>
-          </aside>
+        <div className="site-container">
+          <ServiceCarousel
+            actionLabel={copy.actions.learnMore}
+            eyebrow={isFrench ? "Services publiés" : "Published services"}
+            intro={
+              isFrench
+                ? "Explorez nos sept parcours de services et indiquez le bâtiment, les travaux envisagés et l'emplacement dans votre demande."
+                : "Explore our seven service pathways and include the property, work planned and location in your request."
+            }
+            items={servicePageIds.map(id => ({ id, page: copy.pages[id] }))}
+            locale={locale}
+            title={isFrench ? `Travaux électriques à ${cityName}` : `Electrical work in ${cityName}`}
+            variant="city"
+          />
         </div>
       </section>
 
@@ -1085,13 +1068,13 @@ function ContactPage({ locale }: { locale: Locale }) {
       <InnerHero locale={locale} pageId="contact" />
       <section className="section-pad contact-section">
         <div className="site-container contact-layout">
+          <QuoteIntakeWizard locale={locale} />
           <div className="contact-methods">
             <article><Phone aria-hidden="true" /><div><p>{copy.contact.office}</p><a href={site.officePhoneHref}>{site.officePhoneDisplay}</a><span>{isFrench ? "Demandes générales et planification" : "General requests and planning"}</span></div></article>
             <article className="emergency-card"><PhoneCall aria-hidden="true" /><div><p>{copy.contact.emergency}</p><a href={site.emergencyPhoneHref}>{site.emergencyPhoneDisplay}</a><span>{copy.contact.emergencyNote}</span></div></article>
             <article><Mail aria-hidden="true" /><div><p>{copy.contact.email}</p><a href={site.emailHref}>{site.email}</a><span>{isFrench ? "Écrivez-nous depuis votre application de courriel" : "Write from your preferred email application"}</span></div></article>
             <article><MapPin aria-hidden="true" /><div><p>{copy.contact.territory}</p><strong>{copy.contact.territoryValue}</strong><a href={pathFor("serviceArea", locale)}>{copy.actions.checkArea}</a></div></article>
           </div>
-          <QuoteIntakeWizard locale={locale} />
         </div>
       </section>
     </>

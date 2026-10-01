@@ -531,8 +531,11 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                       <ArrowRight aria-hidden="true" />
                     </Link>
                     {regionOrder.map((region) => (
-                      <div className="mobile-city-group" key={region}>
-                        <strong>{regionLabels[region]}</strong>
+                      <details className="mobile-city-group mobile-region-accordion" key={region}>
+                        <summary className="mobile-region-trigger">
+                          <strong>{regionLabels[region]}</strong>
+                          <ChevronDown aria-hidden="true" />
+                        </summary>
                         <div className="mobile-city-chips">
                           {cityRoutes
                             .filter((city) => city.region === region)
@@ -542,7 +545,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                               </Link>
                             ))}
                         </div>
-                      </div>
+                      </details>
                     ))}
                   </div>
                 </details>

@@ -168,8 +168,8 @@ const copy = {
     licence: `Éclipse électrique inc. détient la licence RBQ ${site.rbq}, délivrée en ${site.licensedSince}, et possède une fiche au répertoire de la CMEQ.`,
     licenceAction: "Consulter la fiche CMEQ",
     hours:
-      "**Heures d'ouverture et de service :**\n\n• **Urgence électrique 24/7** : Disponible 24 h sur 24, 7 jours sur 7 (soirs, week-ends et jours fériés) au **514-717-9277**.\n• **Bureau et projets réguliers (Semaine)** : Du lundi au vendredi de 7 h 00 à 17 h 00 au **514-510-1112**.\n• **Fin de semaine (Samedi et Dimanche)** : Équipe d'urgence active 24/7; consultations et soumissions planifiées sur rendez-vous.",
-    hoursAction: "Appeler le bureau · 514-510-1112",
+      "**Heures d'ouverture et de service :**\n\n• **Urgence électrique 24/7** : Disponible 24 h sur 24, 7 jours sur 7 (soirs, week-ends et jours fériés) au **514-717-9277**.\n• **Bureau et projets réguliers (Semaine)** : Du lundi au vendredi de 7 h 00 à 17 h 00 au **514-955-1112**.\n• **Fin de semaine (Samedi et Dimanche)** : Équipe d'urgence active 24/7; consultations et soumissions planifiées sur rendez-vous.",
+    hoursAction: "Appeler le bureau · 514-955-1112",
     thanks:
       "C’est un grand plaisir de vous aider ! Si vous avez besoin d’autres renseignements ou si vous souhaitez planifier des travaux avec nos maîtres électriciens, nous sommes toujours à votre écoute.",
     greetingResponse:
@@ -216,8 +216,8 @@ const copy = {
     licence: `Éclipse électrique inc. holds RBQ licence ${site.rbq}, issued in ${site.licensedSince}, and has a listing in the CMEQ directory.`,
     licenceAction: "View the CMEQ listing",
     hours:
-      "**Opening & Service Hours:**\n\n• **24/7 Emergency Dispatch**: Open 24 hours a day, 7 days a week (weekdays, weekends & holidays) at **514-717-9277**.\n• **Office & Regular Projects (Weekdays)**: Monday to Friday from 7:00 AM to 5:00 PM at **514-510-1112**.\n• **Weekends (Saturday & Sunday)**: Emergency crew is active 24/7; planned appointments and consultations are scheduled by appointment.",
-    hoursAction: "Call the office · 514-510-1112",
+      "**Opening & Service Hours:**\n\n• **24/7 Emergency Dispatch**: Open 24 hours a day, 7 days a week (weekdays, weekends & holidays) at **514-717-9277**.\n• **Office & Regular Projects (Weekdays)**: Monday to Friday from 7:00 AM to 5:00 PM at **514-955-1112**.\n• **Weekends (Saturday & Sunday)**: Emergency crew is active 24/7; planned appointments and consultations are scheduled by appointment.",
+    hoursAction: "Call the office · 514-955-1112",
     thanks:
       "You’re very welcome! If you need any more information or would like to schedule an appointment with our master electricians, we’re always here to assist.",
     greetingResponse:

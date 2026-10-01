@@ -16,12 +16,12 @@ export const customerFaq = {
     {
       "id": "cost",
       "question": "How much does an electrician visit or electrical project cost?",
-      "answer": "Cost depends on the diagnosis, scope, materials, access and whether the request is urgent. Contact the office at 514-510-1112 with a description and photos for an assessment. Ask which visit, diagnostic or emergency fees apply and what the estimate includes before authorizing work."
+      "answer": "Cost depends on the diagnosis, scope, materials, access and whether the request is urgent. Contact the office at 514-955-1112 with a description and photos for an assessment. Ask which visit, diagnostic or emergency fees apply and what the estimate includes before authorizing work."
     },
     {
       "id": "request",
       "question": "How do I request service or an estimate?",
-      "answer": "Use Request service to prepare your enquiry, call 514-510-1112 or email yasser@eclipseelectrique.com. Include your address, property type, description, preferred timing and accessible photos. An online enquiry is not an emergency dispatch request; call 514-717-9277 for urgent help."
+      "answer": "Use Request service to prepare your enquiry, call 514-955-1112 or email info@eclipseelectrique.com. Include your address, property type, description, preferred timing and accessible photos. An online enquiry is not an emergency dispatch request; call 514-717-9277 for urgent help."
     },
     {
       "id": "emergency",
@@ -98,12 +98,12 @@ export const customerFaq = {
     {
       "id": "cost",
       "question": "Combien coûte une visite ou un projet électrique?",
-      "answer": "Le coût dépend du diagnostic, des travaux, des matériaux, de l’accès et du caractère urgent de la demande. Appelez le bureau au 514-510-1112 avec une description et des photos pour une évaluation. Confirmez les frais de visite, de diagnostic ou d’urgence et le contenu de la soumission avant d’autoriser les travaux."
+      "answer": "Le coût dépend du diagnostic, des travaux, des matériaux, de l’accès et du caractère urgent de la demande. Appelez le bureau au 514-955-1112 avec une description et des photos pour une évaluation. Confirmez les frais de visite, de diagnostic ou d’urgence et le contenu de la soumission avant d’autoriser les travaux."
     },
     {
       "id": "request",
       "question": "Comment demander un service ou une soumission?",
-      "answer": "Utilisez Demander un service pour préparer votre demande, appelez le 514-510-1112 ou écrivez à yasser@eclipseelectrique.com. Indiquez l’adresse, le type de bâtiment, les travaux, l’échéancier et joignez des photos accessibles. Une demande en ligne ne déclenche pas une intervention d’urgence : appelez le 514-717-9277."
+      "answer": "Utilisez Demander un service pour préparer votre demande, appelez le 514-955-1112 ou écrivez à info@eclipseelectrique.com. Indiquez l’adresse, le type de bâtiment, les travaux, l’échéancier et joignez des photos accessibles. Une demande en ligne ne déclenche pas une intervention d’urgence : appelez le 514-717-9277."
     },
     {
       "id": "emergency",

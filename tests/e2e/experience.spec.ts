@@ -96,13 +96,16 @@ for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"
         expect(launcher && bar && launcher.y + launcher.height <= bar.y).toBeTruthy();
       }
     }
-    const tabs = page.getByRole("tab");
-    await tabs.nth(2).click();
-    await expect(tabs.nth(2)).toHaveAttribute("aria-selected", "true");
-    await expect(page.getByRole("tabpanel")).toContainText(locale === "fr" ? "Thermographie" : "Thermography");
-    await tabs.nth(2).press("ArrowRight");
-    await expect(tabs.nth(3)).toBeFocused();
-    await expect(tabs.nth(3)).toHaveAttribute("aria-selected", "true");
+    const context = page.locator(".service-carousel");
+    const tabs = context.getByRole("tab");
+    await expect(tabs).toHaveCount(3);
+    await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
+    await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
+    await tabs.nth(0).focus();
+    await tabs.nth(0).press("ArrowRight");
+    await expect(tabs.nth(1)).toBeFocused();
+    await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+    await expect(context.getByRole("tabpanel")).toHaveAttribute("id", "service-panel-commercial");
     await accessible(page);
     const alternate = locale === "fr" ? "en" : "fr";
     if (await page.locator(".mobile-menu").isVisible()) {

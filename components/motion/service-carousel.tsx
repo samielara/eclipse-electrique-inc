@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 
 import { ServiceCard } from "@/components/service-card";
 import type { LocalizedPage } from "@/content/site-content";
@@ -19,6 +19,7 @@ export function ServiceCarousel({
   eyebrow,
   title,
   intro,
+  variant = "default",
 }: {
   locale: Locale;
   items: ServiceCarouselItem[];
@@ -26,6 +27,7 @@ export function ServiceCarousel({
   eyebrow: string;
   title: string;
   intro: string;
+  variant?: "default" | "city";
 }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -41,12 +43,31 @@ export function ServiceCarousel({
   }, []);
 
   useEffect(() => {
-    if (paused || reducedMotion || items.length < 2) return;
+    if (variant === "city" || paused || reducedMotion || items.length < 2) return;
     const timer = window.setInterval(() => setActive(index => (index + 1) % items.length), 5200);
     return () => window.clearInterval(timer);
   }, [items.length, paused, reducedMotion]);
 
   const select = (index: number) => setActive((index + items.length) % items.length);
+  const tabId = (id: ServicePageId) => `service-tab-${id}`;
+  const panelId = (id: ServicePageId) => `service-panel-${id}`;
+  const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const last = items.length - 1;
+    const next = event.key === "ArrowRight" || event.key === "ArrowDown"
+      ? (index + 1) % items.length
+      : event.key === "ArrowLeft" || event.key === "ArrowUp"
+        ? (index - 1 + items.length) % items.length
+        : event.key === "Home"
+          ? 0
+          : event.key === "End"
+            ? last
+            : index;
+
+    if (next === index && event.key !== "Home" && event.key !== "End") return;
+    event.preventDefault();
+    setActive(next);
+    document.getElementById(tabId(items[next].id))?.focus();
+  };
   const item = items[active];
   const setDepth = (x = 0, y = 0) => {
     stageRef.current?.style.setProperty("--service-depth-x", `${x}px`);
@@ -55,7 +76,7 @@ export function ServiceCarousel({
 
   return (
     <div
-      className="service-carousel"
+      className={`service-carousel${variant === "city" ? " service-carousel-city" : ""}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -83,25 +104,30 @@ export function ServiceCarousel({
           <h2>{title}</h2>
           <p>{intro}</p>
 
-          <div className="service-carousel-bar">
-            <div className="service-carousel-tabs" role="tablist" aria-label={locale === "fr" ? "Parcours de services" : "Service pathways"}>
-              {items.map((entry, index) => (
-                <button
-                  aria-label={`${locale === "fr" ? "Voir" : "View"} ${entry.page.eyebrow}`}
-                  aria-selected={index === active}
-                  className={`service-tab-pill${index === active ? " is-active" : ""}`}
-                  key={entry.id}
-                  onClick={() => select(index)}
-                  role="tab"
-                  type="button"
-                >
-                  <span className="service-tab-index">0{index + 1}</span>
-                  <span className="service-carousel-tab-label">{entry.page.eyebrow}</span>
-                </button>
-              ))}
-            </div>
+          {variant === "default" && (
+            <div className="service-carousel-bar">
+              <div className="service-carousel-tabs" role="tablist" aria-label={locale === "fr" ? "Parcours de services" : "Service pathways"}>
+                {items.map((entry, index) => (
+                  <button
+                    aria-controls={panelId(entry.id)}
+                    aria-label={`${locale === "fr" ? "Voir" : "View"} ${entry.page.eyebrow}`}
+                    aria-selected={index === active}
+                    className={`service-tab-pill${index === active ? " is-active" : ""}`}
+                    id={tabId(entry.id)}
+                    key={entry.id}
+                    onClick={() => select(index)}
+                    onKeyDown={(event) => onTabKeyDown(event, index)}
+                    role="tab"
+                    tabIndex={index === active ? 0 : -1}
+                    type="button"
+                  >
+                    <span className="service-tab-index">0{index + 1}</span>
+                    <span className="service-carousel-tab-label">{entry.page.eyebrow}</span>
+                  </button>
+                ))}
+              </div>
 
-            <div className="service-carousel-actions">
+              <div className="service-carousel-actions">
               <button
                 aria-label={locale === "fr" ? "Service précédent" : "Previous service"}
                 onClick={() => select(active - 1)}
@@ -134,15 +160,38 @@ export function ServiceCarousel({
               >
                 {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
               </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="service-carousel-surface">
-          <div className="service-carousel-card" key={item.id}>
+          <div
+            aria-label={variant === "city" ? item.page.eyebrow : undefined}
+            aria-labelledby={variant === "default" ? tabId(item.id) : undefined}
+            className="service-carousel-card"
+            id={panelId(item.id)}
+            key={item.id}
+            role="tabpanel"
+            tabIndex={0}
+          >
             <ServiceCard actionLabel={actionLabel} locale={locale} page={item.page} serviceId={item.id} />
           </div>
+          {variant === "city" && (
+            <div className="city-service-carousel-arrows">
+              <button aria-label={locale === "fr" ? "Service précédent" : "Previous service"} onClick={() => select(active - 1)} type="button">
+                <ChevronLeft aria-hidden="true" />
+              </button>
+              <button aria-label={locale === "fr" ? "Service suivant" : "Next service"} onClick={() => select(active + 1)} type="button">
+                <ChevronRight aria-hidden="true" />
+              </button>
+            </div>
+          )}
         </div>
+
+        {variant === "city" && (
+          <span className="city-service-carousel-counter" aria-live="polite">0{active + 1} <i>/</i> 0{items.length}</span>
+        )}
       </div>
     </div>
   );
