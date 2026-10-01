@@ -197,15 +197,13 @@ test("homepage uses visual service choices without repeating the long capability
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(html, /class="service-carousel"/);
-  assert.match(html, /class="service-carousel-copy"/);
-  assert.match(html, /Choose your context/);
-  assert.match(html, /service-carousel-stage service-carousel-stage-3d/);
-  assert.match(html, /class="service-carousel-surface"/);
-  assert.match(html, /class="service-carousel-tab-label">Residential/);
-  assert.match(html, /eclipse-residential-electrician-v1\.png/);
-  assert.match(html, /media\/electrical-testing\.webp/);
-  assert.match(html, /media\/industrial-panel\.webp/);
+  assert.match(html, /popular-services-section/);
+  assert.match(html, /200A Electrical Panel/);
+  assert.match(html, /technical-expertise-section/);
+  assert.match(html, /\/en\/services\/residential-electrician/);
+  assert.match(html, /\/en\/services\/industrial-electrician/);
+  assert.doesNotMatch(html, /Pause slideshow|Resume slideshow/);
+  assert.match(html, /media\//);
   assert.doesNotMatch(html, /The points that matter/);
   assert.doesNotMatch(html, /Focused expertise for every environment/);
 });

@@ -27,7 +27,6 @@ import { useExperienceMotion } from "@/components/motion/provider";
 import { readQuotePrefill } from "@/lib/assistant/prefill";
 import { Button } from "@/components/ui/button";
 import {
-  buildQuoteIntakeMailtoUrl,
   emptyQuoteIntakeValues,
   getQuoteMunicipalityOptions,
   getQuoteServiceOptions,
@@ -69,7 +68,7 @@ const wizardCopy = {
       "Sélectionnez la catégorie qui correspond le mieux à votre besoin.",
       "Indiquez la rapidité d’intervention recherchée.",
       "Confirmez où les travaux doivent être réalisés.",
-      "Ajoutez les renseignements nécessaires pour préparer le courriel de demande.",
+      "Ajoutez les renseignements nécessaires pour envoyer votre demande.",
     ],
     serviceDescriptions: {
       residential: "Panneau, borne VE, éclairage, rénovation ou dépannage résidentiel.",
@@ -86,7 +85,7 @@ const wizardCopy = {
     emergencyTitle: "Urgence électrique active?",
     emergencyText: "Pour une urgence active, appelez directement le",
     city: "Municipalité ou arrondissement",
-    chooseCity: "Choisir dans les 50 secteurs desservis",
+    chooseCity: "Choisir un secteur",
     postalCode: "Code postal",
     fullName: "Nom complet",
     phone: "Téléphone",
@@ -97,17 +96,17 @@ const wizardCopy = {
     files: "Photos ou plans",
     fileButton: "Choisir des fichiers",
     fileHint:
-      "Photos de panneau, codes d’erreur ou plans en image/PDF. Rien n’est téléversé sur le site.",
+      "JPG, PNG, WebP ou PDF : 5 fichiers maximum, 7 Mo au total.",
     noFiles: "Aucun fichier sélectionné.",
     attachmentNotice:
-      "Les noms seront ajoutés au courriel; joignez ensuite les fichiers dans votre application de courriel.",
+      "Les fichiers sélectionnés seront joints à votre demande.",
     clearFiles: "Retirer la sélection",
     errors: "Corrigez les champs indiqués avant de continuer.",
     back: "Retour",
     next: "Continuer",
-    prepare: "Préparer le courriel",
+    prepare: "Envoyer la demande",
     emailNotice:
-      "Le bouton ouvre votre application de courriel. La demande n’est pas envoyée automatiquement.",
+      "Votre demande sera envoyée directement à notre équipe.",
   },
   en: {
     eyebrow: "Quote request",
@@ -127,7 +126,7 @@ const wizardCopy = {
       "Choose the category that best matches your needs.",
       "Tell us how quickly you need an intervention.",
       "Confirm where the work needs to be completed.",
-      "Add the information needed to prepare your request email.",
+      "Add the information needed to send your request.",
     ],
     serviceDescriptions: {
       residential: "Panel, EV charger, lighting, renovation, or residential troubleshooting.",
@@ -144,7 +143,7 @@ const wizardCopy = {
     emergencyTitle: "Active electrical emergency?",
     emergencyText: "For an active emergency, call",
     city: "Municipality or borough",
-    chooseCity: "Choose from the 50 service areas",
+    chooseCity: "Select a service area",
     postalCode: "Postal code",
     fullName: "Full name",
     phone: "Phone number",
@@ -155,17 +154,17 @@ const wizardCopy = {
     files: "Photos or plans",
     fileButton: "Choose files",
     fileHint:
-      "Panel photos, error codes, or image/PDF plans. Nothing is uploaded to the website.",
+      "JPG, PNG, WebP or PDF: up to 5 files, 7 MB total.",
     noFiles: "No files selected.",
     attachmentNotice:
-      "The filenames will be added to the email; attach the files in your email application.",
+      "Selected files will be attached to your request.",
     clearFiles: "Clear selection",
     errors: "Correct the indicated fields before continuing.",
     back: "Back",
     next: "Continue",
-    prepare: "Prepare email",
+    prepare: "Send request",
     emailNotice:
-      "The button opens your email application. The request is not sent automatically.",
+      "Your request will be sent directly to our team.",
   },
 } as const;
 
@@ -183,6 +182,11 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
   const [step, setStep] = useState<QuoteIntakeStep>(1);
   const [values, setValues] = useState<QuoteIntakeValues>(emptyQuoteIntakeValues);
   const [errors, setErrors] = useState<QuoteIntakeErrors>({});
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState("");
+  const selectedFiles = useRef<File[]>([]);
+  const requestId = useRef("");
   const summaryRef = useRef<HTMLDivElement>(null);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const hasMounted = useRef(false);
@@ -208,6 +212,8 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
     field: K,
     value: QuoteIntakeValues[K],
   ) {
+    requestId.current = "";
+    setSendError("");
     setValues((current) => ({ ...current, [field]: value }));
     setErrors((current) => {
       const next = { ...current };
@@ -221,8 +227,9 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
     requestAnimationFrame(() => summaryRef.current?.focus());
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (sending || sent) return;
     const nextErrors = validateQuoteIntakeStep(values, step, locale);
 
     if (Object.keys(nextErrors).length > 0) {
@@ -236,7 +243,36 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
       return;
     }
 
-    window.location.href = buildQuoteIntakeMailtoUrl(values, locale);
+    setSending(true);
+    setSendError("");
+    requestId.current ||= crypto.randomUUID();
+    const form = new FormData();
+    for (const [key, value] of Object.entries(values)) {
+      if (typeof value === "string") form.set(key, value);
+    }
+    form.set("locale", locale);
+    form.set("requestId", requestId.current);
+    for (const file of selectedFiles.current) form.append("files", file);
+    try {
+      const response = await fetch("/api/quote", { method: "POST", body: form, signal: AbortSignal.timeout(30_000) });
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        const messages = locale === "fr" ? {
+          unavailable: "L’envoi est temporairement indisponible. Appelez le bureau au 514-955-1112.",
+          files: "Choisissez au maximum 5 fichiers JPG, PNG, WebP ou PDF (7 Mo au total).",
+          "rate-limit": "Veuillez patienter une minute avant de réessayer.",
+        } : {
+          unavailable: "Sending is temporarily unavailable. Call the office at 514-955-1112.",
+          files: "Choose up to 5 JPG, PNG, WebP or PDF files (7 MB total).",
+          "rate-limit": "Please wait a minute before trying again.",
+        };
+        setSendError(messages[result.error as keyof typeof messages] || (locale === "fr" ? "La demande n’a pas pu être envoyée. Réessayez ou appelez le bureau." : "Your request could not be sent. Try again or call the office."));
+      } else {
+        setSent(true);
+      }
+    } catch {
+      setSendError(locale === "fr" ? "Impossible de confirmer l’envoi. Réessayez ou appelez le bureau." : "We could not confirm sending. Try again or call the office.");
+    } finally { setSending(false); }
   }
 
   function handleBack() {
@@ -246,6 +282,12 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
 
   function handleFiles(event: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.currentTarget.files ?? []);
+    if (files.length > 5 || files.reduce((size, file) => size + file.size, 0) > 7 * 1024 * 1024 || files.some(file => !["image/jpeg", "image/png", "image/webp", "application/pdf"].includes(file.type))) {
+      setSendError(locale === "fr" ? "Maximum 5 fichiers JPG, PNG, WebP ou PDF, 7 Mo au total." : "Maximum 5 JPG, PNG, WebP or PDF files, 7 MB total.");
+      event.currentTarget.value = "";
+      return;
+    }
+    selectedFiles.current = files;
     update(
       "fileNames",
       files.map((file) => file.name),
@@ -388,7 +430,7 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
         </h3>
         <p>{copy.stepIntros[2]}</p>
         <div className="form-grid">
-          <div className="form-field">
+          <div className="form-field form-field-wide">
             <label htmlFor="quote-municipality">{copy.city}<span aria-hidden="true"> *</span></label>
             <select
               aria-describedby={errors.municipality ? "quote-municipality-error" : undefined}
@@ -499,7 +541,7 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
               <Upload aria-hidden="true" />
               <span>{copy.fileButton}</span>
               <input
-                accept="image/*,.pdf,application/pdf"
+                accept="image/jpeg,image/png,image/webp,application/pdf"
                 id="quote-files"
                 multiple
                 onChange={handleFiles}
@@ -517,7 +559,7 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
                       <li key={fileName}><Paperclip aria-hidden="true" />{fileName}</li>
                     ))}
                   </ul>
-                  <button onClick={() => update("fileNames", [])} type="button">{copy.clearFiles}</button>
+                  <button onClick={() => { selectedFiles.current = []; update("fileNames", []); }} type="button">{copy.clearFiles}</button>
                 </>
               )}
             </div>
@@ -526,14 +568,16 @@ export function QuoteIntakeWizard({ locale }: { locale: Locale }) {
         </div>
       </m.fieldset>
 
+      {sendError && <p className="field-error" role="alert">{sendError}</p>}
+      {sent && <p role="status" className="quote-email-notice">{locale === "fr" ? "Votre demande a été envoyée. Notre équipe pourra vous contacter aux coordonnées fournies." : "Your request has been sent. Our team can contact you using the details provided."}</p>}
       <div className="quote-wizard-actions">
         {step > 1 && (
-          <Button className="quote-back-button" onClick={handleBack} size="lg" type="button" variant="outline">
+          <Button disabled={sending || sent} className="quote-back-button" onClick={handleBack} size="lg" type="button" variant="outline">
             <ArrowLeft aria-hidden="true" />{copy.back}
           </Button>
         )}
-        <Button className="primary-action quote-next-button" size="lg" type="submit">
-          {step === 4 ? copy.prepare : copy.next}<ArrowRight aria-hidden="true" />
+        <Button disabled={sending || sent} aria-busy={sending} className="primary-action quote-next-button" size="lg" type="submit">
+          {sent ? (locale === "fr" ? "Envoyée" : "Sent") : sending ? (locale === "fr" ? "Envoi…" : "Sending…") : step === 4 ? copy.prepare : copy.next}<ArrowRight aria-hidden="true" />
         </Button>
       </div>
       {step === 4 && <p className="quote-email-notice">{copy.emailNotice}</p>}

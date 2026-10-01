@@ -191,22 +191,30 @@ test.describe("Service card accessibility and motion", () => {
 
     const card = page.getByTestId("service-card").first();
     await expect(card).toBeVisible();
-    await card.hover();
 
     if (testInfo.project.name === "desktop") {
-      await expect(card).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, -2)");
+      expect(await page.evaluate(() => window.matchMedia("(hover: hover) and (pointer: fine)").matches)).toBe(true);
+      await card.hover();
+      expect(await card.evaluate(element => {
+        const transform = getComputedStyle(element).transform;
+        if (transform === "none") return false;
+        return new DOMMatrixReadOnly(transform).m42 < 0;
+      })).toBe(true);
     } else {
+      expect(await page.evaluate(() => window.matchMedia("(hover: hover) and (pointer: fine)").matches)).toBe(false);
+      await card.dispatchEvent("pointermove", { pointerType: "touch" });
       await expect(card).toHaveCSS("transform", "none");
     }
   });
 
-  test("service cards do not translate under reduced motion", async ({ page }) => {
+  test("service cards do not translate under reduced motion", async ({ page }, testInfo) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/fr");
 
     const card = page.getByTestId("service-card").first();
     await expect(card).toBeVisible();
-    await card.hover();
+    if (testInfo.project.name === "desktop") await card.hover();
+    else await card.dispatchEvent("pointermove", { pointerType: "touch" });
     await expect(card).toHaveCSS("transform", "none");
   });
 

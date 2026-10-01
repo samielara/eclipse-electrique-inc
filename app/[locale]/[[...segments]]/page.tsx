@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PageRenderer } from "@/components/page-renderer";
+import { DocumentLanguage } from "@/components/document-language";
 import { SchemaOrg } from "@/components/schema-org";
 import { content } from "@/content/site-content";
 import { cityBySlug, cityPath } from "@/lib/city-routes";
@@ -80,7 +81,7 @@ export default async function LocalizedPage({ params }: LocalizedPageProps) {
 
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang=${JSON.stringify(resolved.locale === "fr" ? "fr-CA" : "en-CA")}` }} />
+      <DocumentLanguage locale={resolved.locale} />
       <SchemaOrg locale={resolved.locale} />
       <PageRenderer locale={resolved.locale} pageId={resolved.pageId} citySlug={resolved.citySlug} />
     </>

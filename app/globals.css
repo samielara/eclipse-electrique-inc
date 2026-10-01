@@ -2169,8 +2169,8 @@ textarea {
   z-index: 5;
   margin-left: clamp(1.5rem, 3.5vw, 4rem);
   background: rgba(7, 12, 22, 0.72);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 26px;
   padding: clamp(2.2rem, 3.8vh, 3.25rem) clamp(2rem, 2.8vw, 2.75rem);
@@ -5087,6 +5087,114 @@ textarea {
   gap: clamp(0.9rem, 1.8vh, 1.35rem);
   margin-right: auto;
 }
+
+/* Match the homepage's solid dark content card on service-area overview and city routes. */
+:is(.inner-hero-serviceArea, .inner-hero-default) .inner-hero-glass-card {
+  background: rgba(7, 12, 22, 0.72);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Service-area overview and city pages use the same left-side hero composition. */
+:is(.inner-hero-serviceArea, .inner-hero-default) .inner-hero-container {
+  width: 100%;
+  margin-inline: 0;
+  justify-content: flex-start;
+}
+
+:is(.inner-hero-serviceArea, .inner-hero-default).inner-hero-cinematic {
+  min-height: calc(100vh - 6.75rem);
+  min-height: calc(100svh - 6.75rem);
+  min-height: calc(100dvh - 6.75rem);
+}
+
+:is(.inner-hero-serviceArea, .inner-hero-default) .inner-hero-glass-card {
+  width: 100%;
+  max-width: clamp(470px, 42vw, 590px);
+  height: min(calc(100% - 3.5rem), 640px);
+  min-height: clamp(500px, 66vh, 640px);
+  margin-left: clamp(1.5rem, 3.5vw, 4rem);
+  margin-right: auto;
+  padding: clamp(2.2rem, 3.8vh, 3.25rem) clamp(2rem, 2.8vw, 2.75rem);
+  align-items: center;
+  text-align: center;
+}
+
+@media (max-height: 800px) and (min-width: 769px) {
+  :is(.inner-hero-serviceArea, .inner-hero-default) .inner-hero-container {
+    padding-block: clamp(1rem, 2.5vh, 1.5rem);
+  }
+
+  :is(.inner-hero-serviceArea, .inner-hero-default) .inner-hero-glass-card {
+    height: min(calc(100% - 2rem), 520px);
+    min-height: clamp(430px, 60vh, 520px);
+    padding: clamp(1.15rem, 2.4vh, 1.6rem) clamp(1.5rem, 2.5vw, 2.2rem);
+    gap: clamp(0.65rem, 1.4vh, 1rem);
+  }
+}
+
+[data-theme="light"] :is(.inner-hero-serviceArea, .inner-hero-default) .inner-hero-glass-card {
+  background: rgba(7, 12, 22, 0.72);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+[data-theme="light"] :is(.inner-hero-serviceArea, .inner-hero-default) :is(.inner-hero-title, .inner-hero-intro-text) {
+  color: #fff !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Informational pages share the same hero composition as service routes. */
+:is(.inner-hero-about, .inner-hero-faq, .inner-hero-contact) .inner-hero-container {
+  width: 100%;
+  margin-inline: 0;
+  justify-content: flex-start;
+}
+
+:is(.inner-hero-about, .inner-hero-faq, .inner-hero-contact).inner-hero-cinematic {
+  min-height: calc(100vh - 6.75rem);
+  min-height: calc(100svh - 6.75rem);
+  min-height: calc(100dvh - 6.75rem);
+}
+
+:is(.inner-hero-about, .inner-hero-faq, .inner-hero-contact) .inner-hero-glass-card {
+  width: 100%;
+  max-width: clamp(470px, 42vw, 590px);
+  height: min(calc(100% - 3.5rem), 640px);
+  min-height: clamp(500px, 66vh, 640px);
+  margin-left: clamp(1.5rem, 3.5vw, 4rem);
+  margin-right: auto;
+  padding: clamp(2.2rem, 3.8vh, 3.25rem) clamp(2rem, 2.8vw, 2.75rem);
+  background: rgba(7, 12, 22, 0.72);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  align-items: center;
+  text-align: center;
+}
+
+@media (max-height: 800px) and (min-width: 769px) {
+  :is(.inner-hero-about, .inner-hero-faq, .inner-hero-contact) .inner-hero-container {
+    padding-block: clamp(1rem, 2.5vh, 1.5rem);
+  }
+
+  :is(.inner-hero-about, .inner-hero-faq, .inner-hero-contact) .inner-hero-glass-card {
+    height: min(calc(100% - 2rem), 520px);
+    min-height: clamp(430px, 60vh, 520px);
+    padding: clamp(1.15rem, 2.4vh, 1.6rem) clamp(1.5rem, 2.5vw, 2.2rem);
+    gap: clamp(0.65rem, 1.4vh, 1rem);
+  }
+}
+
+[data-theme="light"] :is(.inner-hero-about, .inner-hero-faq, .inner-hero-contact) .inner-hero-glass-card {
+  background: rgba(7, 12, 22, 0.72);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+[data-theme="light"] :is(.inner-hero-about, .inner-hero-faq, .inner-hero-contact) :is(.inner-hero-title, .inner-hero-intro-text) {
+  color: #fff !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+}
 :is(
   .inner-hero-services,
   .inner-hero-residential,
@@ -5129,6 +5237,122 @@ textarea {
   .inner-hero-security
 ) .inner-hero-glass-card > .eyebrow::before {
   display: none;
+}
+
+/* Service pages use the landing-page hero card as their shared visual standard. */
+:is(
+  .inner-hero-services,
+  .inner-hero-residential,
+  .inner-hero-commercial,
+  .inner-hero-industrial,
+  .inner-hero-maintenance,
+  .inner-hero-generators,
+  .inner-hero-thermography,
+  .inner-hero-security
+) .inner-hero-container {
+  width: 100%;
+  margin-inline: 0;
+  justify-content: flex-start;
+}
+
+:is(
+  .inner-hero-services,
+  .inner-hero-residential,
+  .inner-hero-commercial,
+  .inner-hero-industrial,
+  .inner-hero-maintenance,
+  .inner-hero-generators,
+  .inner-hero-thermography,
+  .inner-hero-security
+).inner-hero-cinematic {
+  min-height: calc(100vh - 6.75rem);
+  min-height: calc(100svh - 6.75rem);
+  min-height: calc(100dvh - 6.75rem);
+}
+
+:is(
+  .inner-hero-services,
+  .inner-hero-residential,
+  .inner-hero-commercial,
+  .inner-hero-industrial,
+  .inner-hero-maintenance,
+  .inner-hero-generators,
+  .inner-hero-thermography,
+  .inner-hero-security
+) .inner-hero-glass-card {
+  width: 100%;
+  max-width: clamp(470px, 42vw, 590px);
+  height: min(calc(100% - 3.5rem), 640px);
+  min-height: clamp(500px, 66vh, 640px);
+  margin-left: clamp(1.5rem, 3.5vw, 4rem);
+  margin-right: auto;
+  padding: clamp(2.2rem, 3.8vh, 3.25rem) clamp(2rem, 2.8vw, 2.75rem);
+  background: rgba(7, 12, 22, 0.72);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  align-items: center;
+  text-align: center;
+}
+
+/* Keep the certification strip in view on shorter desktop browser windows. */
+@media (max-height: 800px) and (min-width: 769px) {
+  :is(
+    .inner-hero-services,
+    .inner-hero-residential,
+    .inner-hero-commercial,
+    .inner-hero-industrial,
+    .inner-hero-maintenance,
+    .inner-hero-generators,
+    .inner-hero-thermography,
+    .inner-hero-security
+  ) .inner-hero-container {
+    padding-block: clamp(1rem, 2.5vh, 1.5rem);
+  }
+
+  :is(
+    .inner-hero-services,
+    .inner-hero-residential,
+    .inner-hero-commercial,
+    .inner-hero-industrial,
+    .inner-hero-maintenance,
+    .inner-hero-generators,
+    .inner-hero-thermography,
+    .inner-hero-security
+  ) .inner-hero-glass-card {
+    height: min(calc(100% - 2rem), 520px);
+    min-height: clamp(430px, 60vh, 520px);
+    padding: clamp(1.15rem, 2.4vh, 1.6rem) clamp(1.5rem, 2.5vw, 2.2rem);
+    gap: clamp(0.65rem, 1.4vh, 1rem);
+  }
+}
+
+[data-theme="light"] :is(
+  .inner-hero-services,
+  .inner-hero-residential,
+  .inner-hero-commercial,
+  .inner-hero-industrial,
+  .inner-hero-maintenance,
+  .inner-hero-generators,
+  .inner-hero-thermography,
+  .inner-hero-security
+) .inner-hero-glass-card {
+  background: rgba(7, 12, 22, 0.72);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+[data-theme="light"] :is(
+  .inner-hero-services,
+  .inner-hero-residential,
+  .inner-hero-commercial,
+  .inner-hero-industrial,
+  .inner-hero-maintenance,
+  .inner-hero-generators,
+  .inner-hero-thermography,
+  .inner-hero-security
+) :is(.inner-hero-title, .inner-hero-intro-text) {
+  color: #fff !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9) !important;
 }
 
 /* Use the same centered composition across every cinematic inner hero. */
@@ -5253,11 +5477,63 @@ textarea {
   background: rgba(218, 209, 194, 0.8);
 }
 
+/* Light theme — Ivory + Midnight: retain the light page canvas while keeping
+   hero photography vivid and the content card confidently on-brand. */
+[data-theme="light"] .home-hero-overlay {
+  background:
+    radial-gradient(ellipse 70% 65% at 74% 42%, rgba(7, 12, 22, 0.04) 0%, rgba(7, 12, 22, 0.18) 72%, rgba(7, 12, 22, 0.3) 100%),
+    linear-gradient(90deg, rgba(7, 12, 22, 0.76) 0%, rgba(7, 12, 22, 0.5) 38%, rgba(7, 12, 22, 0.14) 70%, rgba(7, 12, 22, 0.08) 100%),
+    linear-gradient(0deg, rgba(7, 12, 22, 0.24) 0%, transparent 28%);
+}
+
+[data-theme="light"] .inner-hero-gradient-overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(7, 12, 22, 0.72) 0%,
+    rgba(7, 12, 22, 0.5) 45%,
+    rgba(7, 12, 22, 0.18) 78%,
+    rgba(7, 12, 22, 0.08) 100%
+  );
+}
+
+[data-theme="light"] .inner-hero-glass-card {
+  background: rgba(7, 12, 22, 0.92);
+  border-color: rgba(245, 158, 11, 0.48);
+  box-shadow: 0 24px 60px -12px rgba(7, 12, 22, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(245, 158, 11, 0.12);
+  color: #fff;
+}
+
+[data-theme="light"].inner-hero-cinematic .inner-hero-glass-card {
+  background: rgba(7, 12, 22, 0.92);
+}
+
+[data-theme="light"] .inner-hero-title {
+  color: #fff !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9) !important;
+}
+
+[data-theme="light"] .inner-hero-intro-text {
+  color: #d1dee7;
+}
+
+[data-theme="light"] .inner-hero-trust-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #dbe5ef;
+}
+
 @media (max-width: 900px) {
   .inner-hero-cinematic {
     min-height: auto;
   }
-  .inner-hero-glass-card {
+  .inner-hero-cinematic .inner-hero-container {
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: clamp(0.75rem, 3vw, 1.5rem);
+    justify-content: center;
+  }
+  .inner-hero-cinematic .inner-hero-glass-card {
+    width: 100%;
     max-width: 100%;
     margin: 0;
     align-items: center;
@@ -5784,7 +6060,66 @@ textarea {
 }
 
 .services-grid.is-compact .service-card {
-  min-height: 21rem;
+  min-height: 17.5rem;
+  padding: 1.25rem;
+}
+
+/* Related-service cards stay fully readable without extending beyond the section. */
+.services-grid.is-compact .service-card-media {
+  height: 9rem;
+}
+
+.services-grid.is-compact .service-card-top,
+.services-grid.is-compact .service-card:not(.service-card-featured) .service-card-top {
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.services-grid.is-compact .service-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.9rem;
+}
+
+.services-grid.is-compact .service-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.services-grid.is-compact .service-number {
+  font-size: 2.15rem;
+}
+
+.services-grid.is-compact .service-eyebrow {
+  margin-bottom: 0.4rem;
+  font-size: 0.68rem;
+}
+
+.services-grid.is-compact .service-card h3 {
+  font-size: clamp(1.3rem, 1.8vw, 1.55rem);
+  line-height: 1.14;
+}
+
+.services-grid.is-compact .service-card > p:not(.service-eyebrow) {
+  margin: 0.7rem 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.services-grid.is-compact .service-card-highlights {
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.services-grid.is-compact .service-card-highlights li {
+  gap: 0.4rem;
+  padding: 0.28rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.services-grid.is-compact .service-card-link {
+  min-height: 2.25rem;
+  font-size: 0.84rem;
 }
 
 .region-list {
@@ -5885,6 +6220,221 @@ textarea {
 
 .city-contact-rail {
   top: 7rem;
+}
+
+/* A focused, low-clutter browser for the seven city-specific service pathways. */
+.city-service-section .service-carousel-city {
+  max-width: none;
+}
+
+.city-service-section .service-carousel-city .service-carousel-stage {
+  gap: 1.75rem;
+}
+
+.city-service-section .service-carousel-city .service-carousel-copy {
+  max-width: 56rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.city-service-section .service-carousel-city .service-context-badge {
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
+
+.city-service-section .service-carousel-city .service-carousel-copy h2 {
+  font-size: clamp(2.1rem, 4vw, 3.7rem);
+  text-transform: none;
+}
+
+.city-service-section .service-carousel-city .service-carousel-copy > p:not(.eyebrow) {
+  max-width: 44rem;
+  margin: 0.9rem auto 0;
+}
+
+.city-service-section .service-carousel-city .service-carousel-surface {
+  transform: none;
+}
+
+.city-service-section .service-carousel-city .service-carousel-card {
+  border-radius: 26px;
+}
+
+.city-service-section .service-carousel-city .service-carousel-card .service-card {
+  min-height: clamp(20rem, 28vw, 24rem);
+  padding: clamp(2rem, 4vw, 4rem);
+  justify-content: center;
+}
+
+.city-service-section .service-carousel-city .service-card-media {
+  inset: 0;
+  height: 100%;
+  opacity: 1;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+.city-service-section .service-carousel-city .service-card-media::after {
+  background: linear-gradient(90deg, rgba(7, 12, 22, 0.97) 0%, rgba(7, 12, 22, 0.92) 35%, rgba(7, 12, 22, 0.48) 58%, rgba(7, 12, 22, 0.1) 100%);
+}
+
+.city-service-section .service-carousel-city .service-card-top,
+.city-service-section .service-carousel-city .service-card-highlights {
+  display: none;
+}
+
+.city-service-section .service-carousel-city .service-card h3,
+.city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow),
+.city-service-section .service-carousel-city .service-card .service-eyebrow {
+  max-width: min(30rem, 44%);
+}
+
+.city-service-section .service-carousel-city .service-card h3 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1.08;
+  margin-bottom: 0.8rem;
+}
+
+.city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow) {
+  margin-bottom: 1.25rem;
+}
+
+.city-service-section .service-carousel-city .service-card-link {
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  text-transform: none;
+}
+
+.city-service-carousel-arrows {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: -4.75rem;
+  left: -4.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.city-service-carousel-arrows button {
+  display: grid;
+  width: 2.9rem;
+  height: 2.9rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: #101722;
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.city-service-carousel-arrows button:hover,
+.city-service-carousel-arrows button:focus-visible {
+  border-color: var(--amber);
+  background: var(--amber);
+  color: #0b0f16;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.city-service-carousel-counter {
+  display: block;
+  margin-top: 0.1rem;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.city-service-carousel-counter i {
+  margin-inline: 0.25rem;
+  color: #718096;
+  font-style: normal;
+}
+
+/* Service-area and service-page browsers share the same open split composition. */
+@media (min-width: 761px) {
+  .city-service-section .service-carousel-city .service-carousel-card {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-card .service-card {
+    min-height: clamp(24rem, 32vw, 30rem);
+    padding: 0;
+    background: transparent;
+  }
+
+  .city-service-section .service-carousel-city .service-card-media {
+    inset: 0 0 0 auto;
+    width: 62%;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 26px;
+    background: #090e17;
+    box-shadow: 0 25px 65px -12px rgba(0, 0, 0, 0.75), 0 0 40px rgba(255, 183, 3, 0.08);
+  }
+
+  .city-service-section .service-carousel-city .service-card-media::after {
+    display: none;
+  }
+
+  .city-service-section .service-carousel-city .service-card h3,
+  .city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow),
+  .city-service-section .service-carousel-city .service-card .service-eyebrow {
+    width: min(32rem, 34%);
+    max-width: none;
+  }
+
+  .city-service-section .service-carousel-city .service-card h3 {
+    font-size: clamp(2rem, 3.2vw, 3.3rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .city-service-section .service-carousel-city .service-carousel-copy {
+    text-align: left;
+  }
+
+  .city-service-section .service-carousel-city .service-context-badge {
+    justify-content: flex-start;
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-copy > p:not(.eyebrow) {
+    margin-inline: 0;
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-card .service-card {
+    min-height: 28rem;
+    justify-content: flex-end;
+    padding: 1.5rem;
+  }
+
+  .city-service-section .service-carousel-city .service-card-media::after {
+    background: linear-gradient(180deg, rgba(7, 12, 22, 0.18) 0%, rgba(7, 12, 22, 0.94) 62%, rgba(7, 12, 22, 0.99) 100%);
+  }
+
+  .city-service-section .service-carousel-city .service-card h3,
+  .city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow),
+  .city-service-section .service-carousel-city .service-card .service-eyebrow {
+    max-width: none;
+  }
+
+  .city-service-carousel-arrows {
+    right: 0.75rem;
+    left: 0.75rem;
+  }
 }
 
 .about-section {
@@ -5992,6 +6542,29 @@ textarea {
   grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
   gap: clamp(2rem, 6vw, 5rem);
   align-items: start;
+}
+
+/* The quote form is the primary contact experience, with alternatives below. */
+.contact-section .contact-layout {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 2.5rem;
+}
+
+.contact-layout > .quote-wizard,
+.contact-layout > .contact-methods {
+  width: 100%;
+  max-width: 52rem;
+  min-width: 0;
+}
+
+.contact-layout > .quote-wizard {
+  border-radius: 1rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.14);
+}
+
+.contact-layout > .contact-methods article {
+  min-height: 0;
 }
 
 .contact-methods {
@@ -6364,11 +6937,12 @@ textarea {
 
 .quote-choice-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.8rem;
   margin-top: 1.2rem;
 }
 
+.quote-choice-grid:not(.quote-timeline-grid),
 .quote-timeline-grid {
   grid-template-columns: 1fr;
 }
@@ -6377,7 +6951,7 @@ textarea {
   position: relative;
   min-height: 6.75rem;
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr) 1.35rem;
+  grid-template-columns: 1.35rem minmax(0, 1fr);
   gap: 0.75rem;
   align-items: start;
   padding: 1rem;
@@ -6415,9 +6989,9 @@ textarea {
 }
 
 .quote-choice-icon {
+  display: none;
   width: 2.5rem;
   height: 2.5rem;
-  display: grid;
   place-items: center;
   border-radius: 0.4rem;
   background: #fff0cc;
@@ -6431,6 +7005,8 @@ textarea {
 
 .quote-choice-copy {
   min-width: 0;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .quote-choice-copy strong,
@@ -6452,6 +7028,9 @@ textarea {
 }
 
 .quote-choice-check {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 0.1rem;
   width: 1.35rem;
   height: 1.35rem;
   display: grid;
@@ -6465,6 +7044,28 @@ textarea {
   width: 0.75rem;
   height: 0.75rem;
   stroke-width: 3;
+}
+
+/* Both service and timeline options share an indicator beside readable text. */
+.quote-choice-grid .quote-choice {
+  grid-template-columns: 1.35rem minmax(0, 1fr);
+  min-height: 0;
+  align-items: start;
+}
+
+.quote-choice-grid .quote-choice-copy {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.quote-choice-grid .quote-choice-check {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 0.1rem;
+}
+
+.quote-choice-grid .quote-choice-icon {
+  display: none;
 }
 
 .quote-choice[data-selected="true"] .quote-choice-check {
@@ -9928,11 +10529,11 @@ textarea {
 .service-work-stage {
   position: relative;
   display: block;
-  min-height: clamp(30rem, 52vw, 44rem);
+  min-height: clamp(24rem, 31vw, 28rem);
   padding: 0;
   border-top: 1px solid rgba(251, 191, 36, 0.32);
   border-radius: 28px;
-  overflow: hidden;
+  overflow: visible;
   background: #0a101d;
   box-shadow: 0 28px 70px -15px rgba(0, 0, 0, 0.9);
 }
@@ -9945,6 +10546,8 @@ textarea {
   height: 100%;
   margin: 0;
   z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
 }
 
 .residential-work-image-wrap,
@@ -9976,7 +10579,7 @@ textarea {
   height: 100%;
   position: absolute;
   inset: 0;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   animation: residential-work-image-in 360ms ease-out both;
 }
@@ -9985,17 +10588,17 @@ textarea {
 .service-work-copy {
   position: relative;
   z-index: 5;
-  margin-left: auto;
-  margin-right: clamp(1.25rem, 3vw, 3rem);
-  margin-top: clamp(1.5rem, 3.5vw, 3.5rem);
-  margin-bottom: clamp(1.5rem, 3.5vw, 3.5rem);
+  margin-left: clamp(1.5rem, 3.5vw, 4rem);
+  margin-right: auto;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
   max-width: clamp(28rem, 46vw, 38rem);
-  background: rgba(7, 12, 22, 0.55);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  background: rgba(7, 12, 22, 0.72);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 26px;
-  padding: clamp(1.8rem, 3.2vw, 2.75rem);
+  padding: clamp(1.5rem, 2.5vw, 2rem);
   box-shadow:
     0 24px 60px -12px rgba(0, 0, 0, 0.75),
     inset 0 1px 0 rgba(255, 255, 255, 0.35),
@@ -10007,7 +10610,7 @@ textarea {
 .service-work-copy h3 {
   margin: 0.5rem 0 1rem;
   color: #fff;
-  font-size: clamp(1.75rem, 2.8vw, 2.75rem);
+  font-size: clamp(1.65rem, 2.35vw, 2.3rem);
   line-height: 1.08;
   letter-spacing: -0.045em;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9);
@@ -10025,8 +10628,8 @@ textarea {
 .residential-work-copy ul,
 .service-work-copy ul {
   display: grid;
-  gap: 0.6rem;
-  margin: 1.4rem 0 1.8rem;
+  gap: 0.45rem;
+  margin: 1rem 0 1.2rem;
   padding: 0;
   list-style: none;
 }
@@ -10044,7 +10647,7 @@ textarea {
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  padding: 0.55rem 0.85rem;
+  padding: 0.45rem 0.75rem;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
@@ -10087,8 +10690,8 @@ textarea {
   z-index: 10;
   top: 50%;
   display: grid;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 2.9rem;
+  height: 2.9rem;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
@@ -10110,12 +10713,12 @@ textarea {
 
 .residential-image-control.is-previous,
 .service-work-control.is-previous {
-  left: 1.25rem;
+  left: -4.75rem;
 }
 
 .residential-image-control.is-next,
 .service-work-control.is-next {
-  right: 1.25rem;
+  right: -4.75rem;
 }
 
 .residential-image-control:hover,
@@ -10130,8 +10733,350 @@ textarea {
   box-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
 }
 
+/* Match the open, image-led service-area carousel on every service work explorer. */
+.residential-work-tabs,
+.service-work-tabs {
+  display: none;
+}
+
+.residential-work-explorer,
+.service-work-explorer {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  background: #14171e;
+}
+
+.residential-work-explorer-heading,
+.service-work-explorer-heading {
+  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.residential-work-stage,
+.service-work-stage {
+  display: flex;
+  align-items: center;
+  min-height: clamp(20rem, 28vw, 24rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 26px;
+  background: #090e17;
+  box-shadow: 0 25px 65px -12px rgba(0, 0, 0, 0.75), 0 0 40px rgba(255, 183, 3, 0.08);
+}
+
+.residential-work-image-wrap::after,
+.service-work-image-wrap::after {
+  background: linear-gradient(90deg, rgba(7, 12, 22, 0.97) 0%, rgba(7, 12, 22, 0.92) 35%, rgba(7, 12, 22, 0.48) 58%, rgba(7, 12, 22, 0.1) 100%);
+}
+
+.residential-work-copy,
+.service-work-copy {
+  width: min(30rem, 44%);
+  max-width: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.residential-work-copy h3,
+.service-work-copy h3 {
+  margin: 0.5rem 0 0.8rem;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+}
+
+.residential-work-copy > p:not(.eyebrow),
+.service-work-copy > p:not(.eyebrow) {
+  line-height: 1.55;
+}
+
+.residential-work-copy ul,
+.service-work-copy ul {
+  display: none;
+}
+
+.residential-work-copy a,
+.service-work-copy a {
+  padding-top: 0;
+  margin-top: 1.25rem;
+}
+
+.residential-work-counter,
+.service-work-counter {
+  display: block;
+  margin-top: 1rem;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.residential-work-counter i,
+.service-work-counter i {
+  margin-inline: 0.25rem;
+  color: #718096;
+  font-style: normal;
+}
+
+/* Open split layout: copy and service imagery each have their own clear space. */
+@media (min-width: 761px) {
+  .residential-work-stage,
+  .service-work-stage {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .residential-work-image-shell,
+  .service-work-image-shell {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: clamp(20rem, 34vw, 28rem);
+    border: 1px solid rgba(245, 158, 11, 0.42);
+    border-radius: 26px;
+    background: #090e17;
+    box-shadow: 0 25px 65px -12px rgba(0, 0, 0, 0.75), 0 0 32px rgba(245, 158, 11, 0.12);
+  }
+
+  .residential-work-image-wrap::after,
+  .service-work-image-wrap::after {
+    display: none;
+  }
+
+  .residential-work-copy,
+  .service-work-copy {
+    width: min(48rem, 100%);
+    margin-left: 0;
+    margin-top: 1.5rem;
+  }
+
+  .residential-work-copy h3,
+  .service-work-copy h3 {
+    font-size: clamp(2rem, 3vw, 3rem);
+  }
+
+  .residential-image-control,
+  .service-work-control {
+    top: clamp(10rem, 17vw, 14rem);
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-card {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-card .service-card {
+    min-height: 0;
+    display: block;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .city-service-section .service-carousel-city .service-card-media {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: clamp(20rem, 34vw, 28rem);
+    border: 1px solid rgba(245, 158, 11, 0.42);
+    border-radius: 26px;
+    box-shadow: 0 25px 65px -12px rgba(0, 0, 0, 0.75), 0 0 32px rgba(245, 158, 11, 0.12);
+  }
+
+  .city-service-section .service-carousel-city .service-card-media::after {
+    display: none;
+  }
+
+  .city-service-section .service-carousel-city .service-card-top,
+  .city-service-section .service-carousel-city .service-card-highlights {
+    display: none;
+  }
+
+  .city-service-section .service-carousel-city .service-card .service-eyebrow,
+  .city-service-section .service-carousel-city .service-card h3,
+  .city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow),
+  .city-service-section .service-carousel-city .service-card .service-card-link {
+    width: min(48rem, 100%);
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .city-service-section .service-carousel-city .service-card .service-eyebrow {
+    margin-top: 1.5rem;
+  }
+
+  .city-service-section .service-carousel-city .service-card h3 {
+    font-size: clamp(2rem, 3vw, 3rem);
+  }
+
+  .city-service-section .service-carousel-city .service-card-link {
+    margin-top: 1.25rem;
+  }
+
+  .city-service-section .service-carousel-city .city-service-carousel-arrows {
+    top: clamp(10rem, 17vw, 14rem);
+  }
+}
+
+/* Shared 25/75 service browser: opaque copy panel at left, unobstructed photo at right. */
+@media (min-width: 761px) {
+  .residential-work-stage,
+  .service-work-stage {
+    /* 1586 × 992 service artwork: keep the 25/75 split proportional so
+       object-fit: contain can show the complete photo without a dead strip. */
+    /* 1586 × 992 service artwork: keep the 25/75 split proportional so
+       object-fit: contain can show the complete photo without a dead strip. */
+    width: min(100%, 70rem);
+    margin-inline: auto;
+    min-height: clamp(22rem, 30vw, 26rem);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid rgba(245, 158, 11, 0.42);
+    border-radius: 26px;
+    background: #090e17;
+    box-shadow: 0 25px 65px -12px rgba(0, 0, 0, 0.75), 0 0 32px rgba(245, 158, 11, 0.12);
+  }
+
+  .residential-work-image-shell,
+  .service-work-image-shell {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 75%;
+    height: auto;
+    border: 0;
+    border-radius: 0 26px 26px 0;
+    box-shadow: none;
+  }
+
+  /* Match service-area cards: artwork fills the dedicated right-hand pane. */
+  .residential-work-image-wrap img,
+  .service-work-image-wrap img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .residential-work-copy,
+  .service-work-copy {
+    width: 25%;
+    margin: 0;
+    padding: clamp(1.25rem, 2.25vw, 2.25rem);
+  }
+
+  .residential-work-copy h3,
+  .service-work-copy h3 {
+    margin: 0.5rem 0 0.75rem;
+    font-size: clamp(1.45rem, 2.1vw, 2.25rem);
+    line-height: 1.12;
+  }
+
+  .residential-work-copy > p:not(.eyebrow),
+  .service-work-copy > p:not(.eyebrow) {
+    font-size: clamp(0.82rem, 1.05vw, 0.96rem);
+    line-height: 1.5;
+  }
+
+  .residential-work-copy a,
+  .service-work-copy a {
+    margin-top: 0.9rem;
+    font-size: 0.84rem;
+  }
+
+  .residential-image-control,
+  .service-work-control {
+    top: 50%;
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-card {
+    width: 100%;
+    margin-inline: 0;
+    overflow: visible;
+    border: 1px solid rgba(245, 158, 11, 0.42);
+    border-radius: 26px;
+    background: #090e17;
+    box-shadow: 0 25px 65px -12px rgba(0, 0, 0, 0.75), 0 0 32px rgba(245, 158, 11, 0.12);
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-surface {
+    /* The surface owns the arrows, so its bounds must match the compact card. */
+    width: min(100%, 70rem);
+    margin-inline: auto;
+  }
+
+  .city-service-section .service-carousel-city .service-carousel-card .service-card {
+    min-height: clamp(22rem, 30vw, 26rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.25rem, 2.25vw, 2.25rem);
+    overflow: hidden;
+    border: 0;
+    border-radius: 26px;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .city-service-section .service-carousel-city .service-card-media {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 75%;
+    height: auto;
+    border: 0;
+    border-radius: 0 26px 26px 0;
+    box-shadow: none;
+  }
+
+  .city-service-section .service-carousel-city .service-card .service-eyebrow,
+  .city-service-section .service-carousel-city .service-card h3,
+  .city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow),
+  .city-service-section .service-carousel-city .service-card .service-card-link {
+    width: calc(25% - 2rem);
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .city-service-section .service-carousel-city .service-card .service-eyebrow {
+    margin-top: 0;
+  }
+
+  .city-service-section .service-carousel-city .service-card h3 {
+    margin: 0.5rem 0 0.75rem;
+    font-size: clamp(1.45rem, 2.1vw, 2.25rem);
+    line-height: 1.12;
+  }
+
+  .city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow) {
+    margin: 0;
+    font-size: clamp(0.82rem, 1.05vw, 0.96rem);
+    line-height: 1.5;
+  }
+
+  .city-service-section .service-carousel-city .service-card-link {
+    margin-top: 0.9rem;
+    font-size: 0.84rem;
+  }
+
+  .city-service-section .service-carousel-city .city-service-carousel-arrows {
+    top: 50%;
+  }
+}
+
 @keyframes residential-work-image-in {
-  from { opacity: 0.35; transform: scale(1.02); }
+  from { opacity: 0.35; transform: scale(0.98); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -10174,6 +11119,11 @@ textarea {
     padding: 1.5rem;
   }
 
+  .residential-work-tabs,
+  .service-work-tabs {
+    display: none;
+  }
+
   .residential-image-control,
   .service-work-control {
     width: 2.75rem;
@@ -10202,3 +11152,211 @@ textarea {
   .residential-work-tabs button,
   .service-work-tabs button { transition: none; }
 }
+
+/* Mobile content system — intentionally excludes the site header and mobile menu. */
+@media (max-width: 700px) {
+  .section-pad {
+    padding-block: 3.5rem;
+  }
+
+  /* Keep inner-page photography visible, then anchor a compact, readable panel below it. */
+  .inner-hero-cinematic {
+    min-height: 39rem;
+  }
+
+  .inner-hero-container {
+    align-items: flex-end;
+    padding-block: 12.5rem 0;
+  }
+
+  .inner-hero-gradient-overlay {
+    background: linear-gradient(180deg, rgba(7, 12, 22, 0.05) 0%, rgba(7, 12, 22, 0.18) 42%, rgba(7, 12, 22, 0.9) 100%);
+  }
+
+  .inner-hero-glass-card,
+  :is(.inner-hero-serviceArea, .inner-hero-default, .inner-hero-about, .inner-hero-faq, .inner-hero-contact) .inner-hero-glass-card {
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    max-width: none;
+    padding: 1.35rem 1.25rem 1.5rem;
+    gap: 0.85rem;
+    border-radius: 1.25rem 1.25rem 0 0;
+    background: rgba(7, 12, 22, 0.94);
+    box-shadow: 0 -14px 40px rgba(7, 12, 22, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .inner-hero-title {
+    font-size: clamp(2rem, 9vw, 2.65rem);
+    line-height: 1.02;
+  }
+
+  .inner-hero-intro-text {
+    max-width: 34rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .inner-hero-glass-card .action-pair {
+    gap: 0.75rem;
+  }
+
+  .inner-hero-glass-card .action-pair > * {
+    min-height: 3rem;
+  }
+
+  /* Service work explorers use a clear photograph followed by a separate content panel. */
+  .residential-work-explorer,
+  .service-work-explorer {
+    padding-block: 3.5rem;
+  }
+
+  .residential-work-image-shell,
+  .service-work-image-shell {
+    height: clamp(15rem, 66vw, 18.5rem);
+    border-radius: 1.1rem 1.1rem 0 0;
+  }
+
+  .residential-work-copy,
+  .service-work-copy {
+    margin: 0;
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    border-top: 0;
+    border-radius: 0 0 1.1rem 1.1rem;
+    padding: 1.35rem 1.2rem 1.5rem;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
+  }
+
+  .residential-work-copy h3,
+  .service-work-copy h3 {
+    font-size: clamp(1.55rem, 7.2vw, 2rem);
+    line-height: 1.08;
+  }
+
+  .residential-work-copy ul,
+  .service-work-copy ul {
+    gap: 0.55rem;
+  }
+
+  .residential-image-control,
+  .service-work-control,
+  .city-service-carousel-arrows button {
+    width: 3rem;
+    height: 3rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(245, 158, 11, 0.22);
+  }
+
+  .residential-image-control,
+  .service-work-control {
+    top: clamp(7.5rem, 33vw, 9.25rem);
+  }
+
+  .residential-image-control.is-previous,
+  .service-work-control.is-previous { left: 0.5rem; }
+  .residential-image-control.is-next,
+  .service-work-control.is-next { right: 0.5rem; }
+
+  /* Service-area cards follow the same photo-first, text-second mobile rhythm. */
+  .city-service-section .service-carousel-city .service-carousel-card,
+  .city-service-section .service-carousel-city .service-card {
+    overflow: hidden;
+    border-radius: 1.15rem;
+  }
+
+  .city-service-section .service-carousel-city .service-card {
+    display: grid;
+    min-height: 0;
+    padding: 0 1.2rem 1.4rem;
+    background: #09111c;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
+  }
+
+  .city-service-section .service-carousel-city .service-card-media {
+    position: relative;
+    inset: auto;
+    grid-column: 1;
+    width: calc(100% + 2.4rem);
+    height: clamp(14rem, 62vw, 17rem);
+    margin: 0 -1.2rem 1.25rem;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .city-service-section .service-carousel-city .service-card-media::after {
+    background: linear-gradient(180deg, rgba(7, 12, 22, 0.02) 38%, rgba(7, 12, 22, 0.45) 100%);
+  }
+
+  .city-service-section .service-carousel-city .service-card .service-eyebrow,
+  .city-service-section .service-carousel-city .service-card h3,
+  .city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow),
+  .city-service-section .service-carousel-city .service-card .service-card-link {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .city-service-section .service-carousel-city .service-card h3 {
+    margin: 0.45rem 0 0.7rem;
+    font-size: clamp(1.65rem, 7vw, 2.15rem);
+  }
+
+  .city-service-section .service-carousel-city .service-card > p:not(.service-eyebrow) {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .city-service-section .service-carousel-city .city-service-carousel-arrows {
+    top: clamp(7rem, 31vw, 8.5rem);
+    right: 0.45rem;
+    left: 0.45rem;
+  }
+
+  .city-service-carousel-counter {
+    margin-top: 0.7rem;
+    min-height: 1.5rem;
+  }
+
+  /* Readable mobile accordions and contact methods without cramped copy. */
+  .faq-list summary {
+    min-height: 3.5rem;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .faq-answer {
+    padding: 0 0 1.3rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .contact-methods article {
+    min-height: 0;
+    padding: 1.35rem;
+  }
+}
+/* Independent mobile region disclosure controls; desktop navigation is unchanged. */
+.mobile-menu .mobile-region-accordion > summary.mobile-region-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-height: 48px;
+  padding: .75rem .85rem;
+  border: 1px solid rgba(148, 163, 184, .22);
+  border-radius: .65rem;
+  background: transparent;
+  list-style: none;
+  cursor: pointer;
+}
+.mobile-menu .mobile-region-trigger::-webkit-details-marker { display: none; }
+.mobile-menu .mobile-region-trigger::marker { content: ""; }
+.mobile-menu .mobile-region-trigger::before,
+.mobile-menu .mobile-region-trigger::after { display: none; content: none; }
+.mobile-menu .mobile-region-accordion { display: block; }
+.mobile-menu .mobile-region-accordion[open] > .mobile-region-trigger { border-color: #b78015; }
+.mobile-menu .mobile-region-accordion > .mobile-city-chips { padding: .75rem .25rem .25rem; }
+.mobile-region-trigger > svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform .2s ease; }
+.mobile-region-accordion[open] > .mobile-region-trigger > svg { transform: rotate(180deg); }
+.mobile-region-trigger:focus-visible { outline: 2px solid #ffb800; outline-offset: 3px; border-radius: 6px; }
+

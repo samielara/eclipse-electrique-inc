@@ -1,8 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { site } from "@/lib/site";
 import "./fonts.css";
 import "./globals.css";
 import { MotionProvider } from "@/components/motion/provider";
+
+// Default browser chrome and native controls match the site's dark first render.
+export const viewport: Viewport = {
+  colorScheme: "dark light",
+  themeColor: "#08090b",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.origin),

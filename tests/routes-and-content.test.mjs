@@ -117,15 +117,15 @@ test("renders visual homepage service choices in both locales", async () => {
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(frenchHtml, /service-carousel/);
-  assert.match(frenchHtml, /eclipse-residential-electrician-v1\.png/);
-  assert.match(frenchHtml, /Services électriques résidentiels/);
-  assert.match(englishHtml, /Residential electrical services/);
-  assert.match(englishHtml, /media\/industrial-panel\.webp/);
+  assert.match(frenchHtml, /popular-services-section/);
+  assert.match(frenchHtml, /Panneau électrique 200A/);
+  assert.match(frenchHtml, /\/fr\/services\/electricien-residentiel/);
+  assert.match(englishHtml, /200A Electrical Panel/);
+  assert.match(englishHtml, /\/en\/services\/residential-electrician/);
   assert.doesNotMatch(englishHtml, /The points that matter/);
 });
 
-test("renders gallery and thermography proof without a duplicate sector matrix", async () => {
+test("renders technical expertise without a duplicate sector matrix", async () => {
   const { PageRenderer } = await vite.ssrLoadModule(
     "/components/page-renderer.tsx",
   );
@@ -137,15 +137,14 @@ test("renders gallery and thermography proof without a duplicate sector matrix",
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(frenchHtml, /project-gallery/);
-  assert.match(frenchHtml, /La précision électrique en action/);
+  assert.match(frenchHtml, /technical-expertise-section/);
+  assert.match(frenchHtml, /Notre expertise technique de pointe/);
   assert.match(frenchHtml, /\/fr\/services\/electricien-residentiel/);
-  assert.match(frenchHtml, /thermography-proof/);
-  assert.match(frenchHtml, /Inspection par thermographie infrarouge/);
-  assert.match(frenchHtml, /Planifier une inspection thermique/);
-  assert.match(englishHtml, /Electrical precision in action/);
+  assert.match(frenchHtml, /Distribution 3-Phases/);
+  assert.match(frenchHtml, /\/fr\/services\/thermographie-infrarouge/);
+  assert.match(englishHtml, /Our High-Precision Technical Capabilities/);
   assert.doesNotMatch(englishHtml, /sector-matrix/);
-  assert.match(englishHtml, /Plan an infrared inspection/);
+  assert.match(englishHtml, /3-Phase Distribution/);
 });
 
 test("renders verified hero badges and mobile call actions", async () => {
@@ -164,8 +163,8 @@ test("renders verified hero badges and mobile call actions", async () => {
   assert.match(frenchHtml, /50 secteurs/);
   assert.match(frenchHtml, /mobile-action-bar/);
   assert.match(frenchHtml, /Actions rapides/);
-  assert.match(frenchHtml, /tel:\+15145101112/);
-  assert.match(frenchHtml, /514-510-1112/);
+  assert.match(frenchHtml, /tel:\+15149551112/);
+  assert.match(frenchHtml, /514-955-1112/);
   assert.match(frenchHtml, /tel:\+15147179277/);
 });
 
@@ -348,7 +347,7 @@ test("builds the complete bilingual quote handoff without claiming submission", 
   const english = decodeURIComponent(englishUrl);
   const french = decodeURIComponent(frenchUrl);
 
-  assert.match(englishUrl, /^mailto:yasser@eclipseelectrique\.com\?/);
+  assert.match(englishUrl, /^mailto:info@eclipseelectrique\.com\?/);
   assert.match(english, /Infrared thermography/);
   assert.match(english, /Within 24 to 48 hours/);
   assert.match(english, /Brossard/);

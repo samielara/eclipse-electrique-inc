@@ -48,11 +48,11 @@ test("redirects the root to French and renders both locale homes", async () => {
     const html = await response.text();
     assert.match(html, /Éclipse électrique inc\./);
     assert.match(html, /data-theme="dark"/);
-    assert.match(html, /eclipse-logo\.jpg/);
+    assert.match(html, /eclipse-logo-dark\.png/);
     assert.match(html, /data-theme-toggle/);
-    assert.match(html, /poster="\/media\/eclipse-hero-electrician-v2\.png"/);
+    assert.match(html, /media\/eclipse-team-fleet-hero\.jpg/);
     assert.doesNotMatch(html, /eclipse-electrical-ambient\.mp4/);
-    assert.match(html, /class="header-dropdown"/);
+    assert.match(html, /class="header-dropdown /);
     assert.match(html, /(?:territoire-desservi|service-area)\/brossard/);
   }
 });
@@ -91,17 +91,17 @@ test("renders reciprocal locale SEO and verified bilingual LocalBusiness JSON-LD
   assert.deepEqual(frenchSchema["@type"], ["Electrician", "LocalBusiness"]);
   assert.equal(frenchSchema.name, "Éclipse électrique");
   assert.equal(frenchSchema.legalName, "Éclipse électrique inc.");
-  assert.equal(frenchSchema.telephone, "+1-514-510-1112");
-  assert.equal(frenchSchema.email, "yasser@eclipseelectrique.com");
+  assert.equal(frenchSchema.telephone, "+1-514-955-1112");
+  assert.equal(frenchSchema.email, "info@eclipseelectrique.com");
   assert.deepEqual(frenchSchema.address, {
     "@type": "PostalAddress",
-    streetAddress: "3893 Bd Saint-Jean-Baptiste",
-    addressLocality: "Montréal",
+    streetAddress: "9005 Rue du Champ-d’Eau",
+    addressLocality: "Saint-Léonard",
     addressRegion: "QC",
-    postalCode: "H1B 5V4",
+    postalCode: "H1P 3M3",
     addressCountry: "CA",
   });
-  assert.equal(frenchSchema.openingHours, "Mo-Su 00:00-24:00");
+  assert.equal(frenchSchema.openingHours, "Mo-Fr 07:00-17:00");
   assert.equal(frenchSchema.priceRange, "$$");
   assert.ok(
     frenchSchema.identifier.some(
@@ -110,7 +110,7 @@ test("renders reciprocal locale SEO and verified bilingual LocalBusiness JSON-LD
   );
   assert.deepEqual(
     frenchSchema.contactPoint.map((contact) => contact.telephone),
-    ["+1-514-510-1112", "+1-514-717-9277"],
+    ["+1-514-955-1112", "+1-514-717-9277"],
   );
   assert.deepEqual(
     frenchSchema.areaServed.map((area) => area.name),
