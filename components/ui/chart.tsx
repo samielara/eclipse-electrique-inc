@@ -7,8 +7,7 @@ import type { TooltipValueType } from "recharts"
 import { cn } from "@/lib/utils"
 
 const THEMES = {
-  light: null,
-  dark: "(prefers-color-scheme: dark)",
+  dark: null,
 } as const
 
 const INITIAL_DIMENSION = { width: 320, height: 200 } as const

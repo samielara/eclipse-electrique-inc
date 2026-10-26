@@ -49,7 +49,7 @@ test("redirects the root to French and renders both locale homes", async () => {
     assert.match(html, /Éclipse électrique inc\./);
     assert.match(html, /data-theme="dark"/);
     assert.match(html, /eclipse-logo-dark\.png/);
-    assert.match(html, /data-theme-toggle/);
+    assert.doesNotMatch(html, /theme-toggle|eclipse-logo-light\.png/);
     assert.match(html, /media\/eclipse-team-fleet-hero\.jpg/);
     assert.doesNotMatch(html, /eclipse-electrical-ambient\.mp4/);
     assert.match(html, /class="header-dropdown /);
@@ -110,7 +110,7 @@ test("renders reciprocal locale SEO and verified bilingual LocalBusiness JSON-LD
   );
   assert.deepEqual(
     frenchSchema.contactPoint.map((contact) => contact.telephone),
-    ["+1-514-955-1112", "+1-514-717-9277"],
+    ["+1-514-955-1112", "+1-514-510-1112"],
   );
   assert.deepEqual(
     frenchSchema.areaServed.map((area) => area.name),
@@ -123,7 +123,7 @@ test("renders reciprocal locale SEO and verified bilingual LocalBusiness JSON-LD
     [
       "Services électriques résidentiels",
       "Services électriques commerciaux et industriels",
-      "Thermographie infrarouge",
+      "Énergie solaire",
       "Systèmes d’alarme et d’incendie",
     ],
   );
@@ -134,7 +134,7 @@ test("renders reciprocal locale SEO and verified bilingual LocalBusiness JSON-LD
     [
       "Residential electrical services",
       "Commercial and industrial electrical services",
-      "Infrared thermography",
+      "Solar energy",
       "Alarm and fire systems",
     ],
   );
@@ -172,8 +172,8 @@ test("serves every registered public route with one localized H1", async () => {
     "/en/services/maintenance-and-emergency",
     "/fr/services/generatrices",
     "/en/services/generators",
-    "/fr/services/thermographie-infrarouge",
-    "/en/services/infrared-thermography",
+    "/fr/services/energie-solaire",
+    "/en/services/solar-energy",
     "/fr/services/alarme-et-securite",
     "/en/services/fire-and-security",
     "/fr/territoire-desservi",
@@ -192,9 +192,15 @@ test("serves every registered public route with one localized H1", async () => {
 
   for (const pathname of publicPaths) {
     const response = await fetchPage(worker, pathname);
+    if(pathname.endsWith("/electricien-industriel") || pathname.endsWith("/industrial-electrician")) {
+      assert.equal(response.status,308,pathname);
+      assert.match(response.headers.get("location"), /services\/(electricien-commercial|commercial-electrician)$/);
+      continue;
+    }
     assert.equal(response.status, 200, pathname);
     const html = await response.text();
     assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1, pathname);
     assert.doesNotMatch(html, /Starter Project|Lorem ipsum|elcipseelectrique/i);
+    assert.doesNotMatch(html, /514[- .]?717[- .]?9277|\(514\) 717-9277/, pathname);
   }
 });

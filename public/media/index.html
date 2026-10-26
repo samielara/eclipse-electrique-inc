@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root[data-theme="dark"] {
+    :root {
       --bg: #05070a;
       --surface: #0b0e14;
       --surface-card: #111622;
@@ -23,27 +23,11 @@
       --font-serif: 'Cinzel', serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
-    :root[data-theme="light"] {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --surface-card: #f1f5f9;
-      --surface-border: #e2e8f0;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --accent: #d97706;
-      --accent-glow: rgba(217, 119, 6, 0.18);
-      --badge-bg: rgba(217, 119, 6, 0.1);
-      --card-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
-      --font-display: 'Space Grotesk', system-ui, sans-serif;
-      --font-serif: 'Cinzel', serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
       line-height: 1.6;
       padding-bottom: 100px;
     }
@@ -63,9 +47,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    :root[data-theme="light"] header {
-      background-color: rgba(255, 255, 255, 0.9);
     }
     .brand {
       display: flex;
@@ -104,7 +85,7 @@
       gap: 12px;
       align-items: center;
     }
-    .theme-toggle-btn {
+    .media-docs-link {
       background: var(--surface-card);
       border: 1px solid var(--surface-border);
       color: var(--text);
@@ -120,7 +101,7 @@
       transition: all 0.2s;
       text-decoration: none;
     }
-    .theme-toggle-btn:hover {
+    .media-docs-link:hover {
       border-color: var(--accent);
       box-shadow: 0 0 12px var(--accent-glow);
     }
@@ -456,12 +437,9 @@
       </div>
     </div>
     <div class="controls">
-      <a href="/docs/COMPLETE-MEDIA-SHOT-LIST.md" target="_blank" class="theme-toggle-btn" style="border-color: #f59e0b; color: #f59e0b;">
+      <a href="/docs/COMPLETE-MEDIA-SHOT-LIST.md" target="_blank" class="media-docs-link" style="border-color: #f59e0b; color: #f59e0b;">
         <span>📋</span> <span>Shot List (122 Prompts)</span>
       </a>
-      <button class="theme-toggle-btn" id="themeBtn" onclick="toggleTheme()">
-        <span id="themeIcon">☀️</span> <span id="themeText">Mode Clair</span>
-      </button>
     </div>
   </header>
 
@@ -720,7 +698,7 @@
             <div class="card-title">Urgence 24/7 & Dépannage Immédiat</div>
             <div class="card-route">/fr/services/maintenance-et-urgence</div>
             <p class="card-desc">Camion de service officiel d'Éclipse électrique en intervention nocturne sous la pluie, balises ambrées et outillage lourd.</p>
-            <div class="card-prompt">Ligne directe (514) 717-9277 · Balises ambrées de sécurité · Déploiement rapide</div>
+            <div class="card-prompt">Ligne directe (514) 510-1112 · Balises ambrées de sécurité · Déploiement rapide</div>
           </div>
           <div class="card-actions">
             <a href="./service-emergency.jpg" download class="btn btn-primary">Télécharger</a>
@@ -1101,15 +1079,6 @@
   </div>
 
   <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      document.getElementById('themeIcon').textContent = next === 'dark' ? '☀️' : '🌙';
-      document.getElementById('themeText').textContent = next === 'dark' ? 'Mode Clair' : 'Mode Sombre';
-    }
-
     function filterGallery(category, event) {
       const buttons = document.querySelectorAll('.filter-btn');
       buttons.forEach(btn => btn.classList.remove('active'));

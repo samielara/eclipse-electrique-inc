@@ -1,5 +1,5 @@
 import React from "react";
-import { Building2, Factory, Home, ShieldAlert } from "lucide-react";
+import { Building2, Home, ShieldAlert } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/routes";
 import { site } from "@/lib/site";
 
@@ -47,57 +47,29 @@ export function HomeContextSelector({ locale }: HomeContextSelectorProps) {
       imageAlt: isFrench
         ? "Câblage structuré et éclairage architectural commercial Éclipse"
         : "Commercial structured cabling and architectural lighting Éclipse",
-      kicker: isFrench ? "COMMERCIAL" : "COMMERCIAL",
-      title: isFrench ? "Commerce & Bureaux" : "Commercial & Offices",
+      kicker: isFrench ? "COMMERCIAL & INDUSTRIEL" : "COMMERCIAL & INDUSTRIAL",
+      title: isFrench ? "Commercial & industriel" : "Commercial & Industrial",
       description: isFrench
-        ? "Boutiques, bureaux, restaurants, éclairage architectural et maintenance préventive pour vos espaces d'affaires."
-        : "Retail, offices, restaurants, architectural lighting, and preventive maintenance for your business spaces.",
+        ? "Construction, rénovations et entrées électriques pour bureaux, commerces, restaurants et installations industrielles."
+        : "New construction, renovations and service entrances for offices, shops, restaurants and industrial facilities.",
       highlights: isFrench
         ? [
-            "Éclairage architectural & DEL",
-            "Câblage structuré & réseaux",
-            "Entretien préventif & conformité",
+            "Construction neuve",
+            "Rénovations & réaménagements",
+            "Entrées électriques & mises à niveau",
           ]
         : [
-            "Architectural & LED lighting",
-            "Structured cabling & networks",
-            "Preventive maintenance & safety",
+            "New construction",
+            "Renovations & remodeling",
+            "Service entrances & upgrades",
           ],
       href: pathFor("commercial", locale),
       cta: isFrench ? "En savoir plus" : "Learn more",
       isEmergency: false,
     },
     {
-      id: "industrial",
-      number: "03",
-      icon: Factory,
-      image: "/media/service-industrial.jpg",
-      imageAlt: isFrench
-        ? "Distribution haute tension et machinerie industrielle Éclipse"
-        : "High-voltage distribution and industrial machinery Éclipse",
-      kicker: isFrench ? "INDUSTRIEL" : "INDUSTRIAL",
-      title: isFrench ? "Milieux Industriels" : "Industrial Environments",
-      description: isFrench
-        ? "Installations manufacturières, machinerie lourde, distribution triphasée 600V et interventions planifiées."
-        : "Manufacturing plants, heavy machinery hookups, 600V three-phase distribution, and planned maintenance.",
-      highlights: isFrench
-        ? [
-            "Entrées & distribution triphasée",
-            "Raccordement de machinerie lourde",
-            "Diagnostic & arrêts planifiés",
-          ]
-        : [
-            "Service entrances & 3-phase power",
-            "Heavy machinery hookups & controls",
-            "Diagnosis & planned shutdowns",
-          ],
-      href: pathFor("industrial", locale),
-      cta: isFrench ? "En savoir plus" : "Learn more",
-      isEmergency: false,
-    },
-    {
       id: "emergency",
-      number: "04",
+      number: "03",
       icon: ShieldAlert,
       image: "/media/service-emergency.jpg",
       imageAlt: isFrench
@@ -106,8 +78,8 @@ export function HomeContextSelector({ locale }: HomeContextSelectorProps) {
       kicker: isFrench ? "LIGNE D'URGENCE 24/7" : "24/7 EMERGENCY LINE",
       title: isFrench ? "Urgence électrique ? Appelez directement." : "Electrical emergency?",
       description: isFrench
-        ? "Pour une demande urgente, appelez Éclipse électrique inc. au 514-717-9277. Nous recueillons les détails pour coordonner l'intervention immédiate."
-        : "For an urgent request, call Éclipse électrique inc. at 514-717-9277. We will collect the information needed to coordinate the next steps based on the situation.",
+        ? "Pour une demande urgente, appelez Éclipse électrique inc. au 514-510-1112. Nous recueillons les détails pour coordonner l'intervention immédiate."
+        : "For an urgent request, call Éclipse électrique inc. at 514-510-1112. We will collect the information needed to coordinate the next steps based on the situation.",
       highlights: isFrench
         ? [
             "Inspection et évaluation d'état",
@@ -142,7 +114,7 @@ export function HomeContextSelector({ locale }: HomeContextSelectorProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
           {choices.map((item) => {
             const IconComponent = item.icon;
             return (
@@ -188,11 +160,6 @@ export function HomeContextSelector({ locale }: HomeContextSelectorProps) {
                     />
                     {/* Smooth delicate fade into glass body */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#0a101d]/90 pointer-events-none" />
-
-                    {/* Corner Number */}
-                    <span className="absolute top-3 right-4 font-mono font-black text-2xl sm:text-3xl text-white/40 select-none tracking-tight group-hover:text-white/60 transition-colors z-10">
-                      {item.number}
-                    </span>
                   </div>
 
                   {/* Card Body */}

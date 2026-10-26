@@ -14,10 +14,10 @@ export function TrustProofBand({ locale }: TrustProofBandProps) {
     {
       number: "01",
       icon: ShieldCheck,
-      image: "/media/craft-engineering-cad.jpg",
+      image: "/media/trust-electrical-compliance.webp",
       imageAlt: isFrench
-        ? "Plans électriques certifiés et conformité CMEQ / CCQ Éclipse"
-        : "Certified electrical plans and CMEQ / CCQ compliance Éclipse",
+        ? "Électricien Éclipse vérifiant un panneau électrique avec un plan et une liste de contrôle"
+        : "Éclipse electrician checking an electrical panel against a wiring plan and inspection checklist",
       kickerFr: "CONFORMITÉ CCQ & CMEQ",
       kickerEn: "CCQ & CMEQ COMPLIANCE",
       titleFr: "Certifié RBQ / CMEQ",
@@ -105,18 +105,18 @@ export function TrustProofBand({ locale }: TrustProofBandProps) {
       titleFr: "Résidentiel & Industriel",
       titleEn: "Residential & Industrial",
       detailFr:
-        "Du panneau résidentiel 200A aux infrastructures triphasées industrielles et thermographie de pointe.",
+        "Des panneaux résidentiels aux infrastructures commerciales et industrielles, avec accompagnement pour les projets solaires.",
       detailEn:
-        "From residential 200A panel upgrades to heavy commercial 3-phase infrastructure and infrared thermography.",
+        "From residential panels to commercial and industrial infrastructure, with support for solar energy projects.",
       highlightsFr: [
         "Résidentiel moderne, VÉ & 200A",
         "Commerces, bureaux & réseaux",
-        "Industriel 600V & thermographie",
+        "Installations industrielles & solaire",
       ],
       highlightsEn: [
         "Modern residential, EV & 200A",
         "Commercial, office & networks",
-        "Industrial 600V & thermography",
+        "Industrial installations & solar",
       ],
       bottomFr: "Garantie de travail décennale",
       bottomEn: "10-year workmanship guarantee",
@@ -186,10 +186,6 @@ export function TrustProofBand({ locale }: TrustProofBandProps) {
                     {/* Smooth delicate fade into glass body */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#0a101d]/90 pointer-events-none" />
 
-                    {/* Corner Number */}
-                    <span className="absolute top-3 right-4 font-mono font-black text-2xl sm:text-3xl text-white/40 select-none tracking-tight group-hover:text-white/60 transition-colors z-10">
-                      {item.number}
-                    </span>
                   </div>
 
                   {/* Card Body */}

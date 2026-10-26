@@ -4,9 +4,9 @@ import "./fonts.css";
 import "./globals.css";
 import { MotionProvider } from "@/components/motion/provider";
 
-// Default browser chrome and native controls match the site's dark first render.
+// Browser chrome and native controls stay dark to match the site.
 export const viewport: Viewport = {
-  colorScheme: "dark light",
+  colorScheme: "dark",
   themeColor: "#08090b",
 };
 
@@ -39,14 +39,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr-CA" data-theme="dark" suppressHydrationWarning>
+    <html lang="fr-CA" data-theme="dark">
       <body>
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              'try{if(localStorage.getItem("eclipse-theme")==="light"){document.documentElement.dataset.theme="light"}}catch(e){}',
-          }}
-        />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

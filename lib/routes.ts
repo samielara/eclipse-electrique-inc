@@ -1,4 +1,6 @@
 import { cityPath, citySlugs } from "@/lib/city-routes";
+import { residentialServices, residentialServicePath } from "@/content/residential-services";
+import { commercialServices, commercialServicePath } from "@/content/commercial-services";
 
 export const locales = ["fr", "en"] as const;
 export type Locale = (typeof locales)[number];
@@ -11,7 +13,7 @@ export const pageIds = [
   "industrial",
   "maintenance",
   "generators",
-  "thermography",
+  "solar",
   "security",
   "serviceArea",
   "about",
@@ -27,16 +29,15 @@ export type ServicePageId =
   | "industrial"
   | "maintenance"
   | "generators"
-  | "thermography"
+  | "solar"
   | "security";
 
 export const servicePageIds: readonly ServicePageId[] = [
   "residential",
   "commercial",
-  "industrial",
   "maintenance",
   "generators",
-  "thermography",
+  "solar",
   "security",
 ];
 
@@ -63,9 +64,9 @@ export const routes = {
     fr: "/fr/services/generatrices",
     en: "/en/services/generators",
   },
-  thermography: {
-    fr: "/fr/services/thermographie-infrarouge",
-    en: "/en/services/infrared-thermography",
+  solar: {
+    fr: "/fr/services/energie-solaire",
+    en: "/en/services/solar-energy",
   },
   security: {
     fr: "/fr/services/alarme-et-securite",
@@ -85,6 +86,9 @@ export interface ResolvedPage {
   locale: Locale;
   pageId: PageId;
   citySlug?: string;
+  residentialServiceId?: string;
+  commercialServiceId?: string;
+  retiredService?: boolean;
 }
 
 export function isLocale(value: string): value is Locale {
@@ -92,11 +96,19 @@ export function isLocale(value: string): value is Locale {
 }
 
 export function pathFor(pageId: PageId, locale: Locale): string {
+  if(pageId==="industrial") return routes.commercial[locale];
   return routes[pageId][locale];
 }
 
-export function quotePath(locale: Locale): string {
-  return `${pathFor("contact", locale)}#quote-intake`;
+export function quotePath(locale: Locale, context?: { pageId?: string; residentialServiceId?: string; commercialServiceId?: string; citySlug?: string }): string {
+  const params = new URLSearchParams();
+  const page = context?.pageId;
+  const category = context?.residentialServiceId ? "residential" : context?.commercialServiceId ? "commercialIndustrial" : page === "commercial" || page === "industrial" ? "commercialIndustrial" : page === "residential" ? "residential" : page === "solar" ? "solar" : page === "security" ? "security" : page === "generators" ? "residential" : page === "maintenance" ? "other" : "";
+  if (category) params.set("assistantService", category);
+  const work = context?.residentialServiceId || context?.commercialServiceId || (page === "generators" ? "generators" : page === "solar" || page === "security" || page === "maintenance" ? page : "");
+  if (work) params.set("work", work);
+  if (context?.citySlug) params.set("assistantCity", context.citySlug);
+  return `${pathFor("contact", locale)}${params.size ? `?${params}` : ""}#quote-intake`;
 }
 
 export function alternatePath(pageId: PageId, locale: Locale): string {
@@ -116,6 +128,11 @@ export function resolvePage(
   const pageId = pageIds.find((id) => routes[id][localeValue] === candidate);
 
   if (pageId) return { locale: localeValue, pageId };
+  if (candidate === "/en/services/infrared-thermography" || candidate === "/fr/services/thermographie-infrarouge") return {locale:localeValue,pageId:"services",retiredService:true};
+  const residential = residentialServices.find(s => residentialServicePath(localeValue,s.id) === candidate);
+  if (residential) return {locale:localeValue,pageId:"residential",residentialServiceId:residential.id};
+  const commercial = commercialServices.find(s => commercialServicePath(localeValue,s.id) === candidate);
+  if(commercial) return {locale:localeValue,pageId:"commercial",commercialServiceId:commercial.id};
 
   const areaSegment = localeValue === "fr" ? "territoire-desservi" : "service-area";
   if (
@@ -131,7 +148,9 @@ export function resolvePage(
 
 export function allLocalizedPaths(): string[] {
   return [
-    ...pageIds.flatMap((pageId) => [routes[pageId].fr, routes[pageId].en]),
+    ...pageIds.filter(id=>id!=="industrial").flatMap((pageId) => [routes[pageId].fr, routes[pageId].en]),
+    ...commercialServices.flatMap(s=>[commercialServicePath("fr",s.id),commercialServicePath("en",s.id)]),
+    ...residentialServices.flatMap(s => [residentialServicePath("fr",s.id),residentialServicePath("en",s.id)]),
     ...citySlugs.flatMap((slug) => [cityPath("fr", slug), cityPath("en", slug)]),
   ];
 }

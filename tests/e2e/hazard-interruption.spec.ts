@@ -30,7 +30,7 @@ test("an emergency interrupts pending AI routing and ignores its late reply", as
   await pendingRequest;
   await input.fill("There are sparks and smoke");
   await page.getByRole("button", { name: "Send", exact: true }).click();
-  await expect(page.locator(".assistant-emergency-card a")).toHaveAttribute("href", "tel:5147179277", { timeout: 1000 });
+  await expect(page.locator(".assistant-emergency-card a")).toHaveAttribute("href", "tel:5145101112", { timeout: 1000 });
   await expect(page.locator(".ai-assistant-thinking")).toHaveCount(0);
   const completedReply = page.waitForResponse(response => response.url().endsWith("/api/assistant") && response.request().method() === "POST");
   releaseReply();
@@ -39,5 +39,5 @@ test("an emergency interrupts pending AI routing and ignores its late reply", as
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
   await expect(page.getByText("STALE MODEL REPLY", { exact: true })).toHaveCount(0);
   await expect(page.locator('[data-message-role="assistant"]')).toHaveCount(2);
-  await expect(page.locator(".assistant-emergency-card a")).toHaveAttribute("href", "tel:5147179277");
+  await expect(page.locator(".assistant-emergency-card a")).toHaveAttribute("href", "tel:5145101112");
 });

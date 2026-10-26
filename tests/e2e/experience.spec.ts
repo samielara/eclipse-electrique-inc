@@ -11,20 +11,6 @@ test.beforeEach(async ({ page }) => {
 test.afterEach(async ({ page }) => {
   expect(browserErrors.get(page) ?? [], "Browser console and uncaught errors").toEqual([]);
 });
-async function seedTheme(page: Page, theme: string) {
-  await page.addInitScript(value => {
-    if (!localStorage.getItem("eclipse-theme")) localStorage.setItem("eclipse-theme", value);
-  }, theme);
-}
-async function toggleTheme(page: Page) {
-  const mobileMenu = page.locator(".mobile-menu");
-  const mobile = await mobileMenu.isVisible();
-  if (mobile && !(await mobileMenu.evaluate(element => element.hasAttribute("open")))) {
-    await mobileMenu.locator(":scope > summary").click();
-  }
-  await page.locator(".theme-toggle:visible").click();
-  if (mobile) await mobileMenu.locator(":scope > summary").click();
-}
 async function dialogFits(page: Page) {
   const dialog = await page.getByRole("dialog").boundingBox();
   const viewport = page.viewportSize()!;
@@ -47,21 +33,12 @@ async function noOverflow(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
 }
 
-for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"] as const) {
-  test(`${locale} ${theme}: navigation, theme, matrix and accessible homepage`, async ({ page }, testInfo) => {
-    await seedTheme(page, theme);
+for (const locale of ["fr", "en"] as const) for (const theme of ["dark"] as const) {
+  test(`${locale} ${theme}: navigation, fixed theme, matrix and accessible homepage`, async ({ page }, testInfo) => {
     await page.goto(`/${locale}`);
-    await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-    await expect(page.locator(`.site-header .brand-logo-${theme}`)).toBeVisible();
-    await expect(page.locator(`.site-header .brand-logo-${theme === "dark" ? "light" : "dark"}`)).toBeHidden();
-    await toggleTheme(page);
-    const other = theme === "dark" ? "light" : "dark";
-    await expect(page.locator("html")).toHaveAttribute("data-theme", other);
-    await page.reload();
-    await expect(page.locator("html")).toHaveAttribute("data-theme", other);
-    await toggleTheme(page);
-    await page.reload();
-    await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await expect(page.locator(".site-header .brand-logo-dark")).toBeVisible();
+    await expect(page.locator(".theme-toggle, .site-header .brand-logo-light")).toHaveCount(0);
     await expect(page.locator("h1")).toHaveCount(1);
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
     expect(await page.locator("h1").evaluate(element => getComputedStyle(element).fontFamily)).toContain("Manrope");
@@ -116,7 +93,6 @@ for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"
   });
 
   test(`${locale} ${theme}: quote retention, validation and city selection`, async ({ page }) => {
-    await seedTheme(page, theme);
     await page.goto(`/${locale}/contact`);
     const wizard = page.locator("#quote-intake");
     const next = wizard.getByRole("button", { name: locale === "fr" ? "Continuer" : "Continue", exact: true });
@@ -124,7 +100,7 @@ for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"
     await next.click();
     await expect(wizard.getByRole("alert")).toBeVisible();
     await expect(wizard.getByRole("alert")).toBeFocused();
-    await wizard.locator('label').filter({ has: page.locator('input[name="quote-service"][value="thermography"]') }).click();
+    await wizard.locator('label').filter({ has: page.locator('input[name="quote-service"][value="solar"]') }).click();
     await next.click();
     await expect(page.locator("#quote-step-2-title")).toBeFocused();
     await wizard.locator('label').filter({ has: page.locator('input[name="quote-timeline"][value="planned"]') }).click();
@@ -142,7 +118,7 @@ for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"
     await back.click();
     await expect(wizard.locator('input[value="planned"]')).toBeChecked();
     await back.click();
-    await expect(wizard.locator('input[value="thermography"]')).toBeChecked();
+    await expect(wizard.locator('input[value="solar"]')).toBeChecked();
     await next.click(); await next.click();
     await expect(page.locator("#quote-municipality")).toHaveValue("brossard");
     await expect(page.locator("#quote-postal-code")).toHaveValue("J4W 1A1");
@@ -156,7 +132,6 @@ for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"
   });
 
   test(`${locale} ${theme}: emergency is local, fallback and dialog focus`, async ({ page }) => {
-    await seedTheme(page, theme);
     const modelRequests: string[] = [];
     page.on("request", request => { if (request.url().includes("/api/assistant") && request.method() === "POST") modelRequests.push(request.url()); });
     await page.goto(`/${locale}`);
@@ -168,7 +143,7 @@ for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"
     await input.fill(locale === "fr" ? "Il y a des étincelles au panneau" : "There are sparks at the panel");
     await input.press("Enter");
     await expect(page.locator(".assistant-emergency-card")).toBeVisible();
-    await expect(page.locator(".assistant-emergency-action")).toHaveAttribute("href", /^tel:(?:\+1)?5147179277$/);
+    await expect(page.locator(".assistant-emergency-action")).toHaveAttribute("href", /^tel:(?:\+1)?5145101112$/);
     expect(modelRequests).toEqual([]);
     await input.fill(locale === "fr" ? "Je cherche une soumission" : "I need a quote");
     await input.press("Enter");
@@ -183,10 +158,10 @@ for (const locale of ["fr", "en"] as const) for (const theme of ["dark", "light"
 
 for (const locale of ["fr", "en"] as const) {
   test(`${locale}: quote prefill accepts known values and rejects unknown values`, async ({ page }) => {
-    await page.goto(`/${locale}/contact?assistantService=thermography&assistantCity=brossard#quote-intake`);
+    await page.goto(`/${locale}/contact?assistantService=solar&assistantCity=brossard#quote-intake`);
     const wizard = page.locator("#quote-intake");
     const next = wizard.getByRole("button", { name: locale === "fr" ? "Continuer" : "Continue", exact: true });
-    await expect(wizard.locator('input[name="quote-service"][value="thermography"]')).toBeChecked();
+    await expect(wizard.locator('input[name="quote-service"][value="solar"]')).toBeChecked();
     await next.click();
     await wizard.locator('label').filter({ has: page.locator('input[name="quote-timeline"][value="planned"]') }).click();
     await next.click();
@@ -227,7 +202,7 @@ for (const locale of ["fr", "en"] as const) {
     await input.fill(locale === "fr" ? "Il y a des étincelles au panneau" : "There are sparks at the panel");
     await input.press("Enter");
     await expect(page.locator(".assistant-emergency-card")).toBeVisible();
-    await expect(page.locator(".assistant-emergency-action")).toHaveAttribute("href", /^tel:(?:\+1)?5147179277$/);
+    await expect(page.locator(".assistant-emergency-action")).toHaveAttribute("href", /^tel:(?:\+1)?5145101112$/);
     expect(modelMessages).toEqual([benign]);
     await dialogFits(page);
   });
@@ -249,7 +224,7 @@ test("cinematic hero settles without blocking keyboard navigation", async ({ pag
   await expect(quote).toBeFocused();
 
   const emergency = hero.getByRole("link", { name: "Urgence 24/7" });
-  await expect(emergency).toHaveAttribute("href", /^tel:(?:\+1)?5147179277$/);
+  await expect(emergency).toHaveAttribute("href", /^tel:(?:\+1)?5145101112$/);
   await emergency.focus();
   await expect(emergency).toBeFocused();
 
@@ -343,13 +318,12 @@ test("cinematic hero settles immediately with reduced motion", async ({ page }) 
   await noOverflow(page);
 });
 
-test("saved light theme survives reload and reduced motion stops effects", async ({ page }) => {
+test("dark appearance stays fixed and reduced motion stops effects", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/fr");
-  await toggleTheme(page);
   await page.reload();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-  await expect(page.locator(".site-header .brand-logo-light")).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator(".theme-toggle, .site-header .brand-logo-light")).toHaveCount(0);
   expect(await page.locator("video").evaluate(video => (video as HTMLVideoElement).paused)).toBe(true);
   expect(await page.locator(".electrical-grid-cell").first().evaluate(element => getComputedStyle(element).animationName)).toBe("none");
   await page.keyboard.press("Tab");

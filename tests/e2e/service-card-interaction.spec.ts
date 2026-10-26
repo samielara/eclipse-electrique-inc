@@ -16,7 +16,7 @@ test.describe("Service card accessibility and motion", () => {
     "/en/services/industrial-electrician",
     "/en/services/maintenance-and-emergency",
     "/en/services/generators",
-    "/en/services/infrared-thermography",
+    "/en/services/solar-energy",
     "/en/services/fire-and-security",
   ]) {
     test(`${route}: the context image begins after the hero`, async ({ page }) => {
@@ -138,7 +138,7 @@ test.describe("Service card accessibility and motion", () => {
     "/en/services/industrial-electrician",
     "/en/services/maintenance-and-emergency",
     "/en/services/generators",
-    "/en/services/infrared-thermography",
+    "/en/services/solar-energy",
     "/en/services/fire-and-security",
   ]) {
     test(`${route}: the context heading is centered above its image`, async ({ page }) => {
@@ -218,13 +218,10 @@ test.describe("Service card accessibility and motion", () => {
     await expect(card).toHaveCSS("transform", "none");
   });
 
-  for (const theme of ["dark", "light"] as const) {
+  for (const theme of ["dark"] as const) {
     test(`service cards render properly and without horizontal overflow in ${theme} theme`, async ({ page }) => {
-      await page.addInitScript((val) => {
-        localStorage.setItem("eclipse-theme", val);
-      }, theme);
       await page.goto("/fr");
-      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+      await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
       const card = page.getByTestId("service-card").first();
       await expect(card).toBeVisible();
 

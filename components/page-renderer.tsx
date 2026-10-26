@@ -1,3 +1,8 @@
+import { ServiceTile } from "@/components/service-tile";
+import { ServiceWorkGrid } from "@/components/service-work-grid";
+import tileStyles from "@/components/service-tile.module.css";
+import aboutStyles from "@/components/about-services.module.css";
+import { ContextQuoteLink } from "@/components/context-quote-link";
 import {
   ArrowRight,
   BadgeCheck,
@@ -19,21 +24,16 @@ import { ServiceCarousel } from "@/components/motion/service-carousel";
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern";
 import { AiAssistant } from "@/components/ai-assistant";
 import { HomeContextSelector } from "@/components/home/home-context-selector";
-import { PopularServicesSlider } from "@/components/home/popular-services-slider";
-import { ProblemIntentGrid } from "@/components/home/problem-intent-grid";
 import { VisualProcessStepper } from "@/components/home/visual-process-stepper";
 import { TrustProofBand } from "@/components/home/trust-proof-band";
-import { TechnicalExpertiseTabs } from "@/components/home/technical-expertise-tabs";
-import { ResidentialWorkExplorer } from "@/components/residential-work-explorer";
-import { ServiceWorkExplorer } from "@/components/service-work-explorer";
+import { ResidentialServicesGrid } from "@/components/residential-services-grid";
+import { ResidentialServicePage } from "@/components/residential-service-page";
+import { getResidentialSeason } from "@/content/residential-services";
 import { serviceWorkExplorerData } from "@/content/service-work-explorer";
-import { VisualCoverageHub } from "@/components/home/visual-coverage-hub";
-import { HomeFaqTeaser } from "@/components/home/home-faq-teaser";
 import { DispatchCoverageConsole } from "@/components/motion/dispatch-coverage-console";
 import { HeroMediaTransition } from "@/components/motion/hero-media-transition";
 import { ServiceCard } from "@/components/service-card";
 import { VisualServicesGrid } from "@/components/visual-services-grid";
-import { ThermographyProof } from "@/components/thermography-proof";
 import { MobileActionBar } from "@/components/mobile-action-bar";
 import { QuoteIntakeWizard } from "@/components/quote-intake-wizard";
 import { SiteFooter } from "@/components/site-footer";
@@ -55,6 +55,8 @@ interface PageRendererProps {
   locale: Locale;
   pageId: PageId;
   citySlug?: string;
+  residentialServiceId?: string;
+  commercialServiceId?: string;
 }
 
 function ActionPair({ locale, dark = false }: { locale: Locale; dark?: boolean }) {
@@ -63,9 +65,9 @@ function ActionPair({ locale, dark = false }: { locale: Locale; dark?: boolean }
   return (
     <div className="action-pair">
       <Button asChild size="lg" className="primary-action hero-primary-cta">
-        <a href={quotePath(locale)}>
+        <ContextQuoteLink locale={locale}>
           {copy.actions.quote}
-        </a>
+        </ContextQuoteLink>
       </Button>
       <Button
         asChild
@@ -109,7 +111,7 @@ function ServicesGrid({ locale, compact = false, homepage = false }: { locale: L
   const ids = homepage ? servicePageIds.slice(0, 3) : servicePageIds;
 
   return (
-    <div className={`services-grid${compact ? " is-compact" : ""}`}>
+    <div className={tileStyles.grid}>
       {ids.map((serviceId) => (
         <ServiceCard
           actionLabel={copy.actions.learnMore}
@@ -179,18 +181,11 @@ function BentoServicesSection({ locale }: { locale: Locale }) {
           </a>
         </div>
 
-        {/* Tile 3: Thermographie FLIR */}
+        {/* Tile 3: Solar energy */}
         <div className="glass-card rounded-2xl p-8 space-y-4 relative overflow-hidden">
-          <span className="text-xs font-mono text-amber-400 uppercase tracking-wider font-bold">03 // {isFrench ? "PRÉVENTION INCENDIE" : "FIRE PREVENTION"}</span>
-          <h3 className="text-xl font-bold font-display text-white">{isFrench ? "Thermographie Infrarouge FLIR" : "FLIR Infrared Thermography"}</h3>
-          <p className="text-slate-300 text-sm leading-relaxed">
-            {isFrench
-              ? "Détectez les anomalies thermiques invisibles à l'œil nu sans interrompre vos opérations industrielles ou commerciales."
-              : "Detect invisible thermal anomalies without interrupting commercial or industrial plant operations."}
-          </p>
-          <div className="text-xs font-mono text-emerald-400 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
-            {isFrench ? "Rapport certifié pour assureurs" : "Certified underwriter insurance report"}
-          </div>
+          <span className="eyebrow">{isFrench ? "ÉNERGIE SOLAIRE" : "SOLAR ENERGY"}</span>
+          <h3>{isFrench ? "Votre projet solaire" : "Your solar project"}</h3>
+          <p>{isFrench ? "Discutez des besoins électriques de votre bâtiment, des raccordements et de l’intégration éventuelle du stockage." : "Discuss your building’s electrical requirements, connections and potential storage integration."}</p>
         </div>
 
         {/* Tile 4: Industriel 600V */}
@@ -259,7 +254,7 @@ const pageHeroImages: Partial<Record<PageId, string>> = {
   industrial: "/media/service-industrial-master.jpg",
   maintenance: "/media/service-emergency-master.jpg",
   generators: "/media/service-generators-master-patched.png",
-  thermography: "/media/service-thermography-master.jpg",
+  solar: "/media/solar/solar-rooftop-v1.webp",
   security: "/media/service-security-master.jpg",
   serviceArea: "/media/service-coverage-map.png",
   about: "/media/about-craft-master.jpg",
@@ -389,23 +384,6 @@ function InnerHero({ locale, pageId, citySlug, customImage, secondaryImage }: In
   );
 }
 
-function CtaBand({ locale }: { locale: Locale }) {
-  const isFrench = locale === "fr";
-  return (
-    <section className="cta-band">
-      <div className="site-container cta-band-inner">
-        <div>
-          <p className="eyebrow eyebrow-light">
-            {isFrench ? "Votre projet" : "Your project"}
-          </p>
-          <h2>{isFrench ? "Parlons de vos besoins électriques" : "Let’s discuss your electrical needs"}</h2>
-        </div>
-        <ActionPair locale={locale} dark />
-      </div>
-    </section>
-  );
-}
-
 function ProjectGallery({ locale }: { locale: Locale }) {
   const isFrench = locale === "fr";
   const projects = isFrench
@@ -421,7 +399,7 @@ function ProjectGallery({ locale }: { locale: Locale }) {
           src: "/media/electrical-testing.webp",
           eyebrow: "Mesure et vérification",
           title: "Les décisions reposent sur des données, pas des suppositions",
-          description: "Essais, thermographie et validation avant la remise en service.",
+          description: "Essais électriques et validation avant la remise en service.",
           alt: "Technicien testant un panneau électrique avec un multimètre",
         },
         {
@@ -444,7 +422,7 @@ function ProjectGallery({ locale }: { locale: Locale }) {
           src: "/media/electrical-testing.webp",
           eyebrow: "Testing and verification",
           title: "Decisions grounded in measurements, not assumptions",
-          description: "Testing, thermography and validation before equipment returns to service.",
+          description: "Electrical testing and validation before equipment returns to service.",
           alt: "Technician testing an electrical panel with a multimeter",
         },
         {
@@ -482,7 +460,6 @@ function ProjectGallery({ locale }: { locale: Locale }) {
                   src={project.src}
                   width="1600"
                 />
-                <span className="project-story-number" aria-hidden="true">0{index + 1}</span>
               </div>
               <div className="project-story-copy">
                 <p className="eyebrow">{project.eyebrow}</p>
@@ -506,7 +483,7 @@ function ServiceVisualPanel({ locale, pageId }: { locale: Locale; pageId: Servic
     industrial: { src: "/media/industrial-panel.webp", position: "center" },
     maintenance: { src: "/media/service-emergency.jpg", position: "center" },
     generators: { src: "/media/service-generators.jpg", position: "center" },
-    thermography: { src: "/media/service-thermography.jpg", position: "center" },
+    solar: { src: "/media/solar/solar-rooftop-v1.webp", position: "center" },
     security: { src: "/media/service-security.jpg", position: "center" },
   };
   const media = mediaByService[pageId];
@@ -547,7 +524,6 @@ function ServiceVisualPanel({ locale, pageId }: { locale: Locale; pageId: Servic
                     <img alt="" decoding="async" height="900" loading="lazy" src={imageSrc} width="1600" />
                   )}
                   <div className="service-visual-highlight-copy">
-                    <span>0{index + 1}</span>
                     <strong>{item}</strong>
                   </div>
                 </li>
@@ -674,7 +650,7 @@ function HomePage({ locale }: { locale: Locale }) {
             <HeroMediaTransition
               locale={locale}
               intervalMs={4000}
-              showIndicators={true}
+              showIndicators={false}
               hideIndicatorsOnMobile={true}
               items={[
                 {
@@ -745,16 +721,6 @@ function HomePage({ locale }: { locale: Locale }) {
         <HomeContextSelector locale={locale} />
       </ScrollReveal>
 
-      {/* 3. Main Feature: Visual Service Navigator ("Services populaires" - 6 services, no autoplay) */}
-      <ScrollReveal className="home-flow-block">
-        <PopularServicesSlider locale={locale} />
-      </ScrollReveal>
-
-      {/* 4. Problem-based Navigation: "Que souhaitez-vous faire ?" */}
-      <ScrollReveal className="home-flow-block">
-        <ProblemIntentGrid locale={locale} />
-      </ScrollReveal>
-
       {/* 5. Visual 3-Step Process: Parlez-nous → Envoyez les détails → Planifiez la suite */}
       <ScrollReveal className="home-flow-block">
         <VisualProcessStepper locale={locale} />
@@ -765,27 +731,6 @@ function HomePage({ locale }: { locale: Locale }) {
         <TrustProofBand locale={locale} />
       </ScrollReveal>
 
-      {/* 7. Technical Expertise Progressive Disclosure Tabs */}
-      <ScrollReveal className="home-flow-block">
-        <TechnicalExpertiseTabs locale={locale} />
-      </ScrollReveal>
-
-      {/* 8. Regional Coverage Hub Map (Montréal, Rive-Nord, Rive-Sud) */}
-      <ScrollReveal className="home-flow-block">
-        <VisualCoverageHub locale={locale} />
-      </ScrollReveal>
-
-      {/* 9. FAQ Teaser: 3 Homeowner Questions */}
-      <ScrollReveal className="home-flow-block">
-        <HomeFaqTeaser locale={locale} />
-      </ScrollReveal>
-
-      {/* 10. Final Conversion Section */}
-      <div className="home-snap-section home-snap-cta">
-        <ScrollReveal className="home-flow-block home-flow-final">
-          <CtaBand locale={locale} />
-        </ScrollReveal>
-      </div>
     </div>
   );
 }
@@ -818,7 +763,7 @@ function ServicesPage({ locale }: { locale: Locale }) {
           </div>
         </div>
       </section>
-      <CtaBand locale={locale} />
+
     </>
   );
 }
@@ -828,21 +773,16 @@ function ServiceDetailPage({ locale, pageId }: { locale: Locale; pageId: Service
   const page = copy.pages[pageId];
   const isFrench = locale === "fr";
 
+  if(pageId==="residential" || pageId==="commercial") return <>
+    <InnerHero locale={locale} pageId={pageId}/>
+    <ResidentialServicesGrid locale={locale} category={pageId}/>
+  </>;
+
   return (
     <>
       <InnerHero locale={locale} pageId={pageId} />
-      {pageId === "residential" ? (
-        <ResidentialWorkExplorer locale={locale} />
-      ) : (
-        <ServiceWorkExplorer
-          locale={locale}
-          data={serviceWorkExplorerData[pageId] ?? serviceWorkExplorerData["commercial"]}
-        />
-      )}
+      <ServiceWorkGrid locale={locale} data={serviceWorkExplorerData[pageId] ?? serviceWorkExplorerData.commercial} />
 
-      {pageId === "thermography" && (
-        <ThermographyProof locale={locale} copy={copy.home.thermographyProof} />
-      )}
 
       {page.faq && (
         <section className="section-pad faq-section">
@@ -857,7 +797,7 @@ function ServiceDetailPage({ locale, pageId }: { locale: Locale; pageId: Service
         <section className="section-pad related-section">
           <div className="site-container">
             <SectionHeading eyebrow={copy.servicesSectionLabel} title={copy.relatedServices} />
-            <div className="services-grid is-compact">
+            <div className={tileStyles.grid}>
               {page.related.map((relatedId) => (
                 <ServiceCard
                   actionLabel={copy.actions.learnMore}
@@ -871,7 +811,7 @@ function ServiceDetailPage({ locale, pageId }: { locale: Locale; pageId: Service
           </div>
         </section>
       )}
-      <CtaBand locale={locale} />
+
     </>
   );
 }
@@ -927,40 +867,22 @@ function ServiceAreaPage({ locale }: { locale: Locale }) {
             </div>
           </div>
 
-          <div className="region-list">
+          <div className={tileStyles.grid}>
           {copy.regions.map((region, index) => (
-            <article key={region.name}>
-              <div className="region-card-media" style={{ marginBottom: "1.5rem", borderRadius: "0.5rem", overflow: "hidden", height: "220px" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt={region.name}
-                  decoding="async"
-                  height="440"
-                  loading="lazy"
-                  src={regionImages[index % regionImages.length]}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  width="800"
-                />
-              </div>
-              <header><span>0{index + 1}</span><MapPin aria-hidden="true" /><h2>{region.name}</h2></header>
-              <p>{region.description}</p>
-              <ul>
-                {region.cities.map((cityName) => {
-                  const city = cityRoutes.find((route) => route[locale] === cityName);
-                  return (
-                    <li key={cityName}>
-                      {city ? <a href={cityPath(locale, city.slug)}>{cityName}</a> : cityName}
-                    </li>
-                  );
+            <ServiceTile key={region.name} icon={<MapPin/>} image={regionImages[index % regionImages.length]} label={isFrench ? "Territoire desservi" : "Service area"} title={region.name} description={region.description}>
+              <nav aria-label={region.name} className={tileStyles.cityLinks}>
+                {region.cities.map(cityName => {
+                  const city = cityRoutes.find(route => route[locale] === cityName);
+                  return city ? <a key={cityName} href={cityPath(locale,city.slug)}>{cityName}<ArrowRight aria-hidden="true"/></a> : <span key={cityName}>{cityName}</span>;
                 })}
-              </ul>
-            </article>
+              </nav>
+            </ServiceTile>
           ))}
+          </div>
           <p className="region-note"><BadgeCheck aria-hidden="true" />{copy.regionNote}</p>
-        </div>
       </div>
     </section>
-      <CtaBand locale={locale} />
+
     </>
   );
 }
@@ -980,23 +902,12 @@ function CityPage({ locale, citySlug }: { locale: Locale; citySlug: string }) {
 
       <section className="section-pad city-service-section">
         <div className="site-container">
-          <ServiceCarousel
-            actionLabel={copy.actions.learnMore}
-            eyebrow={isFrench ? "Services publiés" : "Published services"}
-            intro={
-              isFrench
-                ? "Explorez nos sept parcours de services et indiquez le bâtiment, les travaux envisagés et l'emplacement dans votre demande."
-                : "Explore our seven service pathways and include the property, work planned and location in your request."
-            }
-            items={servicePageIds.map(id => ({ id, page: copy.pages[id] }))}
-            locale={locale}
-            title={isFrench ? `Travaux électriques à ${cityName}` : `Electrical work in ${cityName}`}
-            variant="city"
-          />
+          <SectionHeading eyebrow={isFrench ? "Services publiés" : "Published services"} title={isFrench ? `Travaux électriques à ${cityName}` : `Electrical work in ${cityName}`} intro={isFrench ? "Explorez nos services et indiquez le bâtiment, les travaux envisagés et l’emplacement dans votre demande." : "Explore our services and include the property, work planned and location in your request."}/>
+          <ServicesGrid locale={locale}/>
         </div>
       </section>
 
-      <CtaBand locale={locale} />
+
     </>
   );
 }
@@ -1028,13 +939,13 @@ function AboutPage({ locale }: { locale: Locale }) {
           </div>
         </div>
       </section>
-      <section className="section-pad services-section">
+      <section className={`section-pad services-section about-services-section ${aboutStyles.section}`}>
         <div className="site-container">
           <SectionHeading eyebrow={copy.home.servicesEyebrow} title={copy.home.servicesTitle} />
           <ServicesGrid locale={locale} compact />
         </div>
       </section>
-      <CtaBand locale={locale} />
+
     </>
   );
 }
@@ -1055,7 +966,7 @@ function FaqPage({ locale }: { locale: Locale }) {
           </div>
         </div>
       </section>
-      <CtaBand locale={locale} />
+
     </>
   );
 }
@@ -1070,7 +981,7 @@ function ContactPage({ locale }: { locale: Locale }) {
         <div className="site-container contact-layout">
           <QuoteIntakeWizard locale={locale} />
           <div className="contact-methods">
-            <article><Phone aria-hidden="true" /><div><p>{copy.contact.office}</p><a href={site.officePhoneHref}>{site.officePhoneDisplay}</a><span>{isFrench ? "Demandes générales et planification" : "General requests and planning"}</span></div></article>
+            <article><Phone aria-hidden="true" /><div><p>{copy.contact.office}</p><a href={site.officePhoneHref}>{site.officePhoneDisplay}</a><span>{isFrench ? "Demandes générales et planification" : "General requests and planning"}</span><span style={{ marginTop: "12px" }}><strong style={{ fontSize: "inherit", marginBottom: "4px" }}>{isFrench ? "Heures d’ouverture :" : "Opening hours:"}</strong>{site.officeHoursDisplay[locale]}</span></div></article>
             <article className="emergency-card"><PhoneCall aria-hidden="true" /><div><p>{copy.contact.emergency}</p><a href={site.emergencyPhoneHref}>{site.emergencyPhoneDisplay}</a><span>{copy.contact.emergencyNote}</span></div></article>
             <article><Mail aria-hidden="true" /><div><p>{copy.contact.email}</p><a href={site.emailHref}>{site.email}</a><span>{isFrench ? "Écrivez-nous depuis votre application de courriel" : "Write from your preferred email application"}</span></div></article>
             <article><MapPin aria-hidden="true" /><div><p>{copy.contact.territory}</p><strong>{copy.contact.territoryValue}</strong><a href={pathFor("serviceArea", locale)}>{copy.actions.checkArea}</a></div></article>
@@ -1100,10 +1011,12 @@ function PrivacyPage({ locale }: { locale: Locale }) {
   );
 }
 
-export function PageRenderer({ locale, pageId, citySlug }: PageRendererProps) {
+export function PageRenderer({ locale, pageId, citySlug, residentialServiceId, commercialServiceId }: PageRendererProps) {
   let page;
 
-  if (citySlug) page = <CityPage locale={locale} citySlug={citySlug} />;
+  if (commercialServiceId) page = <ResidentialServicePage locale={locale} serviceId={commercialServiceId} category="commercial" />;
+  else if (residentialServiceId) page = <ResidentialServicePage locale={locale} serviceId={residentialServiceId} />;
+  else if (citySlug) page = <CityPage locale={locale} citySlug={citySlug} />;
   else if (pageId === "home") page = <HomePage locale={locale} />;
   else if (pageId === "services") page = <ServicesPage locale={locale} />;
   else if (servicePageIds.includes(pageId as ServicePageId)) {
@@ -1116,7 +1029,7 @@ export function PageRenderer({ locale, pageId, citySlug }: PageRendererProps) {
 
   return (
     <div lang={locale === "fr" ? "fr-CA" : "en-CA"}>
-      <SiteHeader locale={locale} pageId={pageId} citySlug={citySlug} />
+      <SiteHeader locale={locale} pageId={pageId} citySlug={citySlug} residentialServiceId={residentialServiceId} commercialServiceId={commercialServiceId} residentialSeason={getResidentialSeason()} />
       <MobileActionBar locale={locale} />
       <main id="contenu">{page}</main>
       <SiteFooter locale={locale} />

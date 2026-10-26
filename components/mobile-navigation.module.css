@@ -1,0 +1,6 @@
+@media (max-width: 72rem) {
+  :global(html):has(.header :global(.mobile-menu[open])), :global(body):has(.header :global(.mobile-menu[open])) { overflow: hidden; }
+  .header :global(.mobile-menu-panel) { overscroll-behavior: contain; }
+  .header :global(.mobile-residential-links a), .header :global(.mobile-submenu-panel > a) { min-height: 44px !important; touch-action: manipulation; }
+  .header :global(.mobile-drawer-close) { min-width: 44px; min-height: 44px; }
+}

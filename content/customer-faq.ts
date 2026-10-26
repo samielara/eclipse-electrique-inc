@@ -6,7 +6,7 @@ export const customerFaq = {
     {
       "id": "services",
       "question": "What electrical services do you provide?",
-      "answer": "Éclipse électrique inc. handles residential, commercial and industrial electrical work, lighting, panel work, maintenance, infrared thermography, security systems and generator installation or repair. Describe your property and project so we can confirm the right service."
+      "answer": "Éclipse électrique inc. handles residential, commercial and industrial electrical work, lighting, panel work, maintenance, solar energy, security systems and generator installation or repair. Describe your property and project so we can confirm the right service."
     },
     {
       "id": "coverage",
@@ -21,12 +21,12 @@ export const customerFaq = {
     {
       "id": "request",
       "question": "How do I request service or an estimate?",
-      "answer": "Use Request service to prepare your enquiry, call 514-955-1112 or email info@eclipseelectrique.com. Include your address, property type, description, preferred timing and accessible photos. An online enquiry is not an emergency dispatch request; call 514-717-9277 for urgent help."
+      "answer": "Use Request service to prepare your enquiry, call 514-955-1112 or email info@eclipseelectrique.com. Include your address, property type, description, preferred timing and accessible photos. An online enquiry is not an emergency dispatch request; call 514-510-1112 for urgent help."
     },
     {
       "id": "emergency",
       "question": "How do I reach your 24/7 electrical emergency line?",
-      "answer": "Call 514-717-9277 directly and describe the location and symptoms. The team can confirm availability and next steps based on the situation; arrival times are not guaranteed. For fire, smoke or immediate danger, move to safety and call 911."
+      "answer": "Call 514-510-1112 directly and describe the location and symptoms. The team can confirm availability and next steps based on the situation; arrival times are not guaranteed. For fire, smoke or immediate danger, move to safety and call 911."
     },
     {
       "id": "outage",
@@ -54,9 +54,9 @@ export const customerFaq = {
       "answer": "Yes. Contact us about electrical distribution, lighting, equipment connections, diagnosis and maintenance for your facility. Include equipment details, operating hours and any shutdown restrictions so access and scheduling can be assessed."
     },
     {
-      "id": "thermography",
-      "question": "What is infrared thermography used for in an electrical installation?",
-      "answer": "Thermography helps identify unusual heat patterns in electrical equipment for further investigation and preventive maintenance. Tell us which equipment must be examined and whether the request comes from an insurer or a maintenance plan. Confirm the inspection scope and report requirements with the team."
+      "id": "solar",
+      "question": "Can you help with a solar energy project?",
+      "answer": "Share the property address, building type and proposed solar equipment. The team can discuss electrical connections, capacity and potential storage integration. Scope and compatibility must be confirmed for the site."
     },
     {
       "id": "generators",
@@ -88,7 +88,7 @@ export const customerFaq = {
     {
       "id": "services",
       "question": "Quels services électriques offrez-vous?",
-      "answer": "Éclipse électrique inc. réalise des travaux électriques résidentiels, commerciaux et industriels, d’éclairage, de panneaux, d’entretien, de thermographie infrarouge, de systèmes de sécurité et de génératrices. Décrivez votre bâtiment et votre projet pour confirmer le service approprié."
+      "answer": "Éclipse électrique inc. réalise des travaux électriques résidentiels, commerciaux et industriels, d’éclairage, de panneaux, d’entretien, de énergie solaire, de systèmes de sécurité et de génératrices. Décrivez votre bâtiment et votre projet pour confirmer le service approprié."
     },
     {
       "id": "coverage",
@@ -103,12 +103,12 @@ export const customerFaq = {
     {
       "id": "request",
       "question": "Comment demander un service ou une soumission?",
-      "answer": "Utilisez Demander un service pour préparer votre demande, appelez le 514-955-1112 ou écrivez à info@eclipseelectrique.com. Indiquez l’adresse, le type de bâtiment, les travaux, l’échéancier et joignez des photos accessibles. Une demande en ligne ne déclenche pas une intervention d’urgence : appelez le 514-717-9277."
+      "answer": "Utilisez Demander un service pour préparer votre demande, appelez le 514-955-1112 ou écrivez à info@eclipseelectrique.com. Indiquez l’adresse, le type de bâtiment, les travaux, l’échéancier et joignez des photos accessibles. Une demande en ligne ne déclenche pas une intervention d’urgence : appelez le 514-510-1112."
     },
     {
       "id": "emergency",
       "question": "Comment joindre votre ligne d’urgence électrique 24/7?",
-      "answer": "Appelez directement le 514-717-9277 et décrivez le lieu et les symptômes. L’équipe pourra confirmer la disponibilité et la suite selon la situation; aucun délai d’arrivée n’est garanti. En cas d’incendie, de fumée ou de danger immédiat, mettez-vous à l’abri et appelez le 911."
+      "answer": "Appelez directement le 514-510-1112 et décrivez le lieu et les symptômes. L’équipe pourra confirmer la disponibilité et la suite selon la situation; aucun délai d’arrivée n’est garanti. En cas d’incendie, de fumée ou de danger immédiat, mettez-vous à l’abri et appelez le 911."
     },
     {
       "id": "outage",
@@ -136,9 +136,9 @@ export const customerFaq = {
       "answer": "Oui. Communiquez avec nous pour la distribution électrique, l’éclairage, le raccordement d’équipements, le diagnostic et l’entretien de vos installations. Précisez les équipements, les heures d’exploitation et les contraintes d’arrêt pour évaluer l’accès et la planification."
     },
     {
-      "id": "thermography",
-      "question": "À quoi sert la thermographie infrarouge d’une installation électrique?",
-      "answer": "La thermographie aide à repérer des échauffements inhabituels dans les équipements électriques pour orienter le diagnostic et l’entretien préventif. Précisez les équipements à examiner et si la demande vient d’un assureur ou d’un plan d’entretien. Confirmez la portée de l’inspection et les exigences du rapport avec l’équipe."
+      "id": "solar",
+      "question": "Pouvez-vous nous accompagner dans un projet d’énergie solaire?",
+      "answer": "Précisez l’adresse, le type de bâtiment et les équipements solaires envisagés. L’équipe pourra discuter des raccordements, de la capacité et du stockage éventuel. La portée et la compatibilité doivent être confirmées selon le site."
     },
     {
       "id": "generators",

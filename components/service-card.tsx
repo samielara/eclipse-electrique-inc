@@ -1,9 +1,11 @@
+import { ServiceTile } from "@/components/service-tile";
 import {
   ArrowUpRight,
   Building2,
   Factory,
   House,
   ScanSearch,
+  Sun,
   ShieldAlert,
   ShieldCheck,
   Unplug,
@@ -18,7 +20,7 @@ const serviceIcons = {
   industrial: Factory,
   maintenance: ShieldAlert,
   generators: Unplug,
-  thermography: ScanSearch,
+  solar: Sun,
   security: ShieldCheck,
 } as const;
 
@@ -26,16 +28,16 @@ const serviceNumbers: Record<ServicePageId, string> = {
   residential: "01",
   commercial: "02",
   industrial: "03",
-  maintenance: "04",
-  generators: "05",
-  thermography: "06",
-  security: "07",
+  maintenance: "03",
+  generators: "04",
+  solar: "05",
+  security: "06",
 };
 
 const serviceMedia: Record<ServicePageId, { alt: string; src: string }> = {
   residential: {
     alt: "Installation domotique et éclairage résidentiel moderne",
-    src: "/media/eclipse-residential-electrician-v1.png",
+    src: "/media/service-residential.jpg",
   },
   commercial: {
     alt: "Câblage structuré et éclairage architectural commercial",
@@ -53,9 +55,9 @@ const serviceMedia: Record<ServicePageId, { alt: string; src: string }> = {
     alt: "Installation extérieure de génératrice de secours et commutateur ATS",
     src: "/media/service-generators.jpg",
   },
-  thermography: {
-    alt: "Inspection thermographique infrarouge par caméra thermique FLIR",
-    src: "/media/service-thermography.jpg",
+  solar: {
+    alt: "Bâtiment résidentiel pour un projet d’énergie solaire",
+    src: "/media/solar/solar-rooftop-v1.webp",
   },
   security: {
     alt: "Système de contrôle d'accès, alarme incendie et sécurité électrique",
@@ -79,37 +81,5 @@ export function ServiceCard({
   const Icon = serviceIcons[serviceId];
   const media = serviceMedia[serviceId];
 
-  return (
-    <article data-service-id={serviceId} data-testid="service-card" className={`service-card${serviceId === "residential" ? " service-card-featured" : ""}`}>
-      <div className="service-card-media" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img alt={media.alt} decoding="async" height="720" loading="lazy" src={media.src} width="1280" />
-      </div>
-      <div className="service-card-top">
-        <span className="service-icon" aria-hidden="true">
-          <Icon strokeWidth={1.8} />
-        </span>
-        <span className="service-number" aria-hidden="true">
-          {serviceNumbers[serviceId]}
-        </span>
-      </div>
-      <p className="service-eyebrow">{page.eyebrow}</p>
-      <h3 data-testid="service-card-title">{page.title}</h3>
-      <p>{page.intro}</p>
-      {page.items && (
-        <ul className="service-card-highlights">
-          {page.items.slice(0, 3).map((highlight) => (
-            <li key={highlight}>
-              <span className="service-highlight-bullet" aria-hidden="true" />
-              <span>{highlight}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      <a data-testid="service-card-link" className="service-card-link" href={pathFor(serviceId, locale)}>
-        {actionLabel}
-        <ArrowUpRight aria-hidden="true" />
-      </a>
-    </article>
-  );
+  return <ServiceTile serviceId={serviceId} icon={<Icon strokeWidth={1.8}/>} image={media.src} label={page.eyebrow} title={page.title} description={page.intro} highlights={page.items?.slice(0,3)} href={pathFor(serviceId,locale)} action={actionLabel}/>;
 }

@@ -12,7 +12,7 @@ const schemaCopy = {
     offers: [
       { name: "Services électriques résidentiels", pageId: "residential" },
       { name: "Services électriques commerciaux et industriels", pageId: "commercial" },
-      { name: "Thermographie infrarouge", pageId: "thermography" },
+      { name: "Énergie solaire", pageId: "solar" },
       { name: "Systèmes d’alarme et d’incendie", pageId: "security" },
     ],
   },
@@ -26,7 +26,7 @@ const schemaCopy = {
     offers: [
       { name: "Residential electrical services", pageId: "residential" },
       { name: "Commercial and industrial electrical services", pageId: "commercial" },
-      { name: "Infrared thermography", pageId: "thermography" },
+      { name: "Solar energy", pageId: "solar" },
       { name: "Alarm and fire systems", pageId: "security" },
     ],
   },

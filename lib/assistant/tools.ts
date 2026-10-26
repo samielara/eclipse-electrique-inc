@@ -24,14 +24,14 @@ export function matchElectricalService(service: z.infer<typeof serviceSchema>, l
   const mapping = {
     residential: { query: "panel", page: "residential" },
     commercialIndustrial: { query: "commercial", page: "commercial" },
-    thermography: { query: "thermography", page: "thermography" },
+    solar: { query: "solar", page: "solar" },
     security: { query: "security system", page: "security" },
     other: { query: "", page: "services" },
   } as const;
   const item = mapping[service];
   // Locale is authoritative here; the query selects a verified template only.
   const reply = getAssistantReply(item.query, locale);
-  const localized = getAssistantReply({ residential: "panneau", commercialIndustrial: "commercial", thermography: "thermographie", security: "alarme", other: "" }[service], "fr");
+  const localized = getAssistantReply({ residential: "panneau", commercialIndustrial: "commercial", solar: "solaire", security: "alarme", other: "" }[service], "fr");
   return { ...(locale === "fr" ? localized : reply), locale, action: { kind: "service", label: locale === "fr" ? "Consulter le service" : "View service", href: pathFor(item.page, locale) } };
 }
 

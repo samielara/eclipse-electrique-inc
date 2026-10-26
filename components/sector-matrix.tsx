@@ -23,7 +23,7 @@ interface SectorMatrixProps {
 const sectorIcons: Record<SectorId, LucideIcon> = {
   residential: House,
   commercialIndustrial: Building2,
-  thermography: ScanSearch,
+  solar: ScanSearch,
   security: ShieldCheck,
 };
 
@@ -140,9 +140,6 @@ export function SectorMatrix({ locale, copy }: SectorMatrixProps) {
                       <p className="eyebrow">{tab.secondaryLabel}</p>
                       <h3>{tab.title}</h3>
                     </div>
-                    <span className="sector-panel-index" aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
                   </div>
                   <p className="sector-matrix-panel-intro">{tab.intro}</p>
                   <ul className="sector-matrix-list">

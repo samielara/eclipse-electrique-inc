@@ -96,7 +96,7 @@ export function DispatchCoverageConsole({ locale }: DispatchCoverageConsoleProps
             
             {/* 1. Hotspot: 24/7 Emergency Dispatch Button */}
             <a
-              href="tel:+15147179277"
+              href="tel:+15145101112"
               onMouseEnter={() => setActiveHotspot("emergency")}
               onMouseLeave={() => setActiveHotspot(null)}
               className="absolute cursor-pointer rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -106,9 +106,9 @@ export function DispatchCoverageConsole({ locale }: DispatchCoverageConsoleProps
                 width: "28%",
                 height: "12%",
               }}
-              aria-label={isFrench ? "Appeler Urgence 24/7 au (514) 717-9277" : "Call 24/7 Emergency at (514) 717-9277"}
+              aria-label={isFrench ? "Appeler Urgence 24/7 au (514) 510-1112" : "Call 24/7 Emergency at (514) 510-1112"}
             >
-              <span className="sr-only">Call (514) 717-9277</span>
+              <span className="sr-only">Call (514) 510-1112</span>
               {/* Subtle hover pulse border */}
               <span className="absolute inset-0 rounded-lg border-2 border-red-500/0 hover:border-red-500/80 hover:bg-red-500/10 transition-all" />
             </a>
@@ -209,7 +209,7 @@ export function DispatchCoverageConsole({ locale }: DispatchCoverageConsoleProps
           {/* Dynamic Hotspot Floating Notification Hint */}
           {activeHotspot && (
             <div className="absolute top-3 left-1/2 -translate-x-1/2 pointer-events-none px-3.5 py-1.5 rounded-full bg-black/85 border border-amber-500/50 backdrop-blur-md text-amber-300 text-[11px] font-mono shadow-lg transition-all animate-in fade-in zoom-in-95">
-              {activeHotspot === "emergency" && (isFrench ? "🚨 Appel d'urgence 24/7 direct → (514) 717-9277" : "🚨 Direct 24/7 emergency dispatch → (514) 717-9277")}
+              {activeHotspot === "emergency" && (isFrench ? "🚨 Appel d'urgence 24/7 direct → (514) 510-1112" : "🚨 Direct 24/7 emergency dispatch → (514) 510-1112")}
               {activeHotspot === "upload" && (isFrench ? "📷 Cliquez pour sélectionner la photo de votre panneau" : "📷 Click to upload electrical panel photo")}
               {activeHotspot === "brossard" && (isFrench ? "🗺️ Voir la couverture : Brossard, Longueuil & Rive-Sud →" : "🗺️ View coverage: Brossard, Longueuil & South Shore →")}
               {activeHotspot === "laval" && (isFrench ? "🗺️ Voir la couverture : Laval & Rive-Nord →" : "🗺️ View coverage: Laval & North Shore →")}
@@ -266,11 +266,11 @@ export function DispatchCoverageConsole({ locale }: DispatchCoverageConsoleProps
               <span>{isFrench ? "Évaluer panneau" : "Assess panel"}</span>
             </button>
             <a
-              href="tel:+15147179277"
+              href="tel:+15145101112"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-950/60 hover:bg-red-900/80 border border-red-500/50 text-red-200 text-xs font-mono font-semibold transition-all shadow-[0_0_12px_rgba(239,68,68,0.25)]"
             >
               <PhoneCall className="w-3.5 h-3.5 text-red-400" />
-              <span>(514) 717-9277</span>
+              <span>(514) 510-1112</span>
             </a>
             <a
               href={`/${locale === "fr" ? "fr/territoire-desservi/brossard" : "en/service-area/brossard"}`}
@@ -323,10 +323,10 @@ export function DispatchCoverageConsole({ locale }: DispatchCoverageConsoleProps
                   {isFrench ? "Télécharger" : "Download"}
                 </a>
                 <a
-                  href="tel:+15147179277"
+                  href="tel:+15145101112"
                   className="px-3 py-1 rounded bg-red-600 hover:bg-red-500 text-white font-bold text-xs"
                 >
-                  {isFrench ? "Urgence : (514) 717-9277" : "Emergency: (514) 717-9277"}
+                  {isFrench ? "Urgence : (514) 510-1112" : "Emergency: (514) 510-1112"}
                 </a>
               </div>
             </div>

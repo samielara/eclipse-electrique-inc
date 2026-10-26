@@ -42,10 +42,10 @@ export function VisualProcessStepper({ locale }: VisualProcessStepperProps) {
     {
       step: "02",
       icon: Camera,
-      image: "/media/faq-master-consultation.jpg",
+      image: "/media/process-send-panel-photos.webp",
       imageAlt: isFrench
-        ? "Électricien Éclipse expliquant le système électrique et évaluant les détails"
-        : "Éclipse electrician reviewing electrical details and photos with homeowner",
+        ? "Propriétaire photographiant son panneau électrique avec un téléphone pour transmettre les détails à l’équipe"
+        : "Homeowner photographing an electrical panel with a phone to share details with the team",
       kickerFr: "ÉTAPE 02 · ÉVALUATION PRÉCISE",
       kickerEn: "STEP 02 · ACCURATE ASSESSMENT",
       titleFr: "Envoyez vos photos & détails",
@@ -148,10 +148,6 @@ export function VisualProcessStepper({ locale }: VisualProcessStepperProps) {
                       {/* Smooth delicate fade into glass body */}
                       <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#0a101d]/90 pointer-events-none" />
 
-                      {/* Corner Number */}
-                      <span className="absolute top-3 right-4 font-mono font-black text-2xl sm:text-3xl text-white/40 select-none tracking-tight group-hover:text-white/60 transition-colors z-10">
-                        {item.step}
-                      </span>
                     </div>
 
                     {/* Card Body */}

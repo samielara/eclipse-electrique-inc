@@ -1,3 +1,4 @@
+import { solarWork } from "@/content/solar-service";
 export type ServiceWorkItem = {
   id: string;
   number: string;
@@ -353,7 +354,7 @@ const industrial: ServiceWorkExplorerData = {
       },
     },
     {
-      id: "thermography",
+      id: "solar",
       number: "04",
       image: "/media/service-industrial-04.png",
       label: { en: "Thermographic inspection", fr: "Inspection thermographique" },
@@ -406,8 +407,8 @@ const maintenance: ServiceWorkExplorerData = {
   eyebrow: { en: "Published work in this category", fr: "Travaux offerts dans cette catégorie" },
   heading: { en: "An overview of available work", fr: "Un aperçu des travaux offerts" },
   lead: {
-    en: "Describe the issue, building and location. For emergencies, call 514-717-9277 directly for immediate response.",
-    fr: "Décrivez le problème, le bâtiment et l'emplacement. Pour les urgences, appelez le 514-717-9277 directement pour une réponse immédiate.",
+    en: "Describe the issue, building and location. For emergencies, call 514-510-1112 directly for immediate response.",
+    fr: "Décrivez le problème, le bâtiment et l'emplacement. Pour les urgences, appelez le 514-510-1112 directement pour une réponse immédiate.",
   },
   items: [
     {
@@ -577,92 +578,7 @@ const generators: ServiceWorkExplorerData = {
 };
 
 // ─── Infrared Thermography ────────────────────────────────────────────────────
-const thermography: ServiceWorkExplorerData = {
-  serviceId: "thermography",
-  eyebrow: { en: "Published work in this category", fr: "Travaux offerts dans cette catégorie" },
-  heading: { en: "An overview of available work", fr: "Un aperçu des travaux offerts" },
-  lead: {
-    en: "Describe the facility and electrical equipment to be inspected. The team can discuss scheduling, report format and next steps.",
-    fr: "Décrivez l'installation et les équipements électriques à inspecter. L'équipe pourra discuter de la planification, du format du rapport et des prochaines étapes.",
-  },
-  items: [
-    {
-      id: "panel-scanning",
-      number: "01",
-      image: "/media/service-thermography-01.png",
-      label: { en: "Panel scanning", fr: "Balayage de panneaux" },
-      title: { en: "Electrical panel infrared scanning", fr: "Balayage infrarouge de panneaux électriques" },
-      description: {
-        en: "Thermal scanning of electrical panels and distribution equipment to detect overloaded circuits, loose connections and failing components.",
-        fr: "Balayage thermique des panneaux électriques et équipements de distribution pour détecter les circuits surchargés, connexions desserrées et composants défaillants.",
-      },
-      highlights: {
-        en: ["Full panel thermal scan", "Hot spot identification and grading", "Written report with thermal images"],
-        fr: ["Balayage thermique complet du panneau", "Identification et classification des points chauds", "Rapport écrit avec images thermiques"],
-      },
-    },
-    {
-      id: "inspection-report",
-      number: "02",
-      image: "/media/service-thermography-02.png",
-      label: { en: "Inspection reports", fr: "Rapports d'inspection" },
-      title: { en: "Thermographic inspection reports", fr: "Rapports d'inspection thermographique" },
-      description: {
-        en: "Detailed written reports with thermal and visual images, severity grading, and corrective action recommendations for each finding.",
-        fr: "Rapports écrits détaillés avec images thermiques et visuelles, classification de la gravité et recommandations de mesures correctives pour chaque constatation.",
-      },
-      highlights: {
-        en: ["Thermal and visual image pairs", "Severity grading by finding", "Priority corrective action list"],
-        fr: ["Paires d'images thermiques et visuelles", "Classification de gravité par constatation", "Liste des mesures correctives prioritaires"],
-      },
-    },
-    {
-      id: "switchgear-inspection",
-      number: "03",
-      image: "/media/service-thermography-03.png",
-      label: { en: "Switchgear inspection", fr: "Inspection d'appareillage" },
-      title: { en: "Industrial switchgear thermographic inspection", fr: "Inspection thermographique d'appareillage industriel" },
-      description: {
-        en: "Thermal inspection of industrial switchgear, bus bars, disconnects and high-voltage equipment during normal operation.",
-        fr: "Inspection thermique des appareillages industriels, jeux de barres, sectionnneurs et équipements haute tension pendant le fonctionnement normal.",
-      },
-      highlights: {
-        en: ["Switchgear and bus bar scanning", "High-voltage equipment inspection", "Shutdown planning for follow-up repairs"],
-        fr: ["Balayage d'appareillage et jeux de barres", "Inspection d'équipements haute tension", "Planification d'arrêt pour réparations"],
-      },
-    },
-    {
-      id: "motor-drives",
-      number: "04",
-      image: "/media/service-thermography-04.png",
-      label: { en: "Motors & drives", fr: "Moteurs & variateurs" },
-      title: { en: "Motor and drive connection thermographic inspection", fr: "Inspection thermographique des connexions de moteurs et variateurs" },
-      description: {
-        en: "Thermal scanning of motor control centers, variable frequency drives and motor connections to identify issues under load.",
-        fr: "Balayage thermique des centres de commande moteurs, variateurs de fréquence et connexions de moteurs pour identifier les problèmes sous charge.",
-      },
-      highlights: {
-        en: ["MCC and drive thermal scanning", "Under-load condition inspection", "Bearing and winding temperature review"],
-        fr: ["Balayage thermique de CCM et variateurs", "Inspection sous conditions de charge", "Révision de température des roulements et enroulements"],
-      },
-    },
-    {
-      id: "reporting-compliance",
-      number: "05",
-      image: "/media/service-thermography-05.png",
-      label: { en: "Compliance reporting", fr: "Rapports de conformité" },
-      title: { en: "Insurance and compliance thermography reporting", fr: "Rapports thermographiques d'assurance et de conformité" },
-      description: {
-        en: "Certified inspection reports formatted for insurance requirements, building compliance and regulatory submissions.",
-        fr: "Rapports d'inspection certifiés formatés pour les exigences d'assurance, la conformité du bâtiment et les soumissions réglementaires.",
-      },
-      highlights: {
-        en: ["Insurance-accepted report format", "Certification and sign-off included", "Follow-up inspection scheduling"],
-        fr: ["Format de rapport accepté par les assureurs", "Certification et signature incluses", "Planification des inspections de suivi"],
-      },
-    },
-  ],
-};
+const solar: ServiceWorkExplorerData = solarWork;
 
 // ─── Fire & Security ──────────────────────────────────────────────────────────
 const security: ServiceWorkExplorerData = {
@@ -722,7 +638,7 @@ const security: ServiceWorkExplorerData = {
     {
       id: "access-intercom",
       number: "04",
-      image: "/media/service-security-04.png",
+      image: "/media/security/access-intercom-v1.webp",
       label: { en: "Access & intercom", fr: "Accès & interphonie" },
       title: { en: "Access control and intercom system installation", fr: "Installation de systèmes de contrôle d'accès et d'interphonie" },
       description: {
@@ -737,7 +653,7 @@ const security: ServiceWorkExplorerData = {
     {
       id: "electrical-review",
       number: "05",
-      image: "/media/service-security-05.png",
+      image: "/media/security/electrical-review-v1.webp",
       label: { en: "Electrical review", fr: "Révision électrique" },
       title: { en: "Electrical compatibility review for security systems", fr: "Révision de compatibilité électrique pour systèmes de sécurité" },
       description: {
@@ -759,6 +675,6 @@ export const serviceWorkExplorerData: Record<string, ServiceWorkExplorerData> = 
   industrial,
   maintenance,
   generators,
-  thermography,
+  solar,
   security,
 };
