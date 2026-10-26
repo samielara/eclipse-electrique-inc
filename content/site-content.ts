@@ -1,4 +1,6 @@
+import { solarPages } from "@/content/solar-service";
 import { customerFaq } from "@/content/customer-faq";
+import { commercialServices } from "@/content/commercial-services";
 import type { Locale, PageId, ServicePageId } from "@/lib/routes";
 
 export interface SeoCopy {
@@ -31,7 +33,7 @@ export interface RegionCopy {
 export type SectorId =
   | "residential"
   | "commercialIndustrial"
-  | "thermography"
+  | "solar"
   | "security";
 
 export interface SectorMatrixCopy {
@@ -70,7 +72,6 @@ export interface ThermographyProofCopy {
 }
 
 export interface LocaleContent {
-  languageName: string;
   alternateLanguageName: string;
   nav: {
     services: string;
@@ -215,7 +216,7 @@ const frenchServiceFaq: Record<ServicePageId, readonly FaqItem[]> = {
     {
       question: "Comment joindre la ligne d’urgence?",
       answer:
-        "Appelez directement le 514-717-9277. La suite est coordonnée selon la nature de la situation et les conditions au moment de l’appel.",
+        "Appelez directement le 514-510-1112. La suite est coordonnée selon la nature de la situation et les conditions au moment de l’appel.",
     },
     {
       question: "Le site garantit-il un délai d’arrivée?",
@@ -245,9 +246,9 @@ const frenchServiceFaq: Record<ServicePageId, readonly FaqItem[]> = {
         "Précisez le type de bâtiment, l’emplacement, l’équipement existant et si la demande concerne une installation, un diagnostic ou une réparation.",
     },
   ],
-  thermography: [
+  solar: [
     {
-      question: "Que permet une inspection par thermographie infrarouge?",
+      question: "Que permet une inspection par énergie solaire?",
       answer:
         "Une lecture thermique non destructive aide à repérer des anomalies comme des échauffements, des surcharges ou des connexions à vérifier avant une panne.",
     },
@@ -337,7 +338,7 @@ const englishServiceFaq: Record<ServicePageId, readonly FaqItem[]> = {
     {
       question: "How do I reach the emergency line?",
       answer:
-        "Call 514-717-9277 directly. Next steps are coordinated according to the situation and conditions at the time of the call.",
+        "Call 514-510-1112 directly. Next steps are coordinated according to the situation and conditions at the time of the call.",
     },
     {
       question: "Does the website guarantee an arrival time?",
@@ -367,9 +368,9 @@ const englishServiceFaq: Record<ServicePageId, readonly FaqItem[]> = {
         "Include the property type, location, existing equipment and whether you need installation, diagnosis or repair.",
     },
   ],
-  thermography: [
+  solar: [
     {
-      question: "What does infrared thermography inspection reveal?",
+      question: "What does solar energy inspection reveal?",
       answer:
         "A non-destructive thermal reading can help identify anomalies such as hot spots, overloads or connections that should be checked before a failure.",
     },
@@ -408,19 +409,19 @@ const frenchPages: Record<PageId, LocalizedPage> = {
     seo: {
       title: "Électricien à Montréal | Éclipse électrique",
       description:
-        "Services électriques résidentiels, commerciaux et industriels dans le Grand Montréal, avec entretien, thermographie infrarouge, alarmes et génératrices.",
+        "Services électriques résidentiels, commerciaux et industriels dans le Grand Montréal, avec entretien, énergie solaire, alarmes et génératrices.",
     },
     eyebrow: "Entrepreneur électricien à Montréal",
     title:
       "Des services électriques fiables, du résidentiel à l’industriel",
     intro:
-      "Éclipse électrique inc. dessert le Grand Montréal, la Rive-Nord et la Rive-Sud pour des travaux électriques, de l’entretien, des urgences, de la thermographie infrarouge et des systèmes de sécurité.",
+      "Éclipse électrique inc. dessert le Grand Montréal, la Rive-Nord et la Rive-Sud pour des travaux électriques, de l’entretien, des urgences, de la énergie solaire et des systèmes de sécurité.",
   },
   services: {
     seo: {
       title: "Services électriques à Montréal | Éclipse électrique",
       description:
-        "Explorez les services résidentiels, commerciaux, industriels, de thermographie, d’alarme, d’entretien, d’urgence et de génératrices dans le Grand Montréal.",
+        "Explorez les services résidentiels, commerciaux et industriels, d’énergie solaire, d’alarme, d’entretien, d’urgence et de génératrices dans le Grand Montréal.",
     },
     eyebrow: "Services électriques",
     title: "Un seul point de contact pour différents besoins électriques",
@@ -456,29 +457,22 @@ const frenchPages: Record<PageId, LocalizedPage> = {
   },
   commercial: {
     seo: {
-      title: "Électricien commercial à Montréal | Éclipse électrique",
+      title: "Électricien commercial et industriel à Montréal | Éclipse électrique",
       description:
-        "Travaux électriques pour bureaux, commerces, restaurants et autres espaces commerciaux du Grand Montréal.",
+        "Construction, rénovations et entrées électriques pour bureaux, commerces, restaurants et installations commerciales ou industrielles du Grand Montréal.",
     },
-    eyebrow: "Commercial",
-    title: "Des installations électriques adaptées aux espaces commerciaux",
+    eyebrow: "Commercial & industriel",
+    title: "Services électriques commerciaux et industriels",
     intro:
-      "Nous discutons de projets électriques pour commerces, bureaux, restaurants et autres lieux à vocation commerciale dans le Grand Montréal.",
+      "Des travaux électriques pour bureaux, commerces, restaurants et installations industrielles : construction neuve, rénovations et entrées électriques dans le Grand Montréal.",
     paragraphs: [
       "Chaque demande est évaluée selon la nature des travaux, le bâtiment, les équipements concernés et les conditions du site.",
     ],
     items: [
-      "Nouvelles installations et réaménagements",
-      "Entrées de service et panneaux électriques",
-      "Éclairage intérieur, extérieur et contrôles",
-      "Mesures d’efficacité énergétique du bâtiment",
-      "Câblage structuré de données, téléphone, audio et vidéo",
-      "Éclairage d’urgence, alarmes incendie, interphone et accès",
-      "Systèmes de sécurité et de surveillance",
-      "UPS et génératrices",
+      ...commercialServices.map(item=>item.title.fr),
     ],
     faq: frenchServiceFaq.commercial,
-    related: ["maintenance", "industrial"],
+    related: ["maintenance", "generators"],
   },
   industrial: {
     seo: {
@@ -508,12 +502,12 @@ const frenchPages: Record<PageId, LocalizedPage> = {
     seo: {
       title: "Entretien et urgence électrique Montréal | Éclipse électrique",
       description:
-        "Diagnostic, dépannage, réparation et entretien électrique, avec une ligne d’urgence accessible en tout temps au 514-717-9277.",
+        "Diagnostic, dépannage, réparation et entretien électrique, avec une ligne d’urgence accessible en tout temps au 514-510-1112.",
     },
     eyebrow: "Ligne d’urgence 24/7",
     title: "Une urgence électrique? Appelez-nous directement.",
     intro:
-      "Pour une demande urgente, appelez Éclipse électrique inc. au 514-717-9277. Nous recueillerons les renseignements nécessaires afin de coordonner la suite selon la situation.",
+      "Pour une demande urgente, appelez Éclipse électrique inc. au 514-510-1112. Nous recueillerons les renseignements nécessaires afin de coordonner la suite selon la situation.",
     paragraphs: [
       "Pour un besoin non urgent, communiquez avec le bureau afin de discuter d’entretien, d’inspection, de diagnostic ou de réparation électrique.",
     ],
@@ -526,7 +520,7 @@ const frenchPages: Record<PageId, LocalizedPage> = {
       "Solutions adaptées au bâtiment et aux équipements",
     ],
     faq: frenchServiceFaq.maintenance,
-    related: ["residential", "commercial", "industrial"],
+    related: ["residential", "commercial"],
   },
   generators: {
     seo: {
@@ -550,29 +544,7 @@ const frenchPages: Record<PageId, LocalizedPage> = {
     faq: frenchServiceFaq.generators,
     related: ["residential", "maintenance"],
   },
-  thermography: {
-    seo: {
-      title: "Thermographie infrarouge à Montréal | Éclipse électrique",
-      description:
-        "Inspection électrique par thermographie infrarouge pour repérer les échauffements, documenter les installations et prévenir les arrêts dans le Grand Montréal.",
-    },
-    eyebrow: "Thermographie infrarouge",
-    title: "Prévenir les anomalies avant la panne",
-    intro:
-      "Une analyse thermique non destructive aide à cibler les points à vérifier sur vos installations électriques, dans leurs conditions normales d’utilisation.",
-    paragraphs: [
-      "Le périmètre de l’inspection, les conditions de mesure et les livrables attendus sont confirmés avec l’équipe avant l’intervention.",
-    ],
-    items: [
-      "Détection préventive de points chauds et d’échauffements",
-      "Analyse de panneaux de distribution sous charge normale",
-      "Rapports techniques à préparer pour les dossiers d’assurance",
-      "Repérage de surcharges, connexions desserrées et déséquilibres de phases",
-      "Priorisation des vérifications pour réduire le risque d’arrêt de production",
-    ],
-    faq: frenchServiceFaq.thermography,
-    related: ["industrial", "maintenance"],
-  },
+  solar: solarPages.fr,
   security: {
     seo: {
       title: "Alarmes et sécurité électrique à Montréal | Éclipse électrique",
@@ -616,7 +588,7 @@ const frenchPages: Record<PageId, LocalizedPage> = {
     eyebrow: "À propos",
     title: "Une entreprise électrique établie à Montréal",
     intro:
-      "Éclipse électrique inc. dessert le Grand Montréal avec des services résidentiels, commerciaux et industriels, de la thermographie infrarouge, des systèmes de sécurité, de l’entretien, une ligne d’urgence et des génératrices.",
+      "Éclipse électrique inc. dessert le Grand Montréal avec des services résidentiels, commerciaux et industriels, de la énergie solaire, des systèmes de sécurité, de l’entretien, une ligne d’urgence et des génératrices.",
     paragraphs: [
       "La licence RBQ 5582-0096-01 a été délivrée le 6 août 2008. Le numéro d’entreprise du Québec est 1165326209.",
       "Le site présente uniquement les renseignements publics vérifiés. Pour discuter d’un besoin précis, communiquez directement avec l’entreprise.",
@@ -626,7 +598,7 @@ const frenchPages: Record<PageId, LocalizedPage> = {
     seo: {
       title: "FAQ électricien Montréal : panneaux, bornes et urgences",
       description:
-        "Réponses sur les services résidentiels, commerciaux et industriels, la thermographie, les systèmes de sécurité, les urgences, le territoire et la licence RBQ.",
+        "Réponses sur les services résidentiels, commerciaux et industriels, l’énergie solaire, les systèmes de sécurité, les urgences, le territoire et la licence RBQ.",
     },
     eyebrow: "Questions fréquentes",
     title: "Des réponses claires avant de communiquer avec nous",
@@ -643,7 +615,7 @@ const frenchPages: Record<PageId, LocalizedPage> = {
     eyebrow: "Contact",
     title: "Parlons de vos besoins électriques",
     intro:
-      "Pour des travaux résidentiels, commerciaux ou industriels, une inspection par thermographie, un système de sécurité, de l’entretien ou une génératrice, communiquez avec Éclipse électrique inc.",
+      "Pour des travaux résidentiels, commerciaux ou industriels, un projet solaire, un système de sécurité, de l’entretien ou une génératrice, communiquez avec Éclipse électrique inc.",
   },
   privacy: {
     seo: {
@@ -668,18 +640,18 @@ const englishPages: Record<PageId, LocalizedPage> = {
     seo: {
       title: "Electrician in Montréal | Éclipse électrique",
       description:
-        "Residential, commercial and industrial electrical services across Greater Montréal, including maintenance, infrared thermography, alarms and generators.",
+        "Residential, commercial and industrial electrical services across Greater Montréal, including maintenance, solar energy, alarms and generators.",
     },
     eyebrow: "Montréal electrical contractor",
     title: "Electrical services from residential to industrial",
     intro:
-      "Éclipse électrique inc. serves Greater Montréal, the North Shore and the South Shore with electrical work, maintenance, emergencies, infrared thermography and security systems.",
+      "Éclipse électrique inc. serves Greater Montréal, the North Shore and the South Shore with electrical work, maintenance, emergencies, solar energy and security systems.",
   },
   services: {
     seo: {
       title: "Electrical services in Montréal | Éclipse électrique",
       description:
-        "Explore residential, commercial and industrial work, infrared thermography, alarm systems, maintenance, emergency support and generator services across Greater Montréal.",
+        "Explore residential, commercial and industrial work, solar energy, alarm systems, maintenance, emergency support and generator services across Greater Montréal.",
     },
     eyebrow: "Electrical services",
     title: "One point of contact for a range of electrical needs",
@@ -715,29 +687,22 @@ const englishPages: Record<PageId, LocalizedPage> = {
   },
   commercial: {
     seo: {
-      title: "Commercial electrician in Montréal | Éclipse électrique",
+      title: "Commercial & industrial electrician in Montréal | Éclipse électrique",
       description:
-        "Electrical work for offices, retail spaces, restaurants and other commercial properties across Greater Montréal.",
+        "Construction, renovations and service entrances for offices, shops, restaurants and commercial or industrial facilities across Greater Montréal.",
     },
-    eyebrow: "Commercial",
-    title: "Electrical installations for commercial spaces",
+    eyebrow: "Commercial & Industrial",
+    title: "Commercial and industrial electrical services",
     intro:
-      "We discuss electrical projects for retail spaces, offices, restaurants and other commercial properties across Greater Montréal.",
+      "Electrical work for offices, shops, restaurants and industrial facilities: new construction, renovations and service entrances across Greater Montréal.",
     paragraphs: [
       "Each request is reviewed according to the work, property, affected equipment and conditions at the site.",
     ],
     items: [
-      "New installations and space reconfiguration",
-      "Service entrances and electrical panels",
-      "Interior, exterior and controlled lighting",
-      "Building energy-efficiency measures",
-      "Structured data, telephone, audio and video cabling",
-      "Emergency lighting, fire alarms, intercom and access",
-      "Security and surveillance systems",
-      "UPS units and generators",
+      ...commercialServices.map(item=>item.title.en),
     ],
     faq: englishServiceFaq.commercial,
-    related: ["maintenance", "industrial"],
+    related: ["maintenance", "generators"],
   },
   industrial: {
     seo: {
@@ -767,12 +732,12 @@ const englishPages: Record<PageId, LocalizedPage> = {
     seo: {
       title: "Electrical maintenance and emergency Montréal | Éclipse",
       description:
-        "Electrical diagnosis, troubleshooting, repair and maintenance, with an emergency line available at all times at 514-717-9277.",
+        "Electrical diagnosis, troubleshooting, repair and maintenance, with an emergency line available at all times at 514-510-1112.",
     },
     eyebrow: "24/7 emergency line",
     title: "Electrical emergency? Call us directly.",
     intro:
-      "For an urgent request, call Éclipse électrique inc. at 514-717-9277. We will collect the information needed to coordinate the next steps based on the situation.",
+      "For an urgent request, call Éclipse électrique inc. at 514-510-1112. We will collect the information needed to coordinate the next steps based on the situation.",
     paragraphs: [
       "For non-urgent needs, contact the office to discuss electrical maintenance, inspection, diagnosis or repair.",
     ],
@@ -785,7 +750,7 @@ const englishPages: Record<PageId, LocalizedPage> = {
       "Solutions matched to the property and equipment",
     ],
     faq: englishServiceFaq.maintenance,
-    related: ["residential", "commercial", "industrial"],
+    related: ["residential", "commercial"],
   },
   generators: {
     seo: {
@@ -809,29 +774,7 @@ const englishPages: Record<PageId, LocalizedPage> = {
     faq: englishServiceFaq.generators,
     related: ["residential", "maintenance"],
   },
-  thermography: {
-    seo: {
-      title: "Infrared thermography in Montréal | Éclipse électrique",
-      description:
-        "Electrical infrared thermography inspections to identify hot spots, document installations and help prevent downtime across Greater Montréal.",
-    },
-    eyebrow: "Infrared thermography",
-    title: "Identify anomalies before a failure",
-    intro:
-      "A non-destructive thermal analysis helps target electrical conditions to review while installations are operating in their normal conditions.",
-    paragraphs: [
-      "The inspection scope, measurement conditions and expected deliverables are confirmed with the team before the visit.",
-    ],
-    items: [
-      "Preventive detection of hot spots and abnormal heat",
-      "Distribution-panel analysis under normal load",
-      "Technical reports prepared for insurance files",
-      "Identification of overloads, loose connections and phase imbalance",
-      "Prioritized checks that can help reduce production downtime risk",
-    ],
-    faq: englishServiceFaq.thermography,
-    related: ["industrial", "maintenance"],
-  },
+  solar: solarPages.en,
   security: {
     seo: {
       title: "Fire and security systems in Montréal | Éclipse électrique",
@@ -875,7 +818,7 @@ const englishPages: Record<PageId, LocalizedPage> = {
     eyebrow: "About",
     title: "An established Montréal electrical contractor",
     intro:
-      "Éclipse électrique inc. serves Greater Montréal with residential, commercial and industrial work, infrared thermography, security systems, maintenance, an emergency line and generator services.",
+      "Éclipse électrique inc. serves Greater Montréal with residential, commercial and industrial work, solar energy, security systems, maintenance, an emergency line and generator services.",
     paragraphs: [
       "RBQ licence 5582-0096-01 was issued on August 6, 2008. The Québec enterprise number is 1165326209.",
       "This website presents verified public information only. Contact the company directly to discuss a specific need.",
@@ -885,7 +828,7 @@ const englishPages: Record<PageId, LocalizedPage> = {
     seo: {
       title: "Montréal Electrician FAQ: Panels, EV Charging & Emergencies",
       description:
-        "Answers about residential, commercial and industrial services, thermography, security systems, emergency contact, territory and the RBQ licence.",
+        "Answers about residential, commercial and industrial services, solar energy, security systems, emergency contact, territory and the RBQ licence.",
     },
     eyebrow: "Frequently asked questions",
     title: "Clear information before you contact us",
@@ -902,7 +845,7 @@ const englishPages: Record<PageId, LocalizedPage> = {
     eyebrow: "Contact",
     title: "Let’s discuss your electrical needs",
     intro:
-      "For residential, commercial or industrial work, infrared thermography, security systems, maintenance, or generator service, contact Éclipse électrique inc.",
+      "For residential, commercial or industrial work, solar energy, security systems, maintenance, or generator service, contact Éclipse électrique inc.",
   },
   privacy: {
     seo: {
@@ -924,7 +867,6 @@ const englishPages: Record<PageId, LocalizedPage> = {
 
 export const content = {
   fr: {
-    languageName: "Français",
     alternateLanguageName: "English",
     nav: {
       services: "Services",
@@ -1027,20 +969,13 @@ export const content = {
             secondaryRoute: "industrial",
           },
           {
-            id: "thermography",
-            label: "Thermographie Infrarouge",
-            secondaryLabel: "Infrared Thermography",
-            title: "Thermographie Infrarouge",
-            intro:
-              "Une lecture thermique non destructive pour repérer les anomalies avant qu’elles ne deviennent une panne.",
-            items: [
-              "Détection préventive de points chauds",
-              "Analyse de panneaux de distribution sous charge",
-              "Rapports techniques pour les dossiers d’assurance",
-              "Repérage des surcharges et connexions à vérifier",
-              "Réduction du risque d’arrêt de production",
-            ],
-            route: "thermography",
+            id: "solar",
+            label: "Énergie solaire",
+            secondaryLabel: "Solar energy",
+            title: solarPages.fr.title,
+            intro: solarPages.fr.intro,
+            items: solarPages.fr.items ?? [],
+            route: "solar",
           },
           {
             id: "security",
@@ -1061,7 +996,7 @@ export const content = {
       },
       thermographyProof: {
         eyebrow: "Preuve technique",
-        title: "Inspection par thermographie infrarouge : Prévenir avant la panne",
+        title: "Inspection par énergie solaire : Prévenir avant la panne",
         intro:
           "Une inspection thermique non destructive aide à repérer les anomalies électriques avant qu’elles ne deviennent une panne. Le périmètre et les livrables sont confirmés avec l’équipe.",
         pillarCountLabel: "piliers de prévention",
@@ -1216,7 +1151,7 @@ export const content = {
       formIntro:
         "Rassemblez les renseignements utiles; votre application de courriel s’ouvrira ensuite pour que vous puissiez vérifier et envoyer le message.",
       emergencyNote:
-        "Pour une urgence, n’utilisez pas le formulaire : appelez directement le 514-717-9277.",
+        "Pour une urgence, n’utilisez pas le formulaire : appelez directement le 514-510-1112.",
       fields: {
         name: "Nom",
         phone: "Téléphone",
@@ -1254,7 +1189,6 @@ export const content = {
     pages: frenchPages,
   },
   en: {
-    languageName: "English",
     alternateLanguageName: "Français",
     nav: {
       services: "Services",
@@ -1357,20 +1291,13 @@ export const content = {
             secondaryRoute: "industrial",
           },
           {
-            id: "thermography",
-            label: "Infrared Thermography",
-            secondaryLabel: "Thermographie Infrarouge",
-            title: "Infrared Thermography",
-            intro:
-              "Non-destructive thermal reading to identify anomalies before they become a failure.",
-            items: [
-              "Preventive hot-spot detection",
-              "Distribution-panel analysis under load",
-              "Technical reports for insurance files",
-              "Identification of overloads and connections to check",
-              "Reduced risk of production downtime",
-            ],
-            route: "thermography",
+            id: "solar",
+            label: "Solar energy",
+            secondaryLabel: "Énergie solaire",
+            title: solarPages.en.title,
+            intro: solarPages.en.intro,
+            items: solarPages.en.items ?? [],
+            route: "solar",
           },
           {
             id: "security",
@@ -1391,7 +1318,7 @@ export const content = {
       },
       thermographyProof: {
         eyebrow: "Technical proof",
-        title: "Infrared thermography inspection: prevent the failure",
+        title: "Solar energy inspection: prevent the failure",
         intro:
           "A non-destructive thermal inspection helps identify electrical anomalies before they become a failure. Scope and deliverables are confirmed with the team.",
         pillarCountLabel: "prevention pillars",
@@ -1546,7 +1473,7 @@ export const content = {
       formIntro:
         "Gather the useful details; your email application will then open so you can review and send the message.",
       emergencyNote:
-        "For an emergency, do not use the form: call 514-717-9277 directly.",
+        "For an emergency, do not use the form: call 514-510-1112 directly.",
       fields: {
         name: "Name",
         phone: "Phone",

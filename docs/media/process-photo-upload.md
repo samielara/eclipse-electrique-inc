@@ -1,0 +1,7 @@
+# Photo submission process image
+
+Built-in ImageGen generation. Saved asset: `public/media/process-send-panel-photos.webp`.
+
+Final prompt:
+
+Use case: photorealistic-natural. Asset: landscape website process card illustrating 'Send details and photos' to an electrical contractor. Create a clear, realistic close over-the-shoulder view of a homeowner using a smartphone to take a photo of their residential electrical breaker panel. Composition: the homeowner's hands and vertical phone are in the left foreground, with a crisp recognizable camera preview of the same panel visible on the screen; the actual panel occupies the center-right background. Crop the homeowner at the shoulders so no face or competing character is shown. The panel has its outer door open but its normal protective dead-front cover is intact, with rows of breaker toggles and a simple circuit schedule; no exposed wiring or electrical work being performed. Setting: tidy, credible Quebec home utility room, soft daylight and subtly warm interior light, neutral gray and warm wood details. Professional editorial photography matching a premium black-and-amber electrician website, realistic hands and phone perspective, clear subject at small card sizes. Full-bleed wide 16:9 photograph. Do not show an electrician consulting with customers, tablet presentation, thermal camera, split screen, collage, added text, watermarks or marketing graphics. The visual message must be unmistakably: take photos of your electrical installation to share with the team.

@@ -1,4 +1,5 @@
 "use client";
+import mobileStyles from "./mobile-navigation.module.css";
 
 import {
   ArrowRight,
@@ -15,6 +16,7 @@ import {
   Menu,
   PhoneCall,
   ScanSearch,
+  Sun,
   Send,
   ShieldCheck,
   X,
@@ -24,7 +26,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { content } from "@/content/site-content";
 import {
@@ -35,11 +36,17 @@ import {
 } from "@/lib/city-routes";
 import { alternatePath, pathFor, quotePath, servicePageIds, type Locale, type PageId, type ServicePageId } from "@/lib/routes";
 import { site } from "@/lib/site";
+import { ResidentialNav } from "@/components/residential-nav";
+import { residentialServicePath, type ResidentialSeason } from "@/content/residential-services";
+import { commercialServicePath } from "@/content/commercial-services";
 
 interface SiteHeaderProps {
   locale: Locale;
   pageId: PageId;
   citySlug?: string;
+  residentialServiceId?: string;
+  commercialServiceId?: string;
+  residentialSeason?: ResidentialSeason;
 }
 
 const regionOrder: readonly CityRegion[] = ["montreal", "northShore", "southShore"];
@@ -50,13 +57,12 @@ const serviceIcons: Record<ServicePageId, typeof House> = {
   industrial: Factory,
   maintenance: Zap,
   generators: BatteryCharging,
-  thermography: ScanSearch,
+  solar: Sun,
   security: ShieldCheck,
 };
 
 const serviceBadges: Partial<Record<ServicePageId, string>> = {
   maintenance: "24/7",
-  thermography: "FLIR",
 };
 
 const regionIcons: Record<CityRegion, typeof MapPin> = {
@@ -72,7 +78,7 @@ const serviceMicroCopy: Record<Locale, Record<ServicePageId, string>> = {
     industrial: "Équipements, moteurs & 600V",
     maintenance: "Urgence 24/7 & entretien",
     generators: "Alimentation de secours",
-    thermography: "Diagnostic infrarouge FLIR",
+    solar: "Projets solaires & raccordements",
     security: "Alarmes, caméras & accès",
   },
   en: {
@@ -81,12 +87,12 @@ const serviceMicroCopy: Record<Locale, Record<ServicePageId, string>> = {
     industrial: "Machinery, motors & 600V",
     maintenance: "24/7 emergency & maintenance",
     generators: "Backup power & transfer",
-    thermography: "FLIR thermal diagnostics",
+    solar: "Solar projects & connections",
     security: "Fire alarms, access & cameras",
   },
 };
 
-export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
+export function SiteHeader({ locale, pageId, citySlug, residentialServiceId, commercialServiceId, residentialSeason="autumn" }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const servicesDropdownRef = useRef<HTMLDetailsElement>(null);
   const areaDropdownRef = useRef<HTMLDetailsElement>(null);
@@ -178,7 +184,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
   const skipLabel = isFrench ? "Aller au contenu" : "Skip to content";
   const quoteLabel = copy.actions.quote;
   const languageLabel = copy.alternateLanguageName;
-  const languageHref = citySlug
+  const languageHref = commercialServiceId ? commercialServicePath(locale==="fr"?"en":"fr",commercialServiceId) : residentialServiceId ? residentialServicePath(locale==="fr"?"en":"fr",residentialServiceId) : citySlug
     ? alternateCityPath(locale, citySlug)
     : alternatePath(pageId, locale);
   const regionLabels: Record<CityRegion, string> = isFrench
@@ -247,7 +253,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
         {skipLabel}
       </a>
       <header
-        className="site-header"
+        className={`site-header ${mobileStyles.header}`}
         data-home={pageId === "home" ? "true" : "false"}
         data-scroll-state={isScrolled ? "scrolled" : "top"}
       >
@@ -275,6 +281,8 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
               <div className="header-dropdown-panel services-dropdown-panel">
                 <div className="services-dropdown-list">
                   {serviceLinks.map(({ serviceId, label, description }) => {
+                    if(serviceId==="residential") return <ResidentialNav key={serviceId} locale={locale} season={residentialSeason} currentId={residentialServiceId} onNavigate={closeDropdowns}/>;
+                    if(serviceId==="commercial") return <ResidentialNav key={serviceId} category="commercial" locale={locale} season={residentialSeason} currentId={commercialServiceId} onNavigate={closeDropdowns}/>;
                     const Icon = serviceIcons[serviceId];
                     const badge = serviceBadges[serviceId];
                     return (
@@ -298,12 +306,6 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                       </Link>
                     );
                   })}
-                </div>
-                <div className="dropdown-footer">
-                  <Link className="dropdown-view-all" href={pathFor("services", locale)} onClick={closeDropdowns}>
-                    <span>{copy.actions.exploreServices}</span>
-                    <ArrowRight aria-hidden="true" />
-                  </Link>
                 </div>
               </div>
             </details>
@@ -378,12 +380,6 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                   })}
                 </div>
 
-                <div className="dropdown-footer">
-                  <Link className="dropdown-view-all" href={pathFor("serviceArea", locale)} onClick={closeDropdowns}>
-                    <span>{copy.actions.checkArea}</span>
-                    <ArrowRight aria-hidden="true" />
-                  </Link>
-                </div>
               </div>
             </details>
 
@@ -400,7 +396,6 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
           </nav>
 
           <div className="desktop-actions">
-            <ThemeToggle locale={locale} />
             <Link
               className="language-link language-toggle"
               href={languageHref}
@@ -416,7 +411,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
             </Link>
 
             <Button asChild size="lg" className="cta-button">
-              <Link href={quotePath(locale)}>
+              <Link href={quotePath(locale, { pageId, citySlug, residentialServiceId, commercialServiceId })}>
                 {quoteLabel}
               </Link>
             </Button>
@@ -486,11 +481,9 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                     <ChevronDown className="mobile-nav-arrow mobile-nav-chevron" aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
-                    <Link className="mobile-submenu-all" href={pathFor("services", locale)} onClick={closeMobileMenu}>
-                      <span>{copy.actions.exploreServices}</span>
-                      <ArrowRight aria-hidden="true" />
-                    </Link>
                     {serviceLinks.map(({ serviceId, label }) => {
+                      if(serviceId==="residential") return <ResidentialNav key={serviceId} mobile locale={locale} season={residentialSeason} currentId={residentialServiceId} onNavigate={closeMobileMenu}/>;
+                      if(serviceId==="commercial") return <ResidentialNav key={serviceId} category="commercial" mobile locale={locale} season={residentialSeason} currentId={commercialServiceId} onNavigate={closeMobileMenu}/>;
                       const ServiceIcon = serviceIcons[serviceId];
                       return (
                         <Link
@@ -526,10 +519,6 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                     <ChevronDown className="mobile-nav-arrow mobile-nav-chevron" aria-hidden="true" />
                   </summary>
                   <div className="mobile-submenu-panel">
-                    <Link className="mobile-submenu-all" href={pathFor("serviceArea", locale)} onClick={closeMobileMenu}>
-                      <span>{copy.actions.checkArea}</span>
-                      <ArrowRight aria-hidden="true" />
-                    </Link>
                     {regionOrder.map((region) => (
                       <details className="mobile-city-group mobile-region-accordion" key={region}>
                         <summary className="mobile-region-trigger">
@@ -590,7 +579,7 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
               <div className="mobile-drawer-bottom">
                 <Link
                   className="mobile-drawer-cta mobile-quote"
-                  href={quotePath(locale)}
+                  href={quotePath(locale, { pageId, citySlug, residentialServiceId, commercialServiceId })}
                   onClick={closeMobileMenu}
                 >
                   <Calendar aria-hidden="true" />
@@ -603,7 +592,6 @@ export function SiteHeader({ locale, pageId, citySlug }: SiteHeaderProps) {
                 </a>
 
                 <div className="mobile-drawer-actions">
-                  <ThemeToggle locale={locale} />
                   <Link
                     className="mobile-drawer-lang"
                     href={languageHref}

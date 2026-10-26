@@ -1,3 +1,5 @@
+import { ServiceTile } from "@/components/service-tile";
+import tileStyles from "./service-tile.module.css";
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/lib/routes";
@@ -582,7 +584,7 @@ export function VisualServicesGrid({
         </div>
       )}
 
-      <div className="visual-services-grid">
+      <div className={tileStyles.grid}>
         {VISUAL_SERVICES.map((item) => {
           const Icon = item.icon;
           const title = item.title[locale];
@@ -590,32 +592,7 @@ export function VisualServicesGrid({
           const category = item.category[locale];
           const href = pathFor(item.linkId, locale);
 
-          return (
-            <article
-              key={item.id}
-              className="visual-service-card group"
-              data-service-item={item.id}
-            >
-              <div className="visual-service-icon-container" aria-hidden="true">
-                <Icon className="visual-service-svg" />
-              </div>
-
-              <span className="visual-service-badge">{category}</span>
-
-              <h3 className="visual-service-card-title">{title}</h3>
-
-              <p className="visual-service-card-desc">{description}</p>
-
-              <a
-                href={href}
-                className="visual-service-action"
-                aria-label={`${title} - ${isFrench ? "En savoir plus" : "Learn more"}`}
-              >
-                <span>{isFrench ? "En savoir plus" : "Learn more"}</span>
-                <ArrowUpRight className="visual-service-arrow" aria-hidden="true" />
-              </a>
-            </article>
-          );
+          return <ServiceTile key={item.id} serviceId={item.id} icon={<Icon/>} label={category} title={title} description={description} href={href} action={isFrench ? "En savoir plus" : "Learn more"}/>;
         })}
       </div>
     </section>

@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 export type AssistantIntent =
   | "emergency"
   | "panel-ev"
-  | "thermography"
+  | "solar"
   | "security"
   | "commercial-industrial"
   | "generators"
@@ -45,7 +45,7 @@ export interface AssistantReply {
 }
 
 export interface AssistantQuickReply {
-  id: "emergency" | "panel-ev" | "thermography" | "coverage" | "quote";
+  id: "emergency" | "panel-ev" | "solar" | "coverage" | "quote";
   label: string;
   value: string;
 }
@@ -57,13 +57,13 @@ export const assistantBusinessFacts = {
   cmeqListingUrl: site.cmeqUrl,
   officePhone: site.officePhoneDisplay,
   emergencyPhone: site.emergencyPhoneDisplay,
-  emergencyPhoneHref: "tel:5147179277",
+  emergencyPhoneHref: "tel:5145101112",
   coveredCityCount: cityRoutes.length,
   emergencyAvailability: "24/7",
   quoteSteps: 4,
   coreServices: [
     "Panneau électrique & Borne VE",
-    "Thermographie infrarouge",
+    "Énergie solaire",
     "Génératrices & transfert",
     "Rénovation résidentielle",
     "Commercial & Industriel",
@@ -84,9 +84,9 @@ const quickReplies: Record<Locale, readonly AssistantQuickReply[]> = {
       value: "Je veux remplacer un panneau électrique ou installer une borne VE",
     },
     {
-      id: "thermography",
-      label: "🔍 Thermographie infrarouge",
-      value: "Je souhaite planifier une inspection par thermographie infrarouge",
+      id: "solar",
+      label: "🔍 Énergie solaire",
+      value: "Je souhaite discuter d’un projet d’énergie solaire",
     },
     {
       id: "coverage",
@@ -111,9 +111,9 @@ const quickReplies: Record<Locale, readonly AssistantQuickReply[]> = {
       value: "I want to replace an electrical panel or install an EV charger",
     },
     {
-      id: "thermography",
-      label: "🔍 Infrared thermography",
-      value: "I would like to book an infrared thermography inspection",
+      id: "solar",
+      label: "🔍 Solar energy",
+      value: "I would like to discuss a solar energy project",
     },
     {
       id: "coverage",
@@ -134,7 +134,7 @@ const copy = {
       "Bonjour ! Je suis votre conseiller virtuel chez Éclipse Électrique inc. Nous intervenons dans tout le Grand Montréal pour vos panneaux électriques, bornes de recharge, génératrices, rénovations et urgences 24/7. Comment puis-je vous aider aujourd’hui ?",
     hazard:
       "⚠️ Situation dangereuse : ne touchez à aucun équipement. Éloignez-vous de la zone. En présence de feu ou de fumée, quittez les lieux et composez le 911. Pour la répartition électrique d’urgence, appelez maintenant.",
-    emergencyAction: "Appeler l’urgence · 514-717-9277",
+    emergencyAction: "Appeler l’urgence · 514-510-1112",
     quote:
       "Je peux vous diriger vers la demande de soumission en 4 étapes. Précisez le type de bâtiment, les travaux prévus, votre municipalité et vos coordonnées. En cas d’urgence active, composez plutôt la ligne 24/7.",
     quoteAction: "Commencer la demande",
@@ -151,10 +151,10 @@ const copy = {
     troubleshooting:
       "Si un disjoncteur saute fréquemment ou qu'une prise ne fonctionne plus sans signe de danger immédiat, vérifiez d'abord si une prise DCL (GFCI) en amont a déclenché. Si le problème persiste, évitez de manipuler le câblage et laissez un maître électricien certifié inspecter et diagnostiquer le circuit en toute sécurité.",
     services:
-      "Nous offrons 6 services certifiés de maître électricien dans le Grand Montréal :\n\n• **Électricité résidentielle** : Remplacement de panneau (100A à 200A), filage, éclairage et rénovations\n• **Bornes de recharge pour VE** : Installation certifiée admissible à la subvention Roulez Vert de 600 $\n• **Commercial et industriel** : Distribution 600V, raccordement de machinerie et maintenance\n• **Thermographie infrarouge** : Inspection thermique préventive sans coupure et rapports pour assurances\n• **Génératrices d’urgence** : Systèmes d’alimentation de secours automatiques et commutateurs de transfert\n• **Urgence électrique 24/7** : Ligne d’intervention rapide pour pannes et défaillances (514-717-9277)",
+      "Nos services : électricité résidentielle, commercial et industriel, entretien et urgence 24/7, génératrices, énergie solaire, alarmes et sécurité. Décrivez le bâtiment et les travaux pour orienter votre demande.",
     servicesAction: "Consulter tous nos services",
-    thermography:
-      "La thermographie infrarouge permet d’examiner les composants électriques sous charge normale sans interruption de service. Décrivez le bâtiment, les équipements à vérifier et l’objectif du rapport (ex. exigence d'assurance).",
+    solar:
+      "Pour un projet solaire, précisez le bâtiment, l’adresse et les équipements envisagés. L’équipe pourra discuter des besoins de raccordement électrique et du stockage éventuel; la compatibilité et la portée restent à confirmer selon le site.",
     security:
       "Éclipse électrique inc. raccorde des systèmes d’alarme incendie, d'intrusion et de sécurité électrique. Précisez la nature de l’installation afin de diriger votre demande vers nos spécialistes.",
     commercialIndustrial:
@@ -168,7 +168,7 @@ const copy = {
     licence: `Éclipse électrique inc. détient la licence RBQ ${site.rbq}, délivrée en ${site.licensedSince}, et possède une fiche au répertoire de la CMEQ.`,
     licenceAction: "Consulter la fiche CMEQ",
     hours:
-      "**Heures d'ouverture et de service :**\n\n• **Urgence électrique 24/7** : Disponible 24 h sur 24, 7 jours sur 7 (soirs, week-ends et jours fériés) au **514-717-9277**.\n• **Bureau et projets réguliers (Semaine)** : Du lundi au vendredi de 7 h 00 à 17 h 00 au **514-955-1112**.\n• **Fin de semaine (Samedi et Dimanche)** : Équipe d'urgence active 24/7; consultations et soumissions planifiées sur rendez-vous.",
+      "**Heures d'ouverture et de service :**\n\n• **Urgence électrique 24/7** : Disponible 24 h sur 24, 7 jours sur 7 (soirs, week-ends et jours fériés) au **514-510-1112**.\n• **Bureau et projets réguliers (Semaine)** : Du lundi au vendredi de 7 h 00 à 17 h 00 au **514-955-1112**.\n• **Fin de semaine (Samedi et Dimanche)** : Équipe d'urgence active 24/7; consultations et soumissions planifiées sur rendez-vous.",
     hoursAction: "Appeler le bureau · 514-955-1112",
     thanks:
       "C’est un grand plaisir de vous aider ! Si vous avez besoin d’autres renseignements ou si vous souhaitez planifier des travaux avec nos maîtres électriciens, nous sommes toujours à votre écoute.",
@@ -182,7 +182,7 @@ const copy = {
       "Hello! I’m your virtual advisor at Éclipse Électrique Inc. We handle electrical panel upgrades, EV chargers, generators, renovations, and 24/7 emergency dispatch across Greater Montreal. How can I help you today?",
     hazard:
       "⚠️ Dangerous situation: do not touch any equipment. Move away from the area. If you see fire or smoke, leave the premises and call 911. Call electrical emergency dispatch now.",
-    emergencyAction: "Call emergency dispatch · 514-717-9277",
+    emergencyAction: "Call emergency dispatch · 514-510-1112",
     quote:
       "I can take you to the 4-step quote request. Include the property type, work required, municipality and contact details; for an active emergency, call the 24/7 line instead.",
     quoteAction: "Start the request",
@@ -199,10 +199,10 @@ const copy = {
     troubleshooting:
       "If a breaker repeatedly trips or an outlet loses power without immediate hazard signs, first check if an upstream GFCI outlet tripped. If the issue persists, avoid touching internal wiring and let a certified master electrician safely inspect and diagnose the issue.",
     services:
-      "We provide 6 certified master electrician services across Greater Montreal:\n\n• **Residential Electrical**: Panel upgrades (100A to 200A), rewiring, lighting & renovations\n• **EV Charging Stations**: Turnkey installation eligible for the $600 Roulez Vert rebate\n• **Commercial & Industrial**: 600V power distribution, transformer connections & machinery wiring\n• **Infrared Thermography**: Non-invasive thermal scans & insurance compliance reports\n• **Generators & Transfer Switches**: Automatic standby backup systems for storm outages\n• **24/7 Emergency Dispatch**: Rapid intervention for electrical failures and hazards (514-717-9277)",
+      "Our services include residential electrical work, commercial and industrial projects, maintenance and 24/7 emergency support, generators, solar energy, alarms and security. Describe the property and work so we can direct your request.",
     servicesAction: "Explore our services",
-    thermography:
-      "Infrared thermography can reveal thermal differences in equipment under normal load without destructive testing. Describe the property, equipment to inspect and purpose of the report.",
+    solar:
+      "For a solar project, share the building, address and proposed equipment. The team can discuss electrical connection needs and potential storage; compatibility and scope must be confirmed for the site.",
     security:
       "Éclipse électrique publishes alarm, fire-detection and safety-system connection services. Describe the property and system involved so our master electricians can direct your request correctly.",
     commercialIndustrial:
@@ -216,7 +216,7 @@ const copy = {
     licence: `Éclipse électrique inc. holds RBQ licence ${site.rbq}, issued in ${site.licensedSince}, and has a listing in the CMEQ directory.`,
     licenceAction: "View the CMEQ listing",
     hours:
-      "**Opening & Service Hours:**\n\n• **24/7 Emergency Dispatch**: Open 24 hours a day, 7 days a week (weekdays, weekends & holidays) at **514-717-9277**.\n• **Office & Regular Projects (Weekdays)**: Monday to Friday from 7:00 AM to 5:00 PM at **514-955-1112**.\n• **Weekends (Saturday & Sunday)**: Emergency crew is active 24/7; planned appointments and consultations are scheduled by appointment.",
+      "**Opening & Service Hours:**\n\n• **24/7 Emergency Dispatch**: Open 24 hours a day, 7 days a week (weekdays, weekends & holidays) at **514-510-1112**.\n• **Office & Regular Projects (Weekdays)**: Monday to Friday from 7:00 AM to 5:00 PM at **514-955-1112**.\n• **Weekends (Saturday & Sunday)**: Emergency crew is active 24/7; planned appointments and consultations are scheduled by appointment.",
     hoursAction: "Call the office · 514-955-1112",
     thanks:
       "You’re very welcome! If you need any more information or would like to schedule an appointment with our master electricians, we’re always here to assist.",
@@ -283,7 +283,7 @@ const englishSignals = [
   "thank",
   "thanks",
   "there",
-  "thermography",
+  "solar",
   "water",
   "wiring",
   "would",
@@ -335,7 +335,7 @@ const frenchSignals = [
   "subventions",
   "tarif",
   "tarifs",
-  "thermographie",
+  "solaire",
   "urgence",
   "urgence active",
   "ville",
@@ -397,12 +397,8 @@ const intentPatterns: Record<Exclude<AssistantIntent, "emergency" | "general">, 
     /\bpanneau\b/,
     /\bborne (?:ve|electrique|de recharge)\b/,
   ],
-  thermography: [
-    /\bthermograph(?:y|ie)\b/,
-    /\binfrared\b/,
-    /\binfrarouge\b/,
-    /\bthermal inspection\b/,
-    /\binspection thermique\b/,
+  solar: [
+    /\b(?:solar|solaire|solaires|photovoltaic|photovoltaique)\b/,
   ],
   security: [
     /\b(?:fire|intrusion) alarm\b/,
@@ -631,11 +627,11 @@ export function getAssistantReply(
     };
   }
 
-  if (hasPattern(normalized, intentPatterns.thermography)) {
+  if (hasPattern(normalized, intentPatterns.solar)) {
     return {
-      intent: "thermography",
+      intent: "solar",
       locale,
-      message: localized.thermography,
+      message: localized.solar,
       emergency: false,
       action: quoteAction(locale),
     };

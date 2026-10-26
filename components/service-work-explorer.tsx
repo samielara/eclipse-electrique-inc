@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { ContextQuoteLink } from "@/components/context-quote-link";
 import type { Locale } from "@/lib/routes";
 import type { ServiceWorkExplorerData } from "@/content/service-work-explorer";
 
@@ -95,10 +96,10 @@ export function ServiceWorkExplorer({ locale, data }: ServiceWorkExplorerProps) 
                 </li>
               ))}
             </ul>
-            <a href="#quote-intake">
+            <ContextQuoteLink locale={locale}>
               {isFrench ? "Demander ce service" : "Request this service"}
               <ArrowRight aria-hidden="true" />
-            </a>
+            </ContextQuoteLink>
           </div>
 
           <button

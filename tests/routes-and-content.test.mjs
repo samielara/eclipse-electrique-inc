@@ -32,7 +32,7 @@ test("every page has unique French and English paths and complete content", asyn
     "industrial",
     "maintenance",
     "generators",
-    "thermography",
+    "solar",
     "security",
     "serviceArea",
     "about",
@@ -49,7 +49,7 @@ test("every page has unique French and English paths and complete content", asyn
   ]);
   assert.equal(new Set(paths).size, paths.length);
   assert.equal(cityRoutes.length, 50);
-  assert.equal(allLocalizedPaths().length, paths.length + cityRoutes.length * 2);
+  assert.equal(allLocalizedPaths().length, paths.length + cityRoutes.length * 2 + 42);
 
   for (const pageId of expectedPageIds) {
     assert.ok(content.fr.pages[pageId], `missing French content for ${pageId}`);
@@ -93,14 +93,13 @@ test("renders emergency, language, dropdown, and skip links", async () => {
   );
 
   assert.match(html, /href="#contenu"/);
-  assert.match(html, /tel:\+15147179277/);
+  assert.match(html, /tel:\+15145101112/);
   assert.doesNotMatch(html, /Call the office|Appeler le bureau/);
   assert.doesNotMatch(html, /Master electrician|Maître électricien/);
   assert.match(html, /href="\/en"/);
   assert.match(html, /English/);
-  assert.match(html, /eclipse-logo-light\.png/);
   assert.match(html, /eclipse-logo-dark\.png/);
-  assert.match(html, /data-theme-toggle/);
+  assert.doesNotMatch(html, /theme-toggle|eclipse-logo-light\.png/);
   assert.match(html, /header-dropdown-panel/);
   assert.match(html, /\/fr\/territoire-desservi\/brossard/);
 });
@@ -117,15 +116,15 @@ test("renders visual homepage service choices in both locales", async () => {
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(frenchHtml, /popular-services-section/);
-  assert.match(frenchHtml, /Panneau électrique 200A/);
+  assert.doesNotMatch(frenchHtml, /popular-services-section/);
+  assert.match(frenchHtml, /context-selector-section/);
   assert.match(frenchHtml, /\/fr\/services\/electricien-residentiel/);
-  assert.match(englishHtml, /200A Electrical Panel/);
+  assert.match(englishHtml, /context-selector-section/);
   assert.match(englishHtml, /\/en\/services\/residential-electrician/);
   assert.doesNotMatch(englishHtml, /The points that matter/);
 });
 
-test("renders technical expertise without a duplicate sector matrix", async () => {
+test("keeps removed homepage sections absent", async () => {
   const { PageRenderer } = await vite.ssrLoadModule(
     "/components/page-renderer.tsx",
   );
@@ -137,14 +136,14 @@ test("renders technical expertise without a duplicate sector matrix", async () =
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(frenchHtml, /technical-expertise-section/);
-  assert.match(frenchHtml, /Notre expertise technique de pointe/);
+  assert.doesNotMatch(frenchHtml, /technical-expertise-section/);
+  assert.doesNotMatch(frenchHtml, /hero-indicator-btn/);
   assert.match(frenchHtml, /\/fr\/services\/electricien-residentiel/);
-  assert.match(frenchHtml, /Distribution 3-Phases/);
-  assert.match(frenchHtml, /\/fr\/services\/thermographie-infrarouge/);
-  assert.match(englishHtml, /Our High-Precision Technical Capabilities/);
+  assert.doesNotMatch(frenchHtml, /problem-intent-section/);
+  assert.match(frenchHtml, /\/fr\/services\/energie-solaire/);
+  assert.doesNotMatch(englishHtml, /technical-expertise-section/);
   assert.doesNotMatch(englishHtml, /sector-matrix/);
-  assert.match(englishHtml, /3-Phase Distribution/);
+  assert.doesNotMatch(englishHtml, /home-snap-cta/);
 });
 
 test("renders verified hero badges and mobile call actions", async () => {
@@ -165,10 +164,10 @@ test("renders verified hero badges and mobile call actions", async () => {
   assert.match(frenchHtml, /Actions rapides/);
   assert.match(frenchHtml, /tel:\+15149551112/);
   assert.match(frenchHtml, /514-955-1112/);
-  assert.match(frenchHtml, /tel:\+15147179277/);
+  assert.match(frenchHtml, /tel:\+15145101112/);
 });
 
-test("styles desktop dropdowns for hover and focus, with theme-aware owner logos", () => {
+test("styles desktop dropdowns for hover and focus, with the fixed dark owner logo", () => {
   const css = fs.readFileSync(
     fileURLToPath(new URL("../app/globals.css", import.meta.url)),
     "utf8",
@@ -177,8 +176,8 @@ test("styles desktop dropdowns for hover and focus, with theme-aware owner logos
 
   assert.ok(logoRule, "logo frame styles should exist");
   assert.match(logoRule, /overflow:\s*hidden/);
-  assert.match(css, /\[data-theme="dark"\] \.brand-logo-light/);
-  assert.match(css, /\[data-theme="dark"\] \.brand-logo-dark/);
+  assert.match(css, /\.brand-logo-frame \.brand-logo-dark/);
+  assert.doesNotMatch(css, /data-theme="light"|brand-logo-light/);
   assert.match(css, /\.header-dropdown:hover\s*>\s*\.header-dropdown-panel/);
   assert.match(css, /\.header-dropdown:focus-within\s*>\s*\.header-dropdown-panel/);
   assert.match(css, /\.header-dropdown::before\s*\{[^}]*height:\s*0\.85rem/s);
@@ -274,7 +273,7 @@ test("validates each quote wizard step before advancing", async () => {
   assert.deepEqual(quoteIntake.validateQuoteIntakeStep(validValues, 4, "fr"), {});
 });
 
-test("renders the accessible four-step quote wizard with all 50 service cities", async () => {
+test("renders the accessible one-page quote form with all 50 service cities", async () => {
   const { PageRenderer } = await vite.ssrLoadModule(
     "/components/page-renderer.tsx",
   );
@@ -286,19 +285,20 @@ test("renders the accessible four-step quote wizard with all 50 service cities",
   );
 
   assert.match(french, /id="quote-intake"/);
-  assert.match(french, /<progress[^>]+max="4"[^>]+value="1"/);
+  assert.doesNotMatch(french, /<progress|Étape 1 sur 4/);
   assert.match(french, /aria-live="polite"/);
-  assert.match(french, /Étape 1 sur 4/);
-  assert.match(french, /role="radiogroup"/);
-  assert.match(french, /name="quote-service"/);
+  assert.match(french, /Service souhaité/);
+  assert.match(french, /<fieldset/g);
+  assert.match(french, /id="quote-service"/);
   assert.match(french, /Résidentiel/);
-  assert.match(french, /Commercial \/ Industriel/);
-  assert.match(french, /Thermographie infrarouge/);
+  assert.match(french, /Commercial &amp; industriel/);
+  assert.match(french, /Énergie solaire/);
   assert.match(french, /Alarme &amp; incendie/);
-  assert.match(english, /Step 1 of 4/);
-  assert.match(english, /Select service/);
+  assert.doesNotMatch(english, /Step 1 of 4|Immediate emergency \(24\/7\)/);
+  assert.match(english, /Requested service/);
   assert.match(english, /Residential/);
-  assert.equal((french.match(/<option value=/g) ?? []).length, 51);
+  const cities = french.match(/<select[^>]*id="quote-municipality"[^>]*>([\s\S]*?)<\/select>/)?.[1] || "";
+  assert.equal((cities.match(/<option value=/g) ?? []).length, 51);
   assert.match(french, /value="saint-jean-sur-richelieu"/);
   assert.match(english, /Saint-Hubert and Old Longueuil/);
 });
@@ -330,7 +330,7 @@ test("builds the complete bilingual quote handoff without claiming submission", 
   assert.equal(typeof quoteIntake.buildQuoteIntakeMailtoUrl, "function");
 
   const values = {
-    service: "thermography",
+    service: "solar",
     timeline: "soon",
     municipality: "brossard",
     postalCode: "H1B 5V4",
@@ -348,7 +348,7 @@ test("builds the complete bilingual quote handoff without claiming submission", 
   const french = decodeURIComponent(frenchUrl);
 
   assert.match(englishUrl, /^mailto:info@eclipseelectrique\.com\?/);
-  assert.match(english, /Infrared thermography/);
+  assert.match(english, /Solar energy/);
   assert.match(english, /Within 24 to 48 hours/);
   assert.match(english, /Brossard/);
   assert.match(english, /H1B 5V4/);
@@ -360,7 +360,7 @@ test("builds the complete bilingual quote handoff without claiming submission", 
   assert.match(english, /panel\.jpg/);
   assert.match(english, /floor-plan\.pdf/);
   assert.match(english, /attach the selected files manually/i);
-  assert.match(french, /Thermographie infrarouge/);
+  assert.match(french, /Énergie solaire/);
   assert.match(french, /Dans les 24 à 48 heures/);
   assert.match(french, /Ajoutez manuellement les fichiers sélectionnés/i);
   assert.doesNotMatch(`${english}\n${french}`, /submitted|sent successfully|transmis avec succès/i);

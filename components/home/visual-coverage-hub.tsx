@@ -150,11 +150,6 @@ export function VisualCoverageHub({ locale }: VisualCoverageHubProps) {
                     />
                     {/* Smooth delicate fade into glass body */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#0a101d]/90 pointer-events-none" />
-
-                    {/* Corner Number */}
-                    <span className="absolute top-3 right-4 font-mono font-black text-2xl sm:text-3xl text-white/40 select-none tracking-tight group-hover:text-white/60 transition-colors z-10">
-                      {reg.number}
-                    </span>
                   </div>
 
                   {/* Card Body */}

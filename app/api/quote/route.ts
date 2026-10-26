@@ -1,3 +1,4 @@
+import { getQuoteWorkOptions } from "@/lib/quote-context";
 import { z } from "zod";
 import { buildQuoteIntakeMailtoUrl, quoteServiceValues, quoteTimelineValues, validateQuoteIntakeStep } from "@/lib/quote-intake";
 
@@ -6,6 +7,7 @@ const MAX_BODY = 8 * 1024 * 1024;
 const headers = { "Cache-Control": "no-store" };
 const attempts = new Map<string, { count: number; expires: number }>();
 const fields = z.object({
+  work: z.string().max(100).optional(),
   service: z.enum(quoteServiceValues), timeline: z.enum(quoteTimelineValues),
   municipality: z.string().max(100), postalCode: z.string().trim().max(12),
   fullName: z.string().trim().min(1).max(150), phone: z.string().trim().max(40),
@@ -50,6 +52,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return fail("invalid-input", 400);
   const locale = form.get("locale") === "fr" ? "fr" : "en";
   const values = { ...parsed.data, fileNames: [] };
+  if (values.work && !getQuoteWorkOptions(values.service, locale).some(option => option.value === values.work)) return fail("invalid-input", 400);
   for (const step of [1, 2, 3, 4] as const) {
     if (Object.keys(validateQuoteIntakeStep(values, step, locale)).length) return fail("invalid-input", 400);
   }

@@ -1,3 +1,4 @@
+import { getQuoteWorkOptions } from "@/lib/quote-context";
 import { cityRoutes } from "@/lib/city-routes";
 import type { Locale } from "@/lib/routes";
 import { site } from "@/lib/site";
@@ -5,7 +6,7 @@ import { site } from "@/lib/site";
 export const quoteServiceValues = [
   "residential",
   "commercialIndustrial",
-  "thermography",
+  "solar",
   "security",
   "other",
 ] as const;
@@ -18,6 +19,7 @@ export type QuoteTimeline = (typeof quoteTimelineValues)[number];
 export type QuoteIntakeStep = 1 | 2 | 3 | 4;
 
 export interface QuoteIntakeValues {
+  work?: string;
   service: "" | QuoteService;
   timeline: "" | QuoteTimeline;
   municipality: string;
@@ -89,8 +91,8 @@ const handoffCopy = {
       "Ajoutez manuellement les fichiers sélectionnés à ce courriel avant de l’envoyer.",
     services: {
       residential: "Résidentiel",
-      commercialIndustrial: "Commercial / Industriel",
-      thermography: "Thermographie infrarouge",
+      commercialIndustrial: "Commercial & industriel",
+      solar: "Énergie solaire",
       security: "Alarme & incendie",
       other: "Autre",
     },
@@ -116,8 +118,8 @@ const handoffCopy = {
       "Please attach the selected files manually to this email before sending it.",
     services: {
       residential: "Residential",
-      commercialIndustrial: "Commercial / Industrial",
-      thermography: "Infrared thermography",
+      commercialIndustrial: "Commercial & Industrial",
+      solar: "Solar energy",
       security: "Alarm and fire systems",
       other: "Other",
     },
@@ -210,6 +212,7 @@ export function buildQuoteIntakeMailtoUrl(
   const municipalityLabel = (city?.[locale] ?? values.municipality.trim()) || "—";
   const body = [
     `${copy.service}: ${serviceLabel}`,
+    ...(values.work ? [`${locale === "fr" ? "Service souhaité" : "Requested service"}: ${getQuoteWorkOptions(values.service, locale).find(option => option.value === values.work)?.label || "—"}`] : []),
     `${copy.timeline}: ${timelineLabel}`,
     `${copy.municipality}: ${municipalityLabel}`,
     `${copy.postalCode}: ${values.postalCode.trim().toUpperCase()}`,

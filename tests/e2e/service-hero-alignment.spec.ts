@@ -8,7 +8,7 @@ const servicePaths = {
     "/en/services/industrial-electrician",
     "/en/services/maintenance-and-emergency",
     "/en/services/generators",
-    "/en/services/infrared-thermography",
+    "/en/services/solar-energy",
     "/en/services/fire-and-security",
   ],
   fr: [
@@ -18,7 +18,7 @@ const servicePaths = {
     "/fr/services/electricien-industriel",
     "/fr/services/maintenance-et-urgence",
     "/fr/services/generatrices",
-    "/fr/services/thermographie-infrarouge",
+    "/fr/services/energie-solaire",
     "/fr/services/alarme-et-securite",
   ],
 };

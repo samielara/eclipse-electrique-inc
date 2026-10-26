@@ -37,7 +37,7 @@ test("assistant knowledge prioritizes active hazards in French and English", asy
   ]) {
     const reply = getAssistantReply(hazard, "fr");
     assert.equal(reply.intent, "emergency", hazard);
-    assert.equal(reply.action.href, "tel:5147179277", hazard);
+    assert.equal(reply.action.href, "tel:5145101112", hazard);
   }
 
   for (const hazard of [
@@ -65,8 +65,8 @@ test("assistant knowledge prioritizes active hazards in French and English", asy
   assert.match(english.message, /^⚠️ Dangerous situation: do not touch any equipment\./);
   assert.deepEqual(english.action, {
     kind: "emergency",
-    label: "Call emergency dispatch · 514-717-9277",
-    href: "tel:5147179277",
+    label: "Call emergency dispatch · 514-510-1112",
+    href: "tel:5145101112",
   });
 
   assert.equal(french.intent, "emergency");
@@ -76,7 +76,7 @@ test("assistant knowledge prioritizes active hazards in French and English", asy
     french.message,
     /^⚠️ Situation dangereuse : ne touchez à aucun équipement\./,
   );
-  assert.equal(french.action.href, "tel:5147179277");
+  assert.equal(french.action.href, "tel:5145101112");
 });
 
 test("assistant knowledge uses the real city catalogue and qualification actions", async () => {
@@ -124,7 +124,7 @@ test("assistant knowledge uses the real city catalogue and qualification actions
     [
       "🚨 Urgence électrique 24/7",
       "⚡ Remplacement de panneau / Borne VE",
-      "🔍 Thermographie infrarouge",
+      "🔍 Énergie solaire",
       "📍 Vérifier ma ville",
       "📋 Obtenir une soumission",
     ],
@@ -159,8 +159,8 @@ test("assistant emergency card renders the direct dispatch action", async () => 
 
   assert.match(html, /role="alert"/);
   assert.match(html, /Situation dangereuse/);
-  assert.match(html, /href="tel:5147179277"/);
-  assert.match(html, /514-717-9277/);
+  assert.match(html, /href="tel:5145101112"/);
+  assert.match(html, /514-510-1112/);
 });
 
 test("assistant visibility state opens and closes predictably", async () => {
@@ -197,11 +197,12 @@ test("homepage uses visual service choices without repeating the long capability
     React.createElement(PageRenderer, { locale: "en", pageId: "home" }),
   );
 
-  assert.match(html, /popular-services-section/);
-  assert.match(html, /200A Electrical Panel/);
-  assert.match(html, /technical-expertise-section/);
+  assert.doesNotMatch(html, /popular-services-section/);
+  assert.match(html, /context-selector-section/);
+  assert.doesNotMatch(html, /technical-expertise-section/);
   assert.match(html, /\/en\/services\/residential-electrician/);
-  assert.match(html, /\/en\/services\/industrial-electrician/);
+  assert.doesNotMatch(html, /href="\/en\/services\/industrial-electrician"/);
+  assert.match(html, /Commercial &amp; Industrial/);
   assert.doesNotMatch(html, /Pause slideshow|Resume slideshow/);
   assert.match(html, /media\//);
   assert.doesNotMatch(html, /The points that matter/);
@@ -235,7 +236,7 @@ test("emits the catalog's animation and scrolling utilities", async () => {
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
 
-test("emits assistant styling above the mobile action bar in both themes", async () => {
+test("emits assistant styling for the fixed dark theme above the mobile action bar", async () => {
   const css = await readCssTree(path.join(root, "dist"));
 
   assert.match(css, /\.ai-assistant-launcher/);
@@ -244,7 +245,7 @@ test("emits assistant styling above the mobile action bar in both themes", async
     css,
     /bottom:\s*calc\(5\.6rem \+ env\(safe-area-inset-bottom\)\)/,
   );
-  assert.match(css, /\[data-theme=light\] \.ai-assistant-panel/);
+  assert.doesNotMatch(css, /data-theme\s*=\s*["']?light/);
   assert.match(css, /@keyframes ai-assistant-enter/);
 });
 
@@ -257,19 +258,20 @@ test("forwards progress semantics to the primitive", async () => {
   assert.match(html, /data-state="loading"/);
 });
 
-test("emits chart themes for the starter's media dark mode", async () => {
+test("emits chart colors for the fixed dark theme", async () => {
   const { ChartStyle } = await vite.ssrLoadModule("/components/ui/chart.tsx");
   const html = renderToStaticMarkup(
     React.createElement(ChartStyle, {
       id: "contract",
       config: {
-        latency: { theme: { light: "#ffffff", dark: "#000000" } },
+        latency: { theme: { dark: "#000000" } },
       },
     }),
   );
 
   assert.match(html, /\[data-chart=contract\]/);
-  assert.match(html, /@media \(prefers-color-scheme: dark\)/);
+  assert.match(html, /--color-latency:\s*#000000/);
+  assert.doesNotMatch(html, /@media/);
   assert.doesNotMatch(html, /\.dark/);
 });
 
